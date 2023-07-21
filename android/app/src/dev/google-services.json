@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "726068690220",
+    "project_id": "dtrade-dev",
+    "storage_bucket": "dtrade-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726068690220:android:89281ad639676c7465c089",
+        "android_client_info": {
+          "package_name": "com.fksoft.dtrade.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726068690220-g9dopi145kb0n9v6e31hrdb5o4j4prso.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fksoft.dtrade.dev",
+            "certificate_hash": "949264cbfd2006b4cc1d1363f922bb749ee01bb7"
+          }
+        },
+        {
+          "client_id": "726068690220-upt1n33lj6r817uj1us0725ebl5qhcsg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-Nht4FL8m9NsfVXEMGKSvBcNZh38iVnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726068690220-upt1n33lj6r817uj1us0725ebl5qhcsg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
