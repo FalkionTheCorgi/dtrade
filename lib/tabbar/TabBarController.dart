@@ -2,12 +2,13 @@ import 'package:dtrade/TopBar/TopBar.dart';
 import 'package:dtrade/bottombar/BottomBar.dart';
 import 'package:dtrade/bottombar/BottomBarViewModel.dart';
 import 'package:dtrade/bottomsheet/addItem/AddItem.dart';
+import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
+import 'package:dtrade/data/DataItemRegister.dart';
 import 'package:dtrade/drawer/DrawerLayout.dart';
 import 'package:dtrade/extension/Color.dart';
 import 'package:dtrade/leilao/andamento/LeilaoAndamento.dart';
 import 'package:dtrade/leilao/concluido/LeilaoConcluido.dart';
 import 'package:dtrade/listitems/ListLeilao.dart';
-import 'package:dtrade/tabbar/TabBarControllerViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,7 +25,7 @@ class TabBarControllerState extends ConsumerState<TabBarController> {
   @override
   Widget build(BuildContext context) {
     final bottomBarModel = ref.watch(bottomBarViewModel);
-    final model = ref.watch(tabBarViewModel);
+    final model = ref.watch(addItemViewModel);
 
     return DefaultTabController(
         length: bottomBarModel.selectedIndex == 0 ? 1 : 2,
@@ -49,7 +50,11 @@ class TabBarControllerState extends ConsumerState<TabBarController> {
               child: FloatingActionButton(
                 onPressed: () {
                   model.file = null;
+                  model.bottomsheetType = false;
+                  model.dataItem = DataItemRegister();
                   showModalBottomSheet(
+                      isDismissible: false,
+                      isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) {
                         return AddItem();

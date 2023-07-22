@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dtrade/tabbar/TabBarControllerViewModel.dart';
+import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +18,7 @@ class PreviewCameraState extends ConsumerState<PreviewCamera> {
 
   @override
   Widget build(BuildContext context) {
-    final tabBarModel = ref.watch(tabBarViewModel);
+    final model = ref.watch(addItemViewModel);
     return Scaffold(
       body: Row(
         children: [
@@ -44,7 +44,7 @@ class PreviewCameraState extends ConsumerState<PreviewCamera> {
                                   icon: const Icon(Icons.check,
                                       color: Colors.white, size: 30),
                                   onPressed: () => {
-                                        tabBarModel.setFile(widget.file),
+                                        model.setFile(widget.file),
                                         Navigator.of(context)
                                             .popUntil((_) => count++ >= 2)
                                       })))),

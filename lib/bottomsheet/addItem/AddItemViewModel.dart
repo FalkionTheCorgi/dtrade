@@ -1,20 +1,21 @@
 import 'dart:io';
-import 'dart:math';
+
 import 'package:dtrade/data/DataItemRegister.dart';
 import 'package:dtrade/extension/Regex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
-final tabBarViewModel =
-    ChangeNotifierProvider((ref) => TabBarControllerViewModel());
+final addItemViewModel = ChangeNotifierProvider((ref) => AddItemViewModel());
 
-class TabBarControllerViewModel extends ChangeNotifier {
+class AddItemViewModel extends ChangeNotifier {
   File? file;
 
   DataItemRegister dataItem = DataItemRegister();
 
   bool bottomsheetType = false;
+
+  bool loadingFile = false;
 
   void changeBottomSheet() {
     bottomsheetType = !bottomsheetType;
@@ -23,6 +24,7 @@ class TabBarControllerViewModel extends ChangeNotifier {
 
   void setFile(File newFile) {
     file = newFile;
+    loadingFile = true;
     notifyListeners();
     analyzeImage(newFile.path);
   }
@@ -45,16 +47,18 @@ class TabBarControllerViewModel extends ChangeNotifier {
       }*/
     }
     textRecognizer.close();
-    changeBottomSheet();
 
-    /*print("Item Name: ${dataItem.nameItem.trimRight()}");
-    print("Item Category: ${dataItem.categoryName}");
-    print("Item Rarity: ${dataItem.rarity}");
-    print("Item Power: ${dataItem.itemPower}");
-    print("Item Level: ${dataItem.lvlRankItem}");
-    dataItem.description.forEach((element) {
-      print("Item Description: ${element}");
-    });*/
+    if (dataItem.rarity == 'Legendary') {
+      const SnackBar(
+        content: Text('Não é possível trocar itens de raridade Lendários.'),
+      );
+      loadingFile = false;
+      notifyListeners();
+    } else {
+      loadingFile = false;
+      changeBottomSheet();
+    }
+
   }
 
   void fillIdentifyItem(String str) {
