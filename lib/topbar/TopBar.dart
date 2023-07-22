@@ -1,4 +1,5 @@
 import 'package:dtrade/bottombar/BottomBarViewModel.dart';
+import 'package:dtrade/bottomsheet/filter/FilterItems.dart';
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +36,16 @@ class TopBarState extends ConsumerState<TopBar> {
                       Icons.search_outlined,
                       color: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                          showDragHandle: true,
+                          isDismissible: false,
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return FilterItems();
+                          });
+                    },
                   ),
                 ],
                 leading: IconButton(

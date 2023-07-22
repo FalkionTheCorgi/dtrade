@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:dtrade/bottomsheet/addItem/AddItemManually.dart';
 import 'package:dtrade/cadastro/Cadastro.dart';
 import 'package:dtrade/camera/PreviewCamera.dart';
 import 'package:dtrade/camera/camera.dart';
+import 'package:dtrade/data/DataItemRegister.dart';
 import 'package:dtrade/login/Login.dart';
 import 'package:dtrade/tabbar/TabBarController.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ class AppRoutes {
   static const String tabbar = '/tabbar';
   static const String camera = '/camera';
   static const String previewcam = '/previewcam';
+  static const String addItem = '/addItem';
 
   static Route<dynamic> generateRoute(RouteSettings settings,
       {Object? arguments}) {
@@ -28,6 +31,16 @@ class AppRoutes {
         return AppRoutes().buildPageRouteBuilder(PreviewCamera(file: args));
       case tabbar:
         return AppRoutes().buildPageRouteBuilder(TabBarController());
+      case addItem:
+        final args = settings.arguments as DataItemRegister;
+        return AppRoutes().buildPageRouteBuilder(AddItemManually(
+            nameItem: args.nameItem,
+            categoryName: args.categoryName,
+            rarity: args.rarity,
+            sacredItem: args.sacredItem,
+            itemPower: args.itemPower,
+            lvlRankItem: args.lvlRankItem,
+            description: args.description));
       default:
         return MaterialPageRoute(builder: (_) => Login());
     }

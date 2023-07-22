@@ -1,11 +1,11 @@
 import 'package:dtrade/extension/Regex.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final addItemManuallyViewModel =
-    ChangeNotifierProvider((ref) => AddItemManuallyViewModel());
+final filterItemsViewModel =
+    ChangeNotifierProvider((ref) => FilterItemsViewModel());
 
-class AddItemManuallyViewModel extends ChangeNotifier {
+class FilterItemsViewModel extends ChangeNotifier {
   String? validateNameItem(String str) {
     if (str.isEmpty) {
       return 'Campo vazio.';

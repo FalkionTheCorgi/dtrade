@@ -53,6 +53,7 @@ class TabBarControllerState extends ConsumerState<TabBarController> {
                   model.bottomsheetType = false;
                   model.dataItem = DataItemRegister();
                   showModalBottomSheet(
+                      showDragHandle: true,
                       isDismissible: false,
                       isScrollControlled: true,
                       context: context,

@@ -1,37 +1,18 @@
-import 'package:dtrade/bottomsheet/addItem/AddItemManuallyViewModel.dart';
+import 'package:dtrade/bottomsheet/filter/FilterItemsViewModel.dart';
 import 'package:dtrade/components/ProgressButton.dart';
 import 'package:dtrade/data/DataDropDownCategory.dart';
 import 'package:dtrade/extension/Color.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AddItemManually extends ConsumerStatefulWidget {
-  final String nameItem;
-  final String categoryName;
-  final String rarity;
-  final String sacredItem;
-  final String itemPower;
-  final String lvlRankItem;
-  final List<String> description;
-
-  const AddItemManually(
-      {Key? key,
-      required this.nameItem,
-      required this.categoryName,
-      required this.rarity,
-      required this.sacredItem,
-      required this.itemPower,
-      required this.lvlRankItem,
-      required this.description})
-      : super(key: key);
-
+class FilterItems extends ConsumerStatefulWidget {
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => AddItemManuallyState();
+  ConsumerState<ConsumerStatefulWidget> createState() => FilterItemsState();
 }
 
-class AddItemManuallyState extends ConsumerState<AddItemManually> {
+class FilterItemsState extends ConsumerState<FilterItems> {
   final formKey = GlobalKey<FormState>();
 
   late TextEditingController nameItem;
@@ -86,41 +67,10 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
 
   @override
   void initState() {
-    var desc = '';
-    nameItem = TextEditingController(text: widget.nameItem);
-    itemPower = TextEditingController(text: widget.itemPower);
-    lvlRankItem = TextEditingController(text: widget.lvlRankItem);
-    for (var element in widget.description) {
-      desc += "$element\n";
-    }
-    DataDropDownCategory magicCategory = dropDownRarity.firstWhere(
-      (category) => category.nameCategory == widget.rarity,
-      orElse: () =>
-          const DataDropDownCategory(value: -1, nameCategory: 'Not Found'),
-    );
-    if (magicCategory.nameCategory == widget.rarity) {
-      dropValueRarity = magicCategory.value;
-    }
-
-    DataDropDownCategory itemCategory = dropDownItemsCategory.firstWhere(
-      (category) => category.nameCategory == widget.categoryName,
-      orElse: () =>
-          const DataDropDownCategory(value: -1, nameCategory: 'Not Found'),
-    );
-    if (itemCategory.nameCategory == widget.categoryName) {
-      dropValue = itemCategory.value;
-    }
-
-    DataDropDownCategory itemSacred = dropDownSacred.firstWhere(
-      (category) => category.nameCategory == widget.sacredItem,
-      orElse: () =>
-          const DataDropDownCategory(value: -1, nameCategory: 'Not Found'),
-    );
-    if (itemSacred.nameCategory == widget.sacredItem) {
-      dropValueSacred = itemSacred.value;
-    }
-
-    description = TextEditingController(text: desc);
+    nameItem = TextEditingController(text: "");
+    itemPower = TextEditingController(text: "");
+    lvlRankItem = TextEditingController(text: "");
+    description = TextEditingController(text: "");
 
     itemListCategory = dropDownItemsCategory
         .map((val) => DropdownMenuItem<int>(
@@ -154,7 +104,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
 
   @override
   Widget build(BuildContext context) {
-    final model = ref.watch(addItemManuallyViewModel);
+    final model = ref.watch(filterItemsViewModel);
 
     return SingleChildScrollView(
         child: Form(
@@ -164,7 +114,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
               child: Column(mainAxisSize: MainAxisSize.min, children: [
                 const SizedBox(height: 24),
                 Text(
-                  "Adicionar Item",
+                  "Filtrar Items",
                   style: GoogleFonts.roboto(
                       textStyle: const TextStyle(fontSize: 24)),
                 ),
@@ -288,7 +238,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
                 ),
                 const SizedBox(height: 16),
                 FkFProgressButton(
-                  title: 'ABRIR LEILÃO',
+                  title: 'FILTRAR',
                   bgColorButton: ColorTheme.colorFirst,
                   textColorButton: Colors.white,
                   colorProgress: Colors.white,
