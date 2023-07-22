@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddItem extends ConsumerStatefulWidget {
+  const AddItem({Key? key}) : super(key: key);
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => AddItemState();
 }
@@ -21,6 +23,7 @@ class AddItemState extends ConsumerState<AddItem> {
               nameItem: model.dataItem.nameItem.trimRight(),
               categoryName: model.dataItem.categoryName,
               rarity: model.dataItem.rarity,
+              sacredItem: model.dataItem.sacredItem,
               itemPower: model.dataItem.itemPower,
               lvlRankItem: model.dataItem.lvlRankItem,
               description: model.dataItem.description));

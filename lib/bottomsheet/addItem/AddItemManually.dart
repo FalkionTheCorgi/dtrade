@@ -11,6 +11,7 @@ class AddItemManually extends ConsumerStatefulWidget {
   final String nameItem;
   final String categoryName;
   final String rarity;
+  final String sacredItem;
   final String itemPower;
   final String lvlRankItem;
   final List<String> description;
@@ -20,6 +21,7 @@ class AddItemManually extends ConsumerStatefulWidget {
       required this.nameItem,
       required this.categoryName,
       required this.rarity,
+      required this.sacredItem,
       required this.itemPower,
       required this.lvlRankItem,
       required this.description})
@@ -104,6 +106,15 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
     );
     if (itemCategory.nameCategory == widget.categoryName) {
       dropValue = itemCategory.value;
+    }
+
+    DataDropDownCategory itemSacred = dropDownSacred.firstWhere(
+      (category) => category.nameCategory == widget.sacredItem,
+      orElse: () =>
+          const DataDropDownCategory(value: -1, nameCategory: 'Not Found'),
+    );
+    if (itemSacred.nameCategory == widget.sacredItem) {
+      dropValueSacred = itemSacred.value;
     }
 
     description = TextEditingController(text: desc);

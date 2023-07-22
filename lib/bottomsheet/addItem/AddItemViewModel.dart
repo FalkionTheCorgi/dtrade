@@ -48,7 +48,7 @@ class AddItemViewModel extends ChangeNotifier {
     }
     textRecognizer.close();
 
-    if (dataItem.rarity == 'Legendary') {
+    /*if (dataItem.rarity == 'Legendary') {
       const SnackBar(
         content: Text('Não é possível trocar itens de raridade Lendários.'),
       );
@@ -57,8 +57,10 @@ class AddItemViewModel extends ChangeNotifier {
     } else {
       loadingFile = false;
       changeBottomSheet();
-    }
-
+    }*/
+    print(dataItem.sacredItem);
+    loadingFile = false;
+    changeBottomSheet();
   }
 
   void fillIdentifyItem(String str) {
@@ -67,14 +69,26 @@ class AddItemViewModel extends ChangeNotifier {
       dataItem.nameItem += "${extractName(str)!} ";
       if (RegExp(RegexData.identifyTypeItem).hasMatch(str)) {
         final typeItem = extractRarityAndType(str);
-        dataItem.categoryName = typeItem[1];
-        dataItem.rarity = typeItem[0];
+        if (typeItem.length == 3) {
+          dataItem.categoryName = typeItem[2];
+          dataItem.rarity = typeItem[1];
+          dataItem.sacredItem = typeItem[0];
+        } else {
+          dataItem.categoryName = typeItem[1];
+          dataItem.rarity = typeItem[0];
+        }
       }
     } else if (RegExp(RegexData.identifyTypeItem).hasMatch(str) &&
         dataItem.categoryName.isEmpty) {
       final typeItem = extractRarityAndType(str);
-      dataItem.categoryName = typeItem[1];
-      dataItem.rarity = typeItem[0];
+      if (typeItem.length == 3) {
+        dataItem.categoryName = typeItem[2];
+        dataItem.rarity = typeItem[1];
+        dataItem.sacredItem = typeItem[0];
+      } else {
+        dataItem.categoryName = typeItem[1];
+        dataItem.rarity = typeItem[0];
+      }
     } else if (RegExp(RegexData.identifyItemPower).hasMatch(str) &&
         dataItem.itemPower.isEmpty) {
       dataItem.itemPower = extractItemPower(str);
@@ -110,7 +124,7 @@ class AddItemViewModel extends ChangeNotifier {
 
   List<String> extractRarityAndType(String frase) {
     RegExp padrao = RegExp(
-        r'\b(?:Common|Magic|Rare|Legendary|Unique)\s+(?:Axe|Bow|Dagger|Two-Handed Axe|Two-Handed Mace|Staff|Two-Handed Staff|Sword|Two-Handed Sword|Scythe|Two-Handed Scythe|Wand|Mace|Crossbow|Helm|Glove|Pants|Boots|Armor|Ring|Amulet)\b');
+        r'\b(?:Ancestral|Sacred)?\s+(?:Common|Magic|Rare|Legendary|Unique)\s+(?:Axe|Bow|Dagger|Two-Handed Axe|Two-Handed Mace|Staff|Two-Handed Staff|Sword|Two-Handed Sword|Scythe|Two-Handed Scythe|Wand|Mace|Crossbow|Helm|Glove|Pants|Boots|Armor)\b');
     List<String> matches = padrao.firstMatch(frase)?.group(0)?.split(' ') ?? [];
     return matches;
   }
