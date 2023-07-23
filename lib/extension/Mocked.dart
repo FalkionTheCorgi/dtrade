@@ -7,7 +7,7 @@ class Mocked {
         ip: "824",
         category: "Body Armour",
         initialPrice: "29M",
-        actualPrice: "147M",
+        actualPrice: "147.542",
         descriptionItem: [
           "Description1",
           "Description2",
@@ -20,7 +20,7 @@ class Mocked {
         ip: "800",
         category: "Ring",
         initialPrice: "32M",
-        actualPrice: "101M",
+        actualPrice: "101.745",
         descriptionItem: [
           "Description1",
           "Description2",
@@ -33,7 +33,7 @@ class Mocked {
         ip: "731",
         category: "Hat",
         initialPrice: "17M",
-        actualPrice: "18M",
+        actualPrice: "18.234",
         descriptionItem: [
           "Description1",
           "Description2",
@@ -46,7 +46,7 @@ class Mocked {
         ip: "856",
         category: "Boots",
         initialPrice: "67M",
-        actualPrice: "799M",
+        actualPrice: "799.678",
         descriptionItem: [
           "Description1",
           "Description2",
@@ -72,7 +72,7 @@ class Mocked {
         ip: "761",
         category: "Ring",
         initialPrice: "456M",
-        actualPrice: "500M",
+        actualPrice: "678.325",
         descriptionItem: [
           "Description1",
           "Description2",

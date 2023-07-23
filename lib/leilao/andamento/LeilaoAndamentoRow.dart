@@ -1,4 +1,4 @@
-import 'package:flutter/gestures.dart';
+import 'package:dtrade/leilao/andamento/DialogDelete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,7 +40,7 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
       padding: EdgeInsets.all(8),
       child: Card(
           child: Padding(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(16),
               child: Column(
                 children: [
                   Row(
@@ -112,17 +112,30 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              RichText(
-                                text: TextSpan(
-                                    text: 'EXCLUIR',
-                                    style: GoogleFonts.roboto(
-                                        textStyle: const TextStyle(
-                                            fontSize: 16, color: Colors.red)),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        print('buttons clicked');
-                                      }),
-                              )
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.zero),
+                                onPressed: () => showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) => Dialog(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[DialogDelete()],
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  'EXCLUIR',
+                                  style: GoogleFonts.roboto(
+                                      textStyle:
+                                          const TextStyle(color: Colors.red)),
+                                ),
+                              ),
                             ],
                           ),
                       ],

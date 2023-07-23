@@ -1,7 +1,5 @@
-import 'package:dtrade/bottomsheet/configuracoes/ConfiguracoesViewModel.dart';
 import 'package:dtrade/bottomsheet/configuracoes/DarkModeProvider.dart';
 import 'package:dtrade/components/ProgressButton.dart';
-import 'package:dtrade/extension/Color.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';

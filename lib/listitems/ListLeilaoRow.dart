@@ -1,5 +1,6 @@
+import 'package:dtrade/bottomsheet/denunciar/DenounceView.dart';
 import 'package:dtrade/extension/Color.dart';
-import 'package:flutter/gestures.dart';
+import 'package:dtrade/listitems/DialogBet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,10 +39,10 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
     //double width = MediaQuery.of(context).size.width;
 
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Card(
           child: Padding(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(16),
               child: Column(
                 children: [
                   Row(
@@ -113,30 +114,56 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              RichText(
-                                text: TextSpan(
-                                    text: 'DENUNCIAR',
-                                    style: GoogleFonts.roboto(
-                                        textStyle: const TextStyle(
-                                            fontSize: 16, color: Colors.red)),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        print('buttons clicked');
-                                      }),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.zero),
+                                onPressed: () => showModalBottomSheet(
+                                    showDragHandle: true,
+                                    isDismissible: false,
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return DenounceView();
+                                    }),
+                                child: Text(
+                                  'DENUNCIAR',
+                                  style: GoogleFonts.roboto(
+                                      textStyle:
+                                          const TextStyle(color: Colors.red)),
+                                ),
                               ),
-                              Spacer(),
-                              RichText(
-                                text: TextSpan(
-                                    text: 'DAR LANCE',
-                                    style: GoogleFonts.roboto(
-                                        textStyle: const TextStyle(
-                                            fontSize: 16,
-                                            color: ColorTheme.colorFirst)),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        print('buttons clicked');
-                                      }),
-                              )
+                              const Spacer(),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    alignment: Alignment.centerRight,
+                                    padding: EdgeInsets.zero),
+                                onPressed: () => showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) => Dialog(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        DialogBet(
+                                          value: widget.value,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  'DAR LANCE',
+                                  style: GoogleFonts.roboto(
+                                      textStyle: const TextStyle(
+                                          color: ColorTheme.colorFirst)),
+                                ),
+                              ),
                             ],
                           ),
                       ],
