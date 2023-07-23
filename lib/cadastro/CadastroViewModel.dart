@@ -1,11 +1,14 @@
 import 'package:dtrade/cadastro/CadastroState.dart';
 import 'package:dtrade/extension/Regex.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final cadastroViewModel = ChangeNotifierProvider((ref) => CadastroViewModel());
 
 class CadastroViewModel extends ChangeNotifier {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   CadastroState state = CadastroState();
 
   String? validateEmail(String str) {
@@ -50,5 +53,13 @@ class CadastroViewModel extends ChangeNotifier {
     } else {
       return 'Formato da Battletag inválida.';
     }
+  }
+
+  Future<void> registerUser(String email, String password) async {
+
+    final user = await auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    print(user);
   }
 }

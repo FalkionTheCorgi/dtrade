@@ -36,6 +36,8 @@ dependencies:
   camera_camera: ^3.0.0
   image_picker: ^1.0.1 
   google_ml_kit: ^0.16.1 
+  firebase_auth: ^4.7.1
+  shared_preferences: ^2.2.0
 
 
   # The following adds the Cupertino Icons font to your application.

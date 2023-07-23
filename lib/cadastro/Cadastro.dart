@@ -165,7 +165,9 @@ class CadastroConsumerState extends ConsumerState<Cadastro> {
                     textColorButton: Colors.white,
                     colorProgress: Colors.white,
                     onPressedCallback: () async {
-                      if (formKey.currentState!.validate()) {}
+                      if (formKey.currentState!.validate()) {
+                        await model.registerUser(email.text, password.text);
+                      }
                     },
                   ),
                   const SizedBox(height: 8.0),

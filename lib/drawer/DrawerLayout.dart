@@ -1,3 +1,4 @@
+import 'package:dtrade/bottomsheet/configuracoes/Configuracoes.dart';
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -27,7 +28,6 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
 
     return Drawer(
       child: Container(
-        color: Colors.white,
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
@@ -60,8 +60,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
             ListTile(
               title: Text("Classes",
                   style: GoogleFonts.roboto(
-                      textStyle:
-                          const TextStyle(fontSize: 16, color: Colors.grey))),
+                      textStyle: const TextStyle(fontSize: 16))),
             ),
             ListTile(
               selectedColor: Colors.red,
@@ -160,8 +159,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
             ListTile(
               title: Text("Opções",
                   style: GoogleFonts.roboto(
-                      textStyle:
-                          const TextStyle(fontSize: 16, color: Colors.grey))),
+                      textStyle: const TextStyle(fontSize: 16))),
             ),
             ListTile(
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -169,13 +167,18 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 SizedBox(width: 4),
                 Text('Configurações',
                     style: GoogleFonts.roboto(
-                        textStyle:
-                            const TextStyle(fontSize: 16, color: Colors.black)))
+                        textStyle: const TextStyle(fontSize: 16)))
               ]),
               onTap: () {
-                // Update the state of the app
-                // Then close the drawer
                 Navigator.pop(context);
+                showModalBottomSheet(
+                    showDragHandle: true,
+                    isDismissible: false,
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Configuracoes();
+                    });
               },
             ),
             ListTile(
@@ -184,8 +187,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 SizedBox(width: 4),
                 Text('Sair',
                     style: GoogleFonts.roboto(
-                        textStyle:
-                            const TextStyle(fontSize: 16, color: Colors.black)))
+                        textStyle: const TextStyle(fontSize: 16)))
               ]),
               onTap: () {
                 // Update the state of the app

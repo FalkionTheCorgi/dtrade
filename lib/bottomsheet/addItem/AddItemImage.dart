@@ -19,7 +19,6 @@ class AddItemImage extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 24),
           Text(
             "Adicionar Item",
             style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 24)),
@@ -53,8 +52,7 @@ class AddItemImage extends ConsumerWidget {
                 text: TextSpan(
                     text: 'Manualmente',
                     style: GoogleFonts.roboto(
-                        textStyle:
-                            const TextStyle(fontSize: 16, color: Colors.black)),
+                        textStyle: const TextStyle(fontSize: 16)),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () async {
                         model.dataItem = DataItemRegister();
