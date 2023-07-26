@@ -1,3 +1,5 @@
+import 'package:dtrade/api/data/Message.dart';
+import 'package:dtrade/api/https.dart';
 import 'package:dtrade/cadastro/CadastroState.dart';
 import 'package:dtrade/extension/Regex.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,11 +57,29 @@ class CadastroViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> registerUser(String email, String password) async {
-
-    final user = await auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-
-    print(user);
+  Future<void> registerUser(String email, String password, String battletag,
+      BuildContext context) async {
+    try {
+      final user = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      print(user.user?.uid);
+      await Api.instance
+          .postRegisterUser(email, battletag, user.user?.uid ?? "")
+          .then((value) {
+        if (value.status == 'REQUIRED_FIELDS') {
+          final snackBar = SnackBar(content: Text(value.message));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        } else {
+          final snackBar = SnackBar(content: Text(value.message));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Navigator.of(context).pop();
+        }
+      });
+    } on FirebaseAuthException catch (_) {
+      const exception =
+          'Erro ao criar um cadastro, por favor entre em contato com o suporte.';
+      final snackBar = SnackBar(content: Text(exception));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }

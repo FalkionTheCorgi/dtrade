@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
+import 'package:dtrade/bottomsheet/configuracoes/DarkModeProvider.dart';
 import 'package:dtrade/components/ProgressButton.dart';
 import 'package:dtrade/data/DataItemRegister.dart';
 import 'package:dtrade/extension/Color.dart';
@@ -14,6 +15,7 @@ class AddItemImage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(addItemViewModel);
+    final darkmode = ref.watch(darkModeProvider);
     return Padding(
       padding: EdgeInsets.all(16),
       child: Column(
@@ -52,7 +54,9 @@ class AddItemImage extends ConsumerWidget {
                 text: TextSpan(
                     text: 'Manualmente',
                     style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(fontSize: 16)),
+                        textStyle: TextStyle(
+                            fontSize: 16,
+                            color: darkmode ? Colors.white : Colors.black)),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () async {
                         model.dataItem = DataItemRegister();

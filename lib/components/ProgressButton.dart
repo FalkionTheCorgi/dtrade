@@ -51,7 +51,7 @@ class ProgressButtonState extends State<FkFProgressButton> {
                   ),
                   const SizedBox(width: 18),
                   Text(
-                    widget.title,
+                    'AGUARDAR',
                     style: TextStyle(color: widget.textColorButton),
                   )
                 ],

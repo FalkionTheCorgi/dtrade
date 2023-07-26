@@ -166,7 +166,8 @@ class CadastroConsumerState extends ConsumerState<Cadastro> {
                     colorProgress: Colors.white,
                     onPressedCallback: () async {
                       if (formKey.currentState!.validate()) {
-                        await model.registerUser(email.text, password.text);
+                        await model.registerUser(
+                            email.text, password.text, battleTag.text, context);
                       }
                     },
                   ),
