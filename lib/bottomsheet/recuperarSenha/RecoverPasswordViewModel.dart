@@ -7,7 +7,7 @@ final recoverPassViewModel =
     ChangeNotifierProvider((ref) => RecoverPasswordViewModel());
 
 class RecoverPasswordViewModel extends ChangeNotifier {
-  String btnChangeState = 'VALIDAR';
+  String btnChangeState = 'ENVIAR';
   bool showCodePass = false;
 
   String? validateEmail(String str) {
@@ -25,7 +25,7 @@ class RecoverPasswordViewModel extends ChangeNotifier {
       return 'Campo senha e repetir senha devem ser identicos';
     } else if (pass.isEmpty) {
       return 'Campo senha não pode estar vazio.';
-    } else if (RegExp(RegexData.password).hasMatch(pass)) {
+    } else if (pass.length == 6) {
       return null;
     } else {
       return 'Formato da senha inválido';
@@ -37,7 +37,7 @@ class RecoverPasswordViewModel extends ChangeNotifier {
       return 'Campo senha e repetir senha devem ser identicos';
     } else if (repeatPass.isEmpty) {
       return 'Campo repetir senha não pode estar vazio.';
-    } else if (RegExp(RegexData.password).hasMatch(pass)) {
+    } else if (repeatPass.length == 6) {
       return null;
     } else {
       return 'Formato da senha inválido';
@@ -45,10 +45,8 @@ class RecoverPasswordViewModel extends ChangeNotifier {
   }
 
   Future<void> sendCodeToEmail(String email) async {
-    try{
+    try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (_){
-
-    }
+    } on FirebaseAuthException catch (_) {}
   }
 }

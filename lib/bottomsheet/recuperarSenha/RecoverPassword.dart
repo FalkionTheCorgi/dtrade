@@ -85,7 +85,6 @@ class RecoverPasswordState extends ConsumerState<RecoverPassword> {
                   const SizedBox(
                     height: 16,
                   ),
-                  if (model.showCodePass) CodeAndPassView(),
                   FkFProgressButton(
                     title: model.btnChangeState,
                     bgColorButton: ColorTheme.colorFirst,

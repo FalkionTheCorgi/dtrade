@@ -28,7 +28,7 @@ class CadastroViewModel extends ChangeNotifier {
       return 'Campo senha e repetir senha devem ser identicos';
     } else if (pass.isEmpty) {
       return 'Campo senha não pode estar vazio.';
-    } else if (RegExp(RegexData.password).hasMatch(pass)) {
+    } else if (pass.length == 6) {
       return null;
     } else {
       return 'Formato da senha inválido';
@@ -40,7 +40,7 @@ class CadastroViewModel extends ChangeNotifier {
       return 'Campo senha e repetir senha devem ser identicos';
     } else if (repeatPass.isEmpty) {
       return 'Campo repetir senha não pode estar vazio.';
-    } else if (RegExp(RegexData.password).hasMatch(pass)) {
+    } else if (repeatPass.length == 6) {
       return null;
     } else {
       return 'Formato da senha inválido';
