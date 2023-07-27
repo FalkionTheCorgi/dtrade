@@ -6,10 +6,12 @@ import 'package:dtrade/camera/PreviewCamera.dart';
 import 'package:dtrade/camera/camera.dart';
 import 'package:dtrade/data/DataItemRegister.dart';
 import 'package:dtrade/login/Login.dart';
+import 'package:dtrade/start/start.dart';
 import 'package:dtrade/tabbar/TabBarController.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
+  static const String start = '/';
   static const String login = '/login';
   static const String cadastro = '/cadastro';
   static const String tabbar = '/tabbar';
@@ -20,6 +22,8 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings,
       {Object? arguments}) {
     switch (settings.name) {
+      case start:
+        return MaterialPageRoute(builder: (_) => Start());
       case login:
         return MaterialPageRoute(builder: (_) => Login());
       case cadastro:

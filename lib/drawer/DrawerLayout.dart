@@ -44,16 +44,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const ImageIcon(AssetImage('assets/Battlenet.png')),
-                      SizedBox(width: 4),
-                      Text("CleitoRhasta#1234",
-                          style: GoogleFonts.roboto(
-                              textStyle: TextStyle(fontSize: 18)))
-                    ],
-                  )
+                  responseBattletag(),
                 ],
               ),
             ),
@@ -199,5 +190,66 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
         ),
       ),
     );
+  }
+
+  Widget responseBattletag() {
+    final model = ref.watch(drawerLayoutViewModel);
+
+    return FutureBuilder(
+        future: model.getProfile(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Exibe um indicador de progresso enquanto a operação está em andamento.
+            return const SizedBox(
+              width: 24.0, // Defina o valor desejado para a largura
+              height: 24.0, // Defina o valor desejado para a altura
+              child: CircularProgressIndicator(
+                strokeWidth:
+                    3.0, // Defina o valor desejado para a largura da linha// Defina a cor desejada para o indicador
+              ),
+            );
+          } else if (snapshot.hasError) {
+            // Caso ocorra um erro durante a execução da função getProfile().
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const ImageIcon(AssetImage('assets/Battlenet.png')),
+                const SizedBox(width: 4),
+                Text('Sem battletag cadastrada.',
+                    style:
+                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 18)))
+              ],
+            );
+          } else {
+            // Se a função for concluída com sucesso, verifica o resultado.
+            bool hasProfile = snapshot.data as bool? ?? false;
+
+            if (hasProfile) {
+              // Caso o perfil não esteja vazio.
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const ImageIcon(AssetImage('assets/Battlenet.png')),
+                  SizedBox(width: 4),
+                  Text(model.battletag,
+                      style: GoogleFonts.roboto(
+                          textStyle: TextStyle(fontSize: 18)))
+                ],
+              );
+            } else {
+              // Caso o perfil esteja vazio.
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const ImageIcon(AssetImage('assets/Battlenet.png')),
+                  SizedBox(width: 4),
+                  Text('Sem battletag cadastrada.',
+                      style: GoogleFonts.roboto(
+                          textStyle: TextStyle(fontSize: 18)))
+                ],
+              );
+            }
+          }
+        });
   }
 }

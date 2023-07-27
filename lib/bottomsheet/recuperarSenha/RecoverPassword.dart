@@ -52,65 +52,74 @@ class RecoverPasswordState extends ConsumerState<RecoverPassword> {
   @override
   Widget build(BuildContext context) {
     final model = ref.watch(recoverPassViewModel);
+    double _ = MediaQuery.of(context).size.width;
+
     return AnimatedSize(
         duration: const Duration(milliseconds: 500),
         child: Form(
             key: formKey,
             child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Recuperar Senha",
-                    style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(fontSize: 24)),
+                padding: const EdgeInsets.all(16),
+                child: Container(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  TextFormField(
-                    controller: email,
-                    validator: (value) {
-                      return model.validateEmail(value!);
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'E-mail',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(
-                        Icons.email_outlined,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Recuperar Senha",
+                        style: GoogleFonts.roboto(
+                            textStyle: const TextStyle(fontSize: 24)),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      TextFormField(
+                        controller: email,
+                        validator: (value) {
+                          return model.validateEmail(value!);
+                        },
+                        decoration: const InputDecoration(
+                          labelText: 'E-mail',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(
+                            Icons.email_outlined,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      FkFProgressButton(
+                        title: model.btnChangeState,
+                        bgColorButton: ColorTheme.colorFirst,
+                        textColorButton: Colors.white,
+                        colorProgress: Colors.white,
+                        onPressedCallback: () async {
+                          if (formKey.currentState!.validate()) {
+                            model.sendCodeToEmail(email.text).then((value) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(content: Text(value)));
+                            });
+                          }
+                        },
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      FkFProgressButton(
+                        title: 'FECHAR',
+                        bgColorButton: Colors.black,
+                        textColorButton: Colors.white,
+                        colorProgress: Colors.white,
+                        onPressedCallback: () async {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  FkFProgressButton(
-                    title: model.btnChangeState,
-                    bgColorButton: ColorTheme.colorFirst,
-                    textColorButton: Colors.white,
-                    colorProgress: Colors.white,
-                    onPressedCallback: () async {
-                      if (formKey.currentState!.validate()) {
-                        model.sendCodeToEmail(email.text);
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  FkFProgressButton(
-                    title: 'FECHAR',
-                    bgColorButton: Colors.black,
-                    textColorButton: Colors.white,
-                    colorProgress: Colors.white,
-                    onPressedCallback: () async {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            )));
+                ))));
   }
 
   Widget CodeAndPassView() {

@@ -1,4 +1,3 @@
-import 'package:dtrade/api/data/Message.dart';
 import 'package:dtrade/api/https.dart';
 import 'package:dtrade/cadastro/CadastroState.dart';
 import 'package:dtrade/extension/Regex.dart';
@@ -62,7 +61,6 @@ class CadastroViewModel extends ChangeNotifier {
     try {
       final user = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      print(user.user?.uid);
       await Api.instance
           .postRegisterUser(email, battletag, user.user?.uid ?? "")
           .then((value) {

@@ -19,6 +19,7 @@ class LoginConsumerState extends ConsumerState<Login> {
   bool hidePassword = true;
   Color borderColorEmail = Colors.black;
   final formKey = GlobalKey<FormState>();
+  final key = GlobalKey<ScaffoldState>();
   late TextEditingController email;
   late TextEditingController senha;
 
@@ -45,6 +46,7 @@ class LoginConsumerState extends ConsumerState<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: key,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -127,14 +129,20 @@ class LoginConsumerState extends ConsumerState<Login> {
                   style: const TextStyle(color: Colors.blue),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      showModalBottomSheet(
-                          showDragHandle: true,
-                          isDismissible: false,
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return RecoverPassword();
-                          });
+                      showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) => Dialog(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        RecoverPassword(
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                      );
                     }),
             )),
       ],

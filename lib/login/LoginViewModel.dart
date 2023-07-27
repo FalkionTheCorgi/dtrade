@@ -1,5 +1,4 @@
 import 'package:dtrade/extension/Regex.dart';
-import 'package:dtrade/routes/AppRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,6 +35,7 @@ class LoginViewModel extends ChangeNotifier {
           .signInWithEmailAndPassword(email: email, password: password);
       final token = await FirebaseAuth.instance.currentUser?.getIdToken();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
+      print(token);
       await prefs.setString('token', token ?? '');
       return '';
     } on FirebaseAuthException catch (error) {

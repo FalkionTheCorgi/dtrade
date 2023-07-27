@@ -8,7 +8,14 @@ final recoverPassViewModel =
 
 class RecoverPasswordViewModel extends ChangeNotifier {
   String btnChangeState = 'ENVIAR';
-  bool showCodePass = false;
+  bool showFeedBack = false;
+
+  void changeFeedBack() {
+    showFeedBack = !showFeedBack;
+    notifyListeners();
+    //showFeedBack = !showFeedBack;
+    //notifyListeners();
+  }
 
   String? validateEmail(String str) {
     if (str.isEmpty) {
@@ -44,9 +51,14 @@ class RecoverPasswordViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> sendCodeToEmail(String email) async {
+  Future<String> sendCodeToEmail(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (_) {}
+      changeFeedBack();
+      return 'Enviamos um e-mail com a redefinição de senha.';
+    } on FirebaseAuthException catch (e) {
+      changeFeedBack();
+      return e.message ?? 'Erro desconhecido. Por favor contactar o suporte.';
+    }
   }
 }

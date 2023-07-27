@@ -123,7 +123,7 @@ class CadastroConsumerState extends ConsumerState<Cadastro> {
                   SizedBox(
                       width: width,
                       child: Text(
-                          'A senha deve conter pelo menos uma letra maiúscula, uma minúscula, símbolos e números, e 8 caracteres.',
+                          'A senha deve conter pelo menos 6 digitos.',
                           textAlign: TextAlign.start,
                           style: GoogleFonts.roboto(
                             textStyle: const TextStyle(

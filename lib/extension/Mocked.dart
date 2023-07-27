@@ -1,3 +1,4 @@
+import 'package:dtrade/data/DataDropDownCategory.dart';
 import 'package:dtrade/data/dataitem.dart';
 
 class Mocked {
@@ -79,8 +80,34 @@ class Mocked {
           "Description3",
           "Description4",
           "Description5"
-        ]),
+        ]), 
   ];
+
+  static final listItemsCategory = [
+          const DataDropDownCategory(value: -1, nameCategory: 'Select'),
+          const DataDropDownCategory(value: 0, nameCategory: 'Axe'),
+          const DataDropDownCategory(value: 1, nameCategory: 'Bow'),
+          const DataDropDownCategory(value: 2, nameCategory: 'Dagger'),
+          const DataDropDownCategory(value: 3, nameCategory: 'Two-Handed Axe'),
+          const DataDropDownCategory(value: 4, nameCategory: 'Two-Handed Mace'),
+          const DataDropDownCategory(value: 5, nameCategory: 'Staff'),
+          const DataDropDownCategory(
+              value: 6, nameCategory: 'Two-Handed Staff'),
+          const DataDropDownCategory(value: 7, nameCategory: 'Sword'),
+          const DataDropDownCategory(
+              value: 8, nameCategory: 'Two-Handed Sword'),
+          const DataDropDownCategory(value: 9, nameCategory: 'Scythe'),
+          const DataDropDownCategory(
+              value: 10, nameCategory: 'Two-Handed Scythe'),
+          const DataDropDownCategory(value: 11, nameCategory: 'Wand'),
+          const DataDropDownCategory(value: 12, nameCategory: 'Mace'),
+          const DataDropDownCategory(value: 13, nameCategory: 'Crossbow'),
+          const DataDropDownCategory(value: 14, nameCategory: 'Helm'),
+          const DataDropDownCategory(value: 15, nameCategory: 'Glove'),
+          const DataDropDownCategory(value: 16, nameCategory: 'Pants'),
+          const DataDropDownCategory(value: 17, nameCategory: 'Boots'),
+          const DataDropDownCategory(value: 18, nameCategory: 'Armor'),
+        ];
 
   Mocked._();
 

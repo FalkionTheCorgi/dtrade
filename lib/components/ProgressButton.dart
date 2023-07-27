@@ -21,6 +21,7 @@ class FkFProgressButton extends StatefulWidget {
 
 class ProgressButtonState extends State<FkFProgressButton> {
   bool isLoading = false;
+  String feedButton = 'AGUARDE';
 
   @override
   Widget build(Object context) {
@@ -51,7 +52,7 @@ class ProgressButtonState extends State<FkFProgressButton> {
                   ),
                   const SizedBox(width: 18),
                   Text(
-                    'AGUARDAR',
+                    'AGUARDE',
                     style: TextStyle(color: widget.textColorButton),
                   )
                 ],

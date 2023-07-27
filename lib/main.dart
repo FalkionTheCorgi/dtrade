@@ -22,7 +22,7 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp(
       title: 'DTrade',
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.start,
       onGenerateRoute: AppRoutes.generateRoute,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
