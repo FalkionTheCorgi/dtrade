@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dtrade/api/data/Items.dart';
+import 'package:dtrade/api/data/Message.dart';
 import 'package:dtrade/api/https.dart';
 import 'package:dtrade/data/DataDropDownCategory.dart';
 import 'package:dtrade/extension/Regex.dart';
@@ -68,6 +69,14 @@ class AddItemManuallyViewModel extends ChangeNotifier {
     }
   }
 
+  String? validatePriceItem(String str) {
+    if (str.isEmpty) {
+      return 'Campo vazio.';
+    } else {
+      return null;
+    }
+  }
+
   void convertImageToBase64(File file) {
     List<int> imageBytes = file.readAsBytesSync();
     String base64image = base64Encode(imageBytes);
@@ -75,5 +84,20 @@ class AddItemManuallyViewModel extends ChangeNotifier {
 
   Future<Items?> getListItemType(String categoryName) async {
     return await Api.instance.getItems();
+  }
+
+  Future<Message> addItem(
+      String name,
+      String itemPower,
+      String initialPrice,
+      String description,
+      int itemType,
+      int itemTier,
+      int itemRarity,
+      int itemLevel) async {
+    final response = Api.instance.postItem(name, itemPower, initialPrice,
+        description, itemType, itemTier, itemRarity, itemLevel);
+
+    return response;
   }
 }

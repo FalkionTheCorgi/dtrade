@@ -17,19 +17,25 @@ class AddItemViewModel extends ChangeNotifier {
 
   bool loadingFile = false;
 
-  void changeBottomSheet() {
-    bottomsheetType = !bottomsheetType;
+  void changeLoading() {
+    loadingFile = !loadingFile;
     notifyListeners();
   }
 
-  void setFile(File newFile) {
+  Future<void> setFile(File newFile) async {
+    dataItem.file = newFile;
+    changeLoading();
+    notifyListeners();
+    await analyzeImage(newFile.path);
+    changeLoading();
+  }
+
+  void setFileWithoutAnalyze(File newFile) {
     file = newFile;
-    loadingFile = true;
     notifyListeners();
-    analyzeImage(newFile.path);
   }
 
-  void analyzeImage(String path) async {
+  Future<void> analyzeImage(String path) async {
     final InputImage inputImage = InputImage.fromFilePath(path);
     final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
     final RecognizedText recognizedText =
@@ -58,9 +64,6 @@ class AddItemViewModel extends ChangeNotifier {
       loadingFile = false;
       changeBottomSheet();
     }*/
-    print(dataItem.sacredItem);
-    loadingFile = false;
-    changeBottomSheet();
   }
 
   void fillIdentifyItem(String str) {

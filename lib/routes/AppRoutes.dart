@@ -40,6 +40,7 @@ class AppRoutes {
         return AppRoutes().buildPageRouteBuilder(AddItemManually(
             nameItem: args.nameItem,
             categoryName: args.categoryName,
+            file: args.file,
             rarity: args.rarity,
             sacredItem: args.sacredItem,
             itemPower: args.itemPower,

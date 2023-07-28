@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dtrade/api/data/AuctionItems.dart';
 import 'package:dtrade/api/data/Items.dart';
 import 'package:dtrade/api/data/Message.dart';
 import 'package:dtrade/api/data/profile.dart';
@@ -7,9 +8,12 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
+  final link = '10.0.2.2:5000';
+  final linkEmulator = '127.0.0.1:5000';
+
   Future<Message> postRegisterUser(
       String email, String battletag, String uuid) async {
-    final url = Uri.http('10.0.2.2:5000', '/profile');
+    final url = Uri.http(link, '/profile');
 
     Map<String, dynamic> data = {
       'email': email,
@@ -31,7 +35,7 @@ class Api {
   }
 
   Future<Profile> getProfile() async {
-    final url = Uri.http('10.0.2.2:5000', '/profile');
+    final url = Uri.http(link, '/profile');
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -49,7 +53,7 @@ class Api {
   }
 
   Future<bool> getTokenValid() async {
-    final url = Uri.http('10.0.2.2:5000', '/token');
+    final url = Uri.http(link, '/token');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final headers = {
@@ -66,7 +70,7 @@ class Api {
   }
 
   Future<Items?> getItems() async {
-    final url = Uri.http('10.0.2.2:5000', '/items');
+    final url = Uri.http(link, '/items');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final headers = {
@@ -83,6 +87,69 @@ class Api {
       return responseParsed;
     } else {
       return null;
+    }
+  }
+
+  Future<Message> postItem(
+      String name,
+      String itemPower,
+      String initialPrice,
+      String description,
+      int itemType,
+      int itemTier,
+      int itemRarity,
+      int itemLevel) async {
+    final url = Uri.http(link, '/auction_item');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+      'Content-Type': 'application/json'
+    };
+
+    Map<String, dynamic> data = {
+      'name': name,
+      'item_power': itemPower,
+      'initial_price': initialPrice,
+      'description': description,
+      'item_type': itemType,
+      'item_tier': itemTier,
+      'item_rarity': itemRarity,
+      'item_level': itemLevel
+    };
+
+    String jsonData = jsonEncode(data);
+
+    final response = await http.post(url, headers: headers, body: jsonData);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    Message responseParsed = Message.fromJson(parsed);
+
+    return responseParsed;
+  }
+
+  Future<dynamic> getAuctionItems(int clas) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+    };
+
+    final queryParameters = {'class': clas.toString()};
+
+    final url = Uri.http(link, '/auction_items', queryParameters);
+
+    final response = await http.get(url, headers: headers);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      AuctionItems responseParsed = AuctionItems.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
     }
   }
 

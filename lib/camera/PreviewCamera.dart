@@ -44,14 +44,15 @@ class PreviewCameraState extends ConsumerState<PreviewCamera> {
                                   icon: const Icon(Icons.check,
                                       color: Colors.white, size: 30),
                                   onPressed: () => {
-                                        model.setFile(widget.file),
+                                        model
+                                            .setFileWithoutAnalyze(widget.file),
                                         Navigator.of(context)
                                             .popUntil((_) => count++ >= 2)
                                       })))),
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
-                          padding: EdgeInsets.all(32),
+                          padding: const EdgeInsets.all(32),
                           child: CircleAvatar(
                               radius: 32,
                               backgroundColor: Colors.black.withOpacity(0.5),

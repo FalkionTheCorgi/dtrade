@@ -1,5 +1,4 @@
 import 'package:dtrade/bottomsheet/addItem/AddItemImage.dart';
-import 'package:dtrade/bottomsheet/addItem/AddItemManually.dart';
 import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,30 +13,19 @@ class AddItem extends ConsumerStatefulWidget {
 class AddItemState extends ConsumerState<AddItem> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     final model = ref.watch(addItemViewModel);
-    if (model.bottomsheetType) {
-      return AnimatedSize(
-          curve: Curves.easeIn,
-          duration: const Duration(milliseconds: 500),
-          child: AddItemManually(
-              nameItem: model.dataItem.nameItem.trimRight(),
-              categoryName: model.dataItem.categoryName,
-              rarity: model.dataItem.rarity,
-              sacredItem: model.dataItem.sacredItem,
-              itemPower: model.dataItem.itemPower,
-              lvlRankItem: model.dataItem.lvlRankItem,
-              description: model.dataItem.description));
+    if (!model.loadingFile) {
+      return AddItemImage();
     } else {
-      if (!model.loadingFile) {
-        return AnimatedSize(
-            curve: Curves.easeIn,
-            duration: const Duration(milliseconds: 500),
-            child: AddItemImage());
-      } else {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
+      return SizedBox(
+        width: width,
+        height: 60,
+        child: const Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [Center(child: CircularProgressIndicator())],
+        ),
+      );
     }
   }
 }

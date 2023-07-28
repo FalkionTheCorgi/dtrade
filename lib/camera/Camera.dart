@@ -7,6 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class Camera extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final void Function() onPressedCallback;
+
     return CameraCamera(
         onFile: (file) async => Navigator.pushNamed(context, AppRoutes.previewcam,
             arguments: file));

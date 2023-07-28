@@ -2,6 +2,7 @@ import 'package:dtrade/TopBar/TopBar.dart';
 import 'package:dtrade/bottombar/BottomBar.dart';
 import 'package:dtrade/bottombar/BottomBarViewModel.dart';
 import 'package:dtrade/bottomsheet/addItem/AddItem.dart';
+import 'package:dtrade/bottomsheet/addItem/AddItemImage.dart';
 import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
 import 'package:dtrade/data/DataItemRegister.dart';
 import 'package:dtrade/drawer/DrawerLayout.dart';
@@ -50,7 +51,7 @@ class TabBarControllerState extends ConsumerState<TabBarController> {
               child: FloatingActionButton(
                 onPressed: () {
                   model.file = null;
-                  model.bottomsheetType = false;
+                  //model.bottomsheetType = false;
                   model.dataItem = DataItemRegister();
                   showModalBottomSheet(
                       showDragHandle: true,
@@ -58,7 +59,7 @@ class TabBarControllerState extends ConsumerState<TabBarController> {
                       isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) {
-                        return AddItem();
+                        return AddItemImage();
                       });
                 },
                 backgroundColor: ColorTheme.colorFirst,

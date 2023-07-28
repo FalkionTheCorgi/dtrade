@@ -8,15 +8,15 @@ import 'package:google_fonts/google_fonts.dart';
 class ListLeilaoRow extends ConsumerStatefulWidget {
   final String name;
   final String ip;
-  final String category;
+  final String lastBet;
   final String initial;
   final String value;
-  final List<String> description;
+  final String description;
 
   const ListLeilaoRow(
       {required this.name,
       required this.ip,
-      required this.category,
+      required this.lastBet,
       required this.initial,
       required this.value,
       required this.description});
@@ -78,7 +78,7 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                               ]),
                               const SizedBox(height: 8),
                               Row(children: [
-                                Text("Categoria: ${widget.category}",
+                                Text("Último Bet: ${widget.lastBet}",
                                     style: GoogleFonts.roboto(
                                         textStyle: TextStyle(fontSize: 16))),
                                 const Spacer(),
@@ -105,10 +105,9 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                     child: Column(
                       children: [
                         if (showCard)
-                          for (var desc in widget.description)
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [Text(desc)]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [Text(widget.description)]),
                         if (showCard) SizedBox(height: 16),
                         if (showCard)
                           Row(
