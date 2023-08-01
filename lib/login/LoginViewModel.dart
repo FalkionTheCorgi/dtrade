@@ -31,11 +31,10 @@ class LoginViewModel extends ChangeNotifier {
 
   Future<String> loginFirebase(String email, String password) async {
     try {
-      final userCredential = await FirebaseAuth.instance
+      final _ = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       final token = await FirebaseAuth.instance.currentUser?.getIdToken();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      print(token);
       await prefs.setString('token', token ?? '');
       return '';
     } on FirebaseAuthException catch (error) {

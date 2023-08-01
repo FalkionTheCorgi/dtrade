@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dtrade/api/data/Items.dart';
 import 'package:dtrade/api/data/Message.dart';
 import 'package:dtrade/api/https.dart';
@@ -8,7 +7,6 @@ import 'package:dtrade/data/DataDropDownCategory.dart';
 import 'package:dtrade/extension/Regex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 final addItemManuallyViewModel =
     ChangeNotifierProvider((ref) => AddItemManuallyViewModel());
@@ -80,7 +78,6 @@ class AddItemManuallyViewModel extends ChangeNotifier {
   String convertImageToBase64(File file) {
     List<int> imageBytes = file.readAsBytesSync();
     String imagemBase64 = base64Encode(imageBytes);
-    print('baseImage: $imagemBase64');
     return imagemBase64;
   }
 

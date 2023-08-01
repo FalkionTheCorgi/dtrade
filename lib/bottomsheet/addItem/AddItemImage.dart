@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
 import 'package:dtrade/bottomsheet/configuracoes/DarkModeProvider.dart';
 import 'package:dtrade/components/ProgressButton.dart';
 import 'package:dtrade/data/DataItemRegister.dart';
 import 'package:dtrade/extension/Color.dart';
 import 'package:dtrade/routes/AppRoutes.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
