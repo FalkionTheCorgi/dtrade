@@ -144,6 +144,8 @@ class Api {
 
     Map<String, dynamic> parsed = jsonDecode(response.body);
 
+    print(response.body);
+
     if (response.statusCode == 200) {
       AuctionItems responseParsed = AuctionItems.fromJson(parsed);
       return responseParsed;
@@ -151,6 +153,29 @@ class Api {
       Message responseParsed = Message.fromJson(parsed);
       return responseParsed;
     }
+  }
+
+  Future<Message> postBetItem(String idItem, String value) async {
+    final url = Uri.http(link, '/bet_item');
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+      'Content-Type': 'application/json'
+    };
+
+    Map<String, dynamic> data = {'id_item': idItem, 'value': value};
+
+    String jsonData = jsonEncode(data);
+
+    final response = await http.post(url, headers: headers, body: jsonData);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    Message responseParsed = Message.fromJson(parsed);
+
+    return responseParsed;
   }
 
   static final Api _instance = Api._internal();

@@ -77,9 +77,11 @@ class AddItemManuallyViewModel extends ChangeNotifier {
     }
   }
 
-  void convertImageToBase64(File file) {
+  String convertImageToBase64(File file) {
     List<int> imageBytes = file.readAsBytesSync();
-    String base64image = base64Encode(imageBytes);
+    String imagemBase64 = base64Encode(imageBytes);
+    print('baseImage: $imagemBase64');
+    return imagemBase64;
   }
 
   Future<Items?> getListItemType(String categoryName) async {
@@ -95,8 +97,15 @@ class AddItemManuallyViewModel extends ChangeNotifier {
       int itemTier,
       int itemRarity,
       int itemLevel) async {
-    final response = Api.instance.postItem(name, itemPower, initialPrice,
-        description, itemType, itemTier, itemRarity, itemLevel);
+    final response = Api.instance.postItem(
+        name,
+        itemPower,
+        initialPrice,
+        description,
+        itemType,
+        itemTier,
+        itemRarity,
+        itemLevel);
 
     return response;
   }

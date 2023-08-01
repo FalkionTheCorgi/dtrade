@@ -1,12 +1,15 @@
 import 'package:dtrade/bottomsheet/denunciar/DenounceView.dart';
 import 'package:dtrade/extension/Color.dart';
 import 'package:dtrade/listitems/DialogBet.dart';
+import 'package:dtrade/listitems/ListLeilaoViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ListLeilaoRow extends ConsumerStatefulWidget {
+  final String idPub;
   final String name;
+  final int category;
   final String ip;
   final String lastBet;
   final String initial;
@@ -14,12 +17,16 @@ class ListLeilaoRow extends ConsumerStatefulWidget {
   final String description;
 
   const ListLeilaoRow(
-      {required this.name,
+      {Key? key,
+      required this.idPub,
+      required this.name,
+      required this.category,
       required this.ip,
       required this.lastBet,
       required this.initial,
       required this.value,
-      required this.description});
+      required this.description})
+      : super(key: key);
 
   @override
   ListLeilaoRowState createState() => ListLeilaoRowState();
@@ -42,57 +49,36 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
       padding: const EdgeInsets.all(8),
       child: Card(
           child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
                   Row(
                     children: [
-                      const Column(
-                        children: [
-                          SizedBox(
-                            width: 72,
-                            height: 72,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  'https://picsum.photos/id/237/200/300'),
-                            ),
-                          )
-                        ],
-                      ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Row(children: [
-                                Text(
-                                  widget.name,
-                                  style: GoogleFonts.roboto(
-                                      textStyle: TextStyle(fontSize: 16)),
-                                ),
+                                textListItemAsset(widget.name,
+                                    returnImageType(widget.category)),
                                 const Spacer(),
-                                Text('IP: ${widget.ip}',
-                                    style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(fontSize: 16))),
+                                textListItemIcon(
+                                    'IP: ${widget.ip}', Icons.bolt_outlined)
                               ]),
                               const SizedBox(height: 8),
                               Row(children: [
-                                Text("Último Bet: ${widget.lastBet}",
-                                    style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(fontSize: 16))),
-                                const Spacer(),
+                                textListItemIcon(
+                                    'Último Bet: ${widget.lastBet}',
+                                    Icons.emoji_events_outlined)
                               ]),
                               const SizedBox(height: 8),
-                              Row(children: [
-                                Text("Inicial: ${widget.initial}",
-                                    style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(fontSize: 16))),
-                                const Spacer(),
-                                Text("Atual: ${widget.value}",
-                                    style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(fontSize: 16)))
-                              ]),
+                              textListItemIcon('Inicial: ${widget.initial}',
+                                  Icons.monetization_on_outlined),
+                              const SizedBox(height: 8),
+                              textListItemIcon('Atual: ${widget.value}',
+                                  Icons.monetization_on_outlined),
                             ],
                           ),
                         ),
@@ -108,7 +94,14 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [Text(widget.description)]),
-                        if (showCard) SizedBox(height: 16),
+                        /*if (showCard) const SizedBox(height: 16),
+                        if (showCard)
+                          TextButton(
+                              onPressed: () {
+                                model.createFileFromString(widget.file);
+                              },
+                              child: textWithoutIcon("Baixar arquivo")),*/
+                        if (showCard) const SizedBox(height: 16),
                         if (showCard)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -151,6 +144,7 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                                       children: <Widget>[
                                         DialogBet(
                                           value: widget.value,
+                                          idPub: widget.idPub,
                                         ),
                                       ],
                                     ),
@@ -183,5 +177,83 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                 ],
               ))),
     );
+  }
+
+  Widget textWithoutIcon(String text) {
+    return Text(text,
+        style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 16)));
+  }
+
+  Widget textListItemAsset(String text, String image) {
+    return Row(
+      children: [
+        Image.asset(image, width: 24, height: 24),
+        const SizedBox(width: 4),
+        Text(text,
+            style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 16)))
+      ],
+    );
+  }
+
+  Widget textListItemIcon(String text, IconData image) {
+    return Row(
+      children: [
+        Icon(image),
+        const SizedBox(width: 4),
+        Text(text,
+            style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 16)))
+      ],
+    );
+  }
+
+  String returnImageType(int item) {
+    switch (item) {
+      case 1:
+        return 'assets/hatchet.png';
+      case 2:
+        return 'assets/archer.png';
+      case 3:
+        return 'assets/kris.png';
+      case 4:
+        return 'assets/crossed_axes.png';
+      case 5:
+        return 'assets/mace.png';
+      case 6:
+        return 'assets/staff.png';
+      case 7:
+        return 'assets/staff.png';
+      case 8:
+        return 'assets/sword.png';
+      case 9:
+        return 'assets/sword.png';
+      case 10:
+        return 'assets/scythe.png';
+      case 11:
+        return 'assets/scythe.png';
+      case 12:
+        return 'assets/fantasy.png';
+      case 13:
+        return 'assets/mace.png';
+      case 14:
+        return 'assets/archer.png';
+      case 15:
+        return 'assets/greek_helmet.png';
+      case 16:
+        return 'assets/gloves.png';
+      case 17:
+        return 'assets/pants.png';
+      case 18:
+        return 'assets/boots.png';
+      case 19:
+        return 'assets/body_armor.png';
+      case 20:
+        return 'assets/skull.png';
+      case 21:
+        return 'assets/ring.png';
+      case 22:
+        return 'assets/necklace.png';
+      default:
+        return 'assets/question.png';
+    }
   }
 }

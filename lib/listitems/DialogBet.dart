@@ -7,8 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class DialogBet extends ConsumerStatefulWidget {
   final String value;
+  final String idPub;
 
-  const DialogBet({required this.value});
+  const DialogBet({required this.value, required this.idPub});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => DialogBetState();
@@ -53,7 +54,7 @@ class DialogBetState extends ConsumerState<DialogBet> {
                     labelText: 'Valor',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(
-                      Icons.document_scanner,
+                      Icons.monetization_on_outlined,
                     ),
                   ),
                   keyboardType: TextInputType.number,
@@ -65,9 +66,7 @@ class DialogBetState extends ConsumerState<DialogBet> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          Navigator.pop(context);
-                        }
+                        Navigator.pop(context);
                       },
                       child: Text('Fechar',
                           style: GoogleFonts.roboto(color: Colors.red)),
@@ -75,7 +74,9 @@ class DialogBetState extends ConsumerState<DialogBet> {
                     Spacer(),
                     TextButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {}
+                        if (formKey.currentState!.validate()) {
+                          model.postBet(widget.idPub, betValue.text);
+                        }
                       },
                       child: Text('Dar Lance', style: GoogleFonts.roboto()),
                     )

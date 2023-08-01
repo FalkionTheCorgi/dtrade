@@ -1,9 +1,7 @@
 import 'package:dtrade/api/data/AuctionItems.dart';
-import 'package:dtrade/extension/mocked.dart';
 import 'package:dtrade/listitems/ListLeilaoRow.dart';
 import 'package:dtrade/listitems/ListLeilaoViewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -43,9 +41,11 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
                       children: <Widget>[
                           for (var item in items.items)
                             ListLeilaoRow(
+                                idPub: item.uuid,
                                 name: item.name,
+                                category: item.typeItem,
                                 ip: item.itemPower,
-                                lastBet: "",
+                                lastBet: item.battletag ?? "Seja o primeiro",
                                 initial: item.initialPrice,
                                 value: item.actualPrice,
                                 description: item.description)

@@ -1,3 +1,4 @@
+import 'package:dtrade/api/https.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,12 +7,11 @@ final dialogBetViewModel =
 
 class DialogBetViewModel extends ChangeNotifier {
   String? validateValueBet(String baseValue, String newValue) {
-    double baseValueDouble = double.parse(baseValue);
-    double newValueDouble = double.parse(newValue);
-
-    print('baseValue: $baseValueDouble');
-    print('newValue: $newValueDouble');
-
+    double baseValueDouble =
+        num.tryParse(baseValue.replaceAll(".", ""))?.toDouble() ?? 0.0;
+    double newValueDouble =
+        num.tryParse(newValue.replaceAll(".", ""))?.toDouble() ?? 0.0;
+        
     if (newValue.isEmpty) {
       return 'Campo vazio.';
     } else if (baseValueDouble >= newValueDouble) {
@@ -19,5 +19,11 @@ class DialogBetViewModel extends ChangeNotifier {
     } else {
       return null;
     }
+  }
+
+  Future<void>postBet(String idItem, String value) async {
+
+    await Api.instance.postBetItem(idItem, value);
+
   }
 }

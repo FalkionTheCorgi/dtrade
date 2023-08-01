@@ -24,6 +24,7 @@ class AuctionItemsData {
   String initialPrice;
   String actualPrice;
   String description;
+  String? battletag;
 
   AuctionItemsData(
       {required this.uuid,
@@ -35,7 +36,8 @@ class AuctionItemsData {
       required this.itemLevel,
       required this.initialPrice,
       required this.actualPrice,
-      required this.description});
+      required this.description,
+      required this.battletag});
 
   factory AuctionItemsData.fromJson(List<dynamic> json) {
     return AuctionItemsData(
@@ -48,6 +50,7 @@ class AuctionItemsData {
         itemLevel: json[6] as int,
         initialPrice: json[7] as String,
         actualPrice: json[8] as String,
-        description: json[9] as String);
+        description: json[9] as String,
+        battletag: json[10] as String?);
   }
 }
