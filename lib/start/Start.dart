@@ -23,9 +23,8 @@ class StartState extends ConsumerState<Start> {
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
-            print('haserror');
             model.clearToken();
-            return Login();
+            return const Login();
           } else {
             // Se a função for concluída com sucesso, verifica o resultado.
             bool tokenValid = snapshot.data as bool? ?? false;

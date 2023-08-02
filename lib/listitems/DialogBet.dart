@@ -68,17 +68,17 @@ class DialogBetState extends ConsumerState<DialogBet> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Fechar',
+                      child: Text('FECHAR',
                           style: GoogleFonts.roboto(color: Colors.red)),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     TextButton(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           model.postBet(widget.idPub, betValue.text);
                         }
                       },
-                      child: Text('Dar Lance', style: GoogleFonts.roboto()),
+                      child: Text('DAR LANCE', style: GoogleFonts.roboto()),
                     )
                   ],
                 )

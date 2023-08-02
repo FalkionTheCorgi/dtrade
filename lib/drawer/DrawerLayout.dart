@@ -1,5 +1,6 @@
 import 'package:dtrade/bottomsheet/configuracoes/Configuracoes.dart';
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
+import 'package:dtrade/listitems/ListLeilaoViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +17,13 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
+  @override
+  void initState() {
+    final model = ref.read(drawerLayoutViewModel);
+    model.getProfile();
+    super.initState();
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -25,6 +33,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
   @override
   Widget build(BuildContext context) {
     final model = ref.watch(drawerLayoutViewModel);
+    final listModel = ref.watch(listLeilaoViewModel);
 
     return Drawer(
       child: Container(
@@ -67,6 +76,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(0);
                 model.changeItem(ClassD.barbarian);
+                listModel.getList(model.returnIntItemChoose(), 1);
 
                 // Then close the drawer
                 Navigator.pop(context);
@@ -76,7 +86,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
               selectedColor: Colors.red,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 const ImageIcon(AssetImage('assets/rogue.png')),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text('Rogue',
                     style: GoogleFonts.roboto(
                         textStyle: const TextStyle(fontSize: 16)))
@@ -86,6 +96,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(1);
                 model.changeItem(ClassD.rogue);
+                listModel.getList(model.returnIntItemChoose(), 1);
                 // Then close the drawer
                 Navigator.pop(context);
               },
@@ -104,6 +115,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(2);
                 model.changeItem(ClassD.druid);
+                listModel.getList(model.returnIntItemChoose(), 1);
                 // Then close the drawer
                 Navigator.pop(context);
               },
@@ -122,7 +134,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(3);
                 model.changeItem(ClassD.necromancer);
-
+                listModel.getList(model.returnIntItemChoose(), 1);
                 // Then close the drawer
                 Navigator.pop(context);
               },
@@ -141,7 +153,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(4);
                 model.changeItem(ClassD.sorcerer);
-
+                listModel.getList(model.returnIntItemChoose(), 1);
                 // Then close the drawer
                 Navigator.pop(context);
               },
@@ -195,61 +207,25 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
   Widget responseBattletag() {
     final model = ref.watch(drawerLayoutViewModel);
 
-    return FutureBuilder(
-        future: model.getProfile(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            // Exibe um indicador de progresso enquanto a operação está em andamento.
-            return const SizedBox(
-              width: 24.0, // Defina o valor desejado para a largura
-              height: 24.0, // Defina o valor desejado para a altura
-              child: CircularProgressIndicator(
-                strokeWidth:
-                    3.0, // Defina o valor desejado para a largura da linha// Defina a cor desejada para o indicador
-              ),
-            );
-          } else if (snapshot.hasError) {
-            // Caso ocorra um erro durante a execução da função getProfile().
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const ImageIcon(AssetImage('assets/Battlenet.png')),
-                const SizedBox(width: 4),
-                Text('Sem battletag cadastrada.',
-                    style:
-                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 18)))
-              ],
-            );
-          } else {
-            // Se a função for concluída com sucesso, verifica o resultado.
-            bool hasProfile = snapshot.data as bool? ?? false;
-
-            if (hasProfile) {
-              // Caso o perfil não esteja vazio.
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const ImageIcon(AssetImage('assets/Battlenet.png')),
-                  SizedBox(width: 4),
-                  Text(model.battletag,
-                      style: GoogleFonts.roboto(
-                          textStyle: TextStyle(fontSize: 18)))
-                ],
-              );
-            } else {
-              // Caso o perfil esteja vazio.
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const ImageIcon(AssetImage('assets/Battlenet.png')),
-                  SizedBox(width: 4),
-                  Text('Sem battletag cadastrada.',
-                      style: GoogleFonts.roboto(
-                          textStyle: TextStyle(fontSize: 18)))
-                ],
-              );
-            }
-          }
-        });
+    if (model.battletag.isEmpty) {
+      return const SizedBox(
+        width: 24.0, // Defina o valor desejado para a largura
+        height: 24.0, // Defina o valor desejado para a altura
+        child: CircularProgressIndicator(
+          strokeWidth:
+              3.0, // Defina o valor desejado para a largura da linha// Defina a cor desejada para o indicador
+        ),
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const ImageIcon(AssetImage('assets/Battlenet.png')),
+          const SizedBox(width: 4),
+          Text(model.battletag,
+              style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 18)))
+        ],
+      );
+    }
   }
 }

@@ -16,7 +16,7 @@ class AddItemState extends ConsumerState<AddItem> {
     double width = MediaQuery.of(context).size.width;
     final model = ref.watch(addItemViewModel);
     if (!model.loadingFile) {
-      return AddItemImage();
+      return const AddItemImage();
     } else {
       return SizedBox(
         width: width,

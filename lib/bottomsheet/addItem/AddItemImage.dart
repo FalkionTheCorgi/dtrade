@@ -11,6 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddItemImage extends ConsumerWidget {
+  const AddItemImage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(addItemViewModel);

@@ -1,15 +1,20 @@
 class AuctionItems {
   String status;
+  int quantidade;
   List<AuctionItemsData> items;
 
-  AuctionItems({required this.status, required this.items});
+  AuctionItems(
+      {required this.status, required this.quantidade, required this.items});
 
   factory AuctionItems.fromJson(Map<String, dynamic> json) {
     final itemList = (json['items'] as List)
         .map((item) => AuctionItemsData.fromJson(item as List<dynamic>))
         .toList();
 
-    return AuctionItems(status: json['status'] as String, items: itemList);
+    return AuctionItems(
+        status: json['status'] as String,
+        quantidade: json['quantidade'] as int,
+        items: itemList);
   }
 }
 

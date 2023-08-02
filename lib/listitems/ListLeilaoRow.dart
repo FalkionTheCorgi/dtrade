@@ -1,5 +1,6 @@
 import 'package:dtrade/bottomsheet/denunciar/DenounceView.dart';
 import 'package:dtrade/extension/Color.dart';
+import 'package:dtrade/extension/Extension.dart';
 import 'package:dtrade/listitems/DialogBet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -178,81 +179,4 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
     );
   }
 
-  Widget textWithoutIcon(String text) {
-    return Text(text,
-        style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 16)));
-  }
-
-  Widget textListItemAsset(String text, String image) {
-    return Row(
-      children: [
-        Image.asset(image, width: 24, height: 24),
-        const SizedBox(width: 4),
-        Text(text,
-            style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 16)))
-      ],
-    );
-  }
-
-  Widget textListItemIcon(String text, IconData image) {
-    return Row(
-      children: [
-        Icon(image),
-        const SizedBox(width: 4),
-        Text(text,
-            style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 16)))
-      ],
-    );
-  }
-
-  String returnImageType(int item) {
-    switch (item) {
-      case 1:
-        return 'assets/hatchet.png';
-      case 2:
-        return 'assets/archer.png';
-      case 3:
-        return 'assets/kris.png';
-      case 4:
-        return 'assets/crossed_axes.png';
-      case 5:
-        return 'assets/mace.png';
-      case 6:
-        return 'assets/staff.png';
-      case 7:
-        return 'assets/staff.png';
-      case 8:
-        return 'assets/sword.png';
-      case 9:
-        return 'assets/sword.png';
-      case 10:
-        return 'assets/scythe.png';
-      case 11:
-        return 'assets/scythe.png';
-      case 12:
-        return 'assets/fantasy.png';
-      case 13:
-        return 'assets/mace.png';
-      case 14:
-        return 'assets/archer.png';
-      case 15:
-        return 'assets/greek_helmet.png';
-      case 16:
-        return 'assets/gloves.png';
-      case 17:
-        return 'assets/pants.png';
-      case 18:
-        return 'assets/boots.png';
-      case 19:
-        return 'assets/body_armor.png';
-      case 20:
-        return 'assets/skull.png';
-      case 21:
-        return 'assets/ring.png';
-      case 22:
-        return 'assets/necklace.png';
-      default:
-        return 'assets/question.png';
-    }
-  }
 }

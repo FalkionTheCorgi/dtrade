@@ -34,7 +34,7 @@ class Api {
     return responseParsed;
   }
 
-  Future<Profile> getProfile() async {
+  Future<dynamic> getProfile() async {
     final url = Uri.http(link, '/profile');
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -47,9 +47,13 @@ class Api {
 
     final parsed = jsonDecode(response.body);
 
-    final responseParsed = Profile.fromJson(parsed);
-
-    return responseParsed;
+    if (response.statusCode == 200) {
+      final responseParsed = Profile.fromJson(parsed);
+      return responseParsed;
+    } else {
+      final responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
   }
 
   Future<bool> getTokenValid() async {
@@ -129,22 +133,20 @@ class Api {
     return responseParsed;
   }
 
-  Future<dynamic> getAuctionItems(int clas) async {
+  Future<dynamic> getAuctionItems(int clas, int page) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final headers = {
       'token': prefs.getString('token') ?? "",
     };
 
-    final queryParameters = {'class': clas.toString()};
+    final queryParameters = {'class': clas.toString(), 'page': page.toString()};
 
     final url = Uri.http(link, '/auction_items', queryParameters);
 
     final response = await http.get(url, headers: headers);
 
     Map<String, dynamic> parsed = jsonDecode(response.body);
-
-    print(response.body);
 
     if (response.statusCode == 200) {
       AuctionItems responseParsed = AuctionItems.fromJson(parsed);
@@ -176,6 +178,54 @@ class Api {
     Message responseParsed = Message.fromJson(parsed);
 
     return responseParsed;
+  }
+
+  Future<dynamic> getMyAuctionItemsProgress(int page) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+    };
+
+    final queryParameters = {'page': page.toString()};
+
+    final url = Uri.http(link, '/auction_items_progress', queryParameters);
+
+    final response = await http.get(url, headers: headers);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      AuctionItems responseParsed = AuctionItems.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
+  }
+
+  Future<dynamic> getMyAuctionItemsClosed(int page) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+    };
+
+    final queryParameters = {'page': page.toString()};
+
+    final url = Uri.http(link, '/auction_items_closed', queryParameters);
+
+    final response = await http.get(url, headers: headers);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      AuctionItems responseParsed = AuctionItems.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
   }
 
   static final Api _instance = Api._internal();
