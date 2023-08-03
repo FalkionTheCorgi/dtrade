@@ -61,16 +61,13 @@ class FilterItemsState extends ConsumerState<FilterItems> {
             child: Column(children: [
               const SizedBox(height: 24),
               Text(
-                "Adicionar Item",
+                "Filtrar Item",
                 style: GoogleFonts.roboto(
                     textStyle: const TextStyle(fontSize: 24)),
               ),
               const SizedBox(height: 32),
               TextFormField(
                 controller: nameItem,
-                validator: (value) {
-                  return model.validateNameItem(value!);
-                },
                 decoration: const InputDecoration(
                   labelText: 'Name',
                   border: OutlineInputBorder(),
@@ -86,9 +83,6 @@ class FilterItemsState extends ConsumerState<FilterItems> {
                 Expanded(
                   child: TextFormField(
                     controller: itemPower,
-                    validator: (value) {
-                      return model.validateItemPower(value!);
-                    },
                     decoration: const InputDecoration(
                       labelText: 'Item Power',
                       border: OutlineInputBorder(),
@@ -103,45 +97,8 @@ class FilterItemsState extends ConsumerState<FilterItems> {
               const SizedBox(
                 height: 16,
               ),
-              /*Row(children: [
-                        Column(
-                          children: [
-                            TextButton.icon(
-                                onPressed: () {
-                                  showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) => Dialog(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          DialogAddImage(
-                                              onPressedCallback: (arq) =>
-                                                  setState(() {
-                                                    file = arq;
-                                                  }))
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                                style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.all(0)),
-                                label: file == null
-                                    ? const Text(
-                                        'Adicione uma imagem (Obrigatório)')
-                                    : Text(file!.path.split('/').last),
-                                icon: const Icon(Icons.camera_alt_outlined)),
-                          ],
-                        )
-                      ]),
-                      const SizedBox(height: 4),*/
               TextFormField(
                 controller: description,
-                validator: (value) {
-                  return model.validateDescriptionItem(value!);
-                },
                 maxLines: 4,
                 decoration: const InputDecoration(
                   labelText: 'Descrição Item',
@@ -164,7 +121,7 @@ class FilterItemsState extends ConsumerState<FilterItems> {
                   onPressedCallback: () async {
                     Navigator.pop(context);
                   },
-                  title: 'VOLTAR',
+                  title: 'FECHAR',
                   bgColorButton: Colors.black,
                   textColorButton: Colors.white,
                   colorProgress: Colors.white)
@@ -177,22 +134,20 @@ class FilterItemsState extends ConsumerState<FilterItems> {
     final model = ref.watch(filterItemsViewModel);
 
     return DropdownButtonFormField<int>(
-        value: dropValue,
-        decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            prefixIcon: Icon(Icons.line_axis_outlined)),
-        onChanged: (int? newValue) {
-          setState(() {
-            dropValue = newValue ?? 0;
-          });
-        },
-        items: model.dropDownItemsCategory
-            .map((val) => DropdownMenuItem<int>(
-                value: val.value,
-                child: Text(val.nameCategory, style: GoogleFonts.roboto())))
-            .toList(),
-        validator: (value) {
-          return model.validateDropDown(value!);
+      value: dropValue,
+      decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.line_axis_outlined)),
+      onChanged: (int? newValue) {
+        setState(() {
+          dropValue = newValue ?? 0;
         });
+      },
+      items: model.dropDownItemsCategory
+          .map((val) => DropdownMenuItem<int>(
+              value: val.value,
+              child: Text(val.nameCategory, style: GoogleFonts.roboto())))
+          .toList(),
+    );
   }
 }

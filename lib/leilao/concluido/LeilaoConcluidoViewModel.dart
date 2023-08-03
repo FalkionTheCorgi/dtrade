@@ -8,15 +8,28 @@ final listLeilaoClosed =
 
 class LeilaoConcluidoViewModel extends ChangeNotifier {
   AuctionItems list = AuctionItems(status: 'INITIAL', quantidade: 0, items: []);
+  AuctionItems emptyList =
+      AuctionItems(status: 'EMPTY_LIST', quantidade: 0, items: []);
+  int page = 1;
 
-  void init(int page) {
-    getList(page);
+  void init() {
+    getList();
   }
 
-  Future<dynamic> getList(int page) async {
+  void resetList() {
+    list = AuctionItems(status: 'INITIAL', quantidade: 0, items: []);
+    page = 1;
+    notifyListeners();
+  }
+
+  Future<dynamic> getList() async {
     final response = await Api.instance.getMyAuctionItemsClosed(page);
     if (response is AuctionItems) {
-      list = response;
+      list.status = response.status;
+      list.quantidade = response.quantidade;
+      list.items.addAll(response.items);
+    } else {
+      list = emptyList;
     }
     notifyListeners();
   }

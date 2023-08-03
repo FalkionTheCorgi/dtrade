@@ -16,7 +16,7 @@ class LeilaoConcluidoState extends ConsumerState<LeilaoConcluido> {
     /*scrollController = ScrollController();
     scrollController.addListener(scrollListener);*/
     final model = ref.read(listLeilaoClosed);
-    model.init(1);
+    model.init();
     return super.initState();
   }
 
@@ -39,10 +39,8 @@ class LeilaoConcluidoState extends ConsumerState<LeilaoConcluido> {
       if (model.list.items.isNotEmpty) {
         return RefreshIndicator(
           onRefresh: () async {
-            setState(() {
-              model.list.items.clear();
-            });
-            model.getList(1);
+            model.resetList();
+            model.getList();
           },
           child: ListView.builder(
               itemCount: model.list.items.length + 1,

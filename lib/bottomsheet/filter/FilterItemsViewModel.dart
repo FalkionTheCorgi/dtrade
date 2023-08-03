@@ -9,56 +9,9 @@ final filterItemsViewModel =
     ChangeNotifierProvider((ref) => FilterItemsViewModel());
 
 class FilterItemsViewModel extends ChangeNotifier {
-
   final List<DataDropDownCategory> dropDownItemsCategory = [
     const DataDropDownCategory(value: -1, nameCategory: 'Carregando...')
   ];
-
-  String? validateNameItem(String str) {
-    if (str.isEmpty) {
-      return 'Campo vazio.';
-    } else if (RegExp(RegexData.nameItem).hasMatch(str)) {
-      return null;
-    } else {
-      return 'Formato Inválido.';
-    }
-  }
-
-  String? validateLvlItem(String str) {
-    if (str.isEmpty) {
-      return 'Campo vazio.';
-    } else if (RegExp(RegexData.onlyNumber).hasMatch(str)) {
-      return null;
-    } else {
-      return 'Formato Inválido';
-    }
-  }
-
-  String? validateItemPower(String str) {
-    if (str.isEmpty) {
-      return 'Campo vazio.';
-    } else if (RegExp(RegexData.onlyNumber).hasMatch(str)) {
-      return null;
-    } else {
-      return 'Formato Inválido';
-    }
-  }
-
-  String? validateDescriptionItem(String str) {
-    if (str.isEmpty) {
-      return 'Campo vazio.';
-    } else {
-      return null;
-    }
-  }
-
-  String? validateDropDown(int opt) {
-    if (opt < 0) {
-      return 'Selecione uma opção.';
-    } else {
-      return null;
-    }
-  }
 
   Future<dynamic> getListItemType() async {
     final response = await Api.instance.getItems();
@@ -73,5 +26,4 @@ class FilterItemsViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 }

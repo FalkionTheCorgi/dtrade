@@ -12,15 +12,29 @@ final listLeilaoViewModel =
 
 class ListLeilaoViewModel extends ChangeNotifier {
   AuctionItems list = AuctionItems(status: 'INITIAL', quantidade: 0, items: []);
+  AuctionItems emptyList =
+      AuctionItems(status: 'EMPTY_LIST', quantidade: 0, items: []);
+  int page = 1;
 
-  void init(int clas, int page) {
-    getList(clas, page);
+  void resetList() {
+    page = 1;
+    list = AuctionItems(status: 'INITIAL', quantidade: 0, items: []);
+    notifyListeners();
   }
 
-  Future<dynamic> getList(int clas, int page) async {
+  void init(int clas) {
+    getList(clas);
+  }
+
+  Future<dynamic> getList(int clas) async {
     final response = await Api.instance.getAuctionItems(clas, page);
     if (response is AuctionItems) {
-      list = response;
+      list.status = response.status;
+      list.quantidade = response.quantidade;
+      list.items.addAll(response.items);
+      page++;
+    } else {
+      list = emptyList;
     }
     notifyListeners();
   }

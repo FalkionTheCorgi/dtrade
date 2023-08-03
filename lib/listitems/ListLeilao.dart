@@ -1,4 +1,3 @@
-import 'package:dtrade/api/data/AuctionItems.dart';
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
 import 'package:dtrade/extension/Extension.dart';
 import 'package:dtrade/listitems/ListLeilaoRow.dart';
@@ -13,32 +12,30 @@ class ListLeilao extends ConsumerStatefulWidget {
 }
 
 class ListLeilaoState extends ConsumerState<ListLeilao> {
-  /*scrollListener() {
+  late ScrollController scrollController;
+
+  scrollListener() {
+    final model = ref.watch(listLeilaoViewModel);
+    final drawerModel = ref.watch(drawerLayoutViewModel);
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
-      setState(() {
-        showIsLoading = true;
-      });
-    } else {
-      setState(() {
-        showIsLoading = false;
-      });
+      model.getList(drawerModel.returnIntItemChoose());
     }
-  }*/
+  }
 
   @override
   void initState() {
-    /*scrollController = ScrollController();
-    scrollController.addListener(scrollListener);*/
+    scrollController = ScrollController();
+    scrollController.addListener(scrollListener);
     final model = ref.read(listLeilaoViewModel);
     final drawerModel = ref.read(drawerLayoutViewModel);
-    model.init(drawerModel.returnIntItemChoose(), 1);
+    model.init(drawerModel.returnIntItemChoose());
     return super.initState();
   }
 
   @override
   void dispose() {
-    //scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -56,16 +53,8 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
       if (model.list.items.isNotEmpty) {
         return RefreshIndicator(
           onRefresh: () async {
-            setState(() {
-              model.list.items.clear();
-            });
-            model.getList(drawerModel.returnIntItemChoose(), 1).then((value) {
-              if (value is AuctionItems) {
-                setState(() {
-                  model.list.items = value.items;
-                });
-              }
-            });
+            model.resetList();
+            model.getList(drawerModel.returnIntItemChoose());
           },
           child: ListView.builder(
               itemCount: model.list.items.length + 1,

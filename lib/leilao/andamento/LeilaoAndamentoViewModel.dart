@@ -9,15 +9,29 @@ final listLeilaoAndamento =
 
 class LeilaoAndamentoViewModel extends ChangeNotifier {
   AuctionItems list = AuctionItems(status: 'INITIAL', quantidade: 0, items: []);
+  AuctionItems emptyList =
+      AuctionItems(status: 'EMPTY_LIST', quantidade: 0, items: []);
+  int page = 1;
 
-  void init(int page) {
-    getList(page);
+  void init() {
+    getList();
   }
 
-  Future<dynamic> getList(int page) async {
+  void resetList() {
+    list = AuctionItems(status: 'INITIAL', quantidade: 0, items: []);
+    page = 1;
+    notifyListeners();
+  }
+
+  Future<dynamic> getList() async {
     final response = await Api.instance.getMyAuctionItemsProgress(page);
     if (response is AuctionItems) {
-      list = response;
+      list.status = response.status;
+      list.quantidade = response.quantidade;
+      list.items.addAll(response.items);
+      page++;
+    } else {
+      list = emptyList;
     }
     notifyListeners();
   }
@@ -29,9 +43,8 @@ class LeilaoAndamentoViewModel extends ChangeNotifier {
       list.items.removeWhere((element) => element.uuid == id);
       list.quantidade -= 1;
       notifyListeners();
-      return response;
-    } else {
-      return response;
     }
+
+    return response;
   }
 }

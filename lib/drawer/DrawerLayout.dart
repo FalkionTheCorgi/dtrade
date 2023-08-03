@@ -66,7 +66,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
               selectedColor: Colors.red,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 const ImageIcon(AssetImage('assets/barbarian.png')),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text('Bárbaro',
                     style: GoogleFonts.roboto(
                         textStyle: const TextStyle(fontSize: 16)))
@@ -76,7 +76,8 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(0);
                 model.changeItem(ClassD.barbarian);
-                listModel.getList(model.returnIntItemChoose(), 1);
+                listModel.resetList();
+                listModel.getList(model.returnIntItemChoose());
 
                 // Then close the drawer
                 Navigator.pop(context);
@@ -96,8 +97,8 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(1);
                 model.changeItem(ClassD.rogue);
-                listModel.getList(model.returnIntItemChoose(), 1);
-                // Then close the drawer
+                listModel.resetList();
+                listModel.getList(model.returnIntItemChoose());
                 Navigator.pop(context);
               },
             ),
@@ -105,7 +106,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
               selectedColor: Colors.red,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 const ImageIcon(AssetImage('assets/druid.png')),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text('Druida',
                     style: GoogleFonts.roboto(
                         textStyle: const TextStyle(fontSize: 16)))
@@ -115,8 +116,8 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(2);
                 model.changeItem(ClassD.druid);
-                listModel.getList(model.returnIntItemChoose(), 1);
-                // Then close the drawer
+                listModel.resetList();
+                listModel.getList(model.returnIntItemChoose());
                 Navigator.pop(context);
               },
             ),
@@ -124,7 +125,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
               selectedColor: Colors.red,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 const ImageIcon(AssetImage('assets/necromancer.png')),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text('Necromancer',
                     style: GoogleFonts.roboto(
                         textStyle: const TextStyle(fontSize: 16)))
@@ -134,8 +135,8 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(3);
                 model.changeItem(ClassD.necromancer);
-                listModel.getList(model.returnIntItemChoose(), 1);
-                // Then close the drawer
+                listModel.resetList();
+                listModel.getList(model.returnIntItemChoose());
                 Navigator.pop(context);
               },
             ),
@@ -143,7 +144,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
               selectedColor: Colors.red,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 const ImageIcon(AssetImage('assets/sorcerer.png')),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text('Mago',
                     style: GoogleFonts.roboto(
                         textStyle: const TextStyle(fontSize: 16)))
@@ -153,8 +154,8 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 // Update the state of the app
                 _onItemTapped(4);
                 model.changeItem(ClassD.sorcerer);
-                listModel.getList(model.returnIntItemChoose(), 1);
-                // Then close the drawer
+                listModel.resetList();
+                listModel.getList(model.returnIntItemChoose());
                 Navigator.pop(context);
               },
             ),
@@ -166,8 +167,8 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
             ),
             ListTile(
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Icon(Icons.settings),
-                SizedBox(width: 4),
+                const Icon(Icons.settings),
+                const SizedBox(width: 4),
                 Text('Configurações',
                     style: GoogleFonts.roboto(
                         textStyle: const TextStyle(fontSize: 16)))
