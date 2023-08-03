@@ -1,4 +1,3 @@
-import 'package:dtrade/api/data/Items.dart';
 import 'package:dtrade/bottomsheet/addItem/AddItemManuallyViewModel.dart';
 import 'package:dtrade/components/ProgressButton.dart';
 import 'package:dtrade/data/DataDropDownCategory.dart';
@@ -48,15 +47,15 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
 
   final List<DataDropDownCategory> dropDownRarity = Mocked.listItemsRarity;
   final List<DataDropDownCategory> dropDownSacred = Mocked.listItemsTier;
-  final List<DataDropDownCategory> dropDownItemsCategory = [
-    const DataDropDownCategory(value: -1, nameCategory: 'Carregando...')
-  ];
 
   late List<DropdownMenuItem<int>> itemListRarity;
   late List<DropdownMenuItem<int>> itemListSacred;
 
   @override
   void initState() {
+    final model = ref.read(addItemManuallyViewModel);
+    model.getListItemType(widget.categoryName);
+
     var desc = '';
     nameItem = TextEditingController(text: widget.nameItem);
     itemPower = TextEditingController(text: widget.itemPower);
@@ -69,7 +68,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
 
     description = TextEditingController(text: desc);
 
-    dropDownItemsCategory
+    model.dropDownItemsCategory
         .map((val) => DropdownMenuItem<int>(
             value: val.value,
             child: Text(val.nameCategory, style: GoogleFonts.roboto())))
@@ -273,54 +272,23 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
   Widget dropDownTypeItem() {
     final model = ref.watch(addItemManuallyViewModel);
 
-    return FutureBuilder(
-        future: model.getListItemType(widget.categoryName),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-          } else if (snapshot.hasError) {
-            dropDownItemsCategory.clear();
-            dropDownItemsCategory.add(const DataDropDownCategory(
-                value: -1, nameCategory: 'Selecione'));
-            for (var item in Mocked.listItemsCategory) {
-              dropDownItemsCategory.add(item);
-            }
-          } else {
-            Items items = snapshot.data as Items;
-            dropDownItemsCategory.clear();
-            dropDownItemsCategory.add(const DataDropDownCategory(
-                value: -1, nameCategory: 'Selecione'));
-            for (var item in items.item) {
-              dropDownItemsCategory.add(DataDropDownCategory(
-                  value: item.id, nameCategory: item.item));
-            }
-          }
-          DataDropDownCategory itemCategory = dropDownItemsCategory.firstWhere(
-            (category) => category.nameCategory == widget.categoryName,
-            orElse: () => const DataDropDownCategory(
-                value: -1, nameCategory: 'Selecione'),
-          );
-          if (itemCategory.nameCategory == widget.categoryName) {
-            dropValue = itemCategory.value;
-          }
-          return DropdownButtonFormField<int>(
-              value: dropValue,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.line_axis_outlined)),
-              onChanged: (int? newValue) {
-                setState(() {
-                  dropValue = newValue ?? 0;
-                });
-              },
-              items: dropDownItemsCategory
-                  .map((val) => DropdownMenuItem<int>(
-                      value: val.value,
-                      child:
-                          Text(val.nameCategory, style: GoogleFonts.roboto())))
-                  .toList(),
-              validator: (value) {
-                return model.validateDropDown(value!);
-              });
+    return DropdownButtonFormField<int>(
+        value: dropValue,
+        decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.line_axis_outlined)),
+        onChanged: (int? newValue) {
+          setState(() {
+            dropValue = newValue ?? 0;
+          });
+        },
+        items: model.dropDownItemsCategory
+            .map((val) => DropdownMenuItem<int>(
+                value: val.value,
+                child: Text(val.nameCategory, style: GoogleFonts.roboto())))
+            .toList(),
+        validator: (value) {
+          return model.validateDropDown(value!);
         });
   }
 }

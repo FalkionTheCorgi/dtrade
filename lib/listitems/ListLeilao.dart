@@ -3,7 +3,6 @@ import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
 import 'package:dtrade/extension/Extension.dart';
 import 'package:dtrade/listitems/ListLeilaoRow.dart';
 import 'package:dtrade/listitems/ListLeilaoViewModel.dart';
-import 'package:dtrade/login/LoginViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -88,6 +87,7 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
                     return circularProgressIndicator(width);
                   }
                 }
+                return null;
               }),
         );
       } else {

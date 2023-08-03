@@ -89,9 +89,9 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
                     child: Column(
                       children: [
                         if (showCard)
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [Text(widget.description)]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [Text(widget.description)]),
                         if (showCard) const SizedBox(height: 16),
                         if (showCard)
                           Row(
@@ -110,7 +110,11 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: <Widget>[DialogDelete()],
+                                      children: <Widget>[
+                                        DialogDelete(
+                                          idPub: widget.idPub,
+                                        )
+                                      ],
                                     ),
                                   ),
                                 ),

@@ -1,22 +1,28 @@
+import 'package:dtrade/extension/Extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LeilaoConcluidoRow extends ConsumerStatefulWidget {
+  final String idPub;
   final String name;
+  final int category;
   final String ip;
-  final String category;
-  final String winner;
+  final String lastBet;
+  final String initial;
   final String value;
-  final List<String> description;
+  final String description;
 
   const LeilaoConcluidoRow(
-      {required this.name,
-      required this.ip,
+      {Key? key,
+      required this.idPub,
+      required this.name,
       required this.category,
-      required this.winner,
+      required this.ip,
+      required this.lastBet,
+      required this.initial,
       required this.value,
-      required this.description});
+      required this.description})
+      : super(key: key);
 
   @override
   LeilaoConcluidoRowState createState() => LeilaoConcluidoRowState();
@@ -44,52 +50,31 @@ class LeilaoConcluidoRowState extends ConsumerState<LeilaoConcluidoRow> {
                 children: [
                   Row(
                     children: [
-                      const Column(
-                        children: [
-                          SizedBox(
-                            width: 72,
-                            height: 72,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  'https://picsum.photos/id/237/200/300'),
-                            ),
-                          )
-                        ],
-                      ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Row(children: [
-                                Text(
-                                  widget.name,
-                                  style: GoogleFonts.roboto(
-                                      textStyle: TextStyle(fontSize: 16)),
-                                ),
+                                textListItemAsset(widget.name,
+                                    returnImageType(widget.category)),
                                 const Spacer(),
-                                Text('IP: ${widget.ip}',
-                                    style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(fontSize: 16))),
+                                textListItemIcon(
+                                    'IP: ${widget.ip}', Icons.bolt_outlined)
                               ]),
                               const SizedBox(height: 8),
                               Row(children: [
-                                Text("Categoria: ${widget.category}",
-                                    style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(fontSize: 16))),
-                                const Spacer(),
+                                textListItemIcon(
+                                    'Último Bet: ${widget.lastBet}',
+                                    Icons.emoji_events_outlined)
                               ]),
                               const SizedBox(height: 8),
-                              Row(children: [
-                                Text("Vencedor: ${widget.winner}",
-                                    style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(fontSize: 16))),
-                                const Spacer(),
-                                Text("Valor: ${widget.value}",
-                                    style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(fontSize: 16)))
-                              ]),
+                              textListItemIcon('Inicial: ${widget.initial}',
+                                  Icons.monetization_on_outlined),
+                              const SizedBox(height: 8),
+                              textListItemIcon('Atual: ${widget.value}',
+                                  Icons.monetization_on_outlined),
                             ],
                           ),
                         ),
@@ -102,10 +87,9 @@ class LeilaoConcluidoRowState extends ConsumerState<LeilaoConcluidoRow> {
                     child: Column(
                       children: [
                         if (showCard)
-                          for (var desc in widget.description)
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [Text(desc)]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [Text(widget.description)]),
                       ],
                     ),
                   ),

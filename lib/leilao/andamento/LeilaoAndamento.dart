@@ -64,6 +64,7 @@ class LeilaoAndamentoState extends ConsumerState<LeilaoAndamento> {
                     return circularProgressIndicator(width);
                   }
                 }
+                return null;
               }),
         );
       } else {

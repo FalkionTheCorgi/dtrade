@@ -1,4 +1,5 @@
 import 'package:dtrade/api/data/AuctionItems.dart';
+import 'package:dtrade/api/data/Message.dart';
 import 'package:dtrade/api/https.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,5 +20,18 @@ class LeilaoAndamentoViewModel extends ChangeNotifier {
       list = response;
     }
     notifyListeners();
+  }
+
+  Future<Message> deleteItem(String id) async {
+    final response = await Api.instance.deleteAuctionItem(id);
+
+    if (response.status == 'OK') {
+      list.items.removeWhere((element) => element.uuid == id);
+      list.quantidade -= 1;
+      notifyListeners();
+      return response;
+    } else {
+      return response;
+    }
   }
 }

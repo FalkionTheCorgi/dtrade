@@ -73,7 +73,7 @@ class Api {
     }
   }
 
-  Future<Items?> getItems() async {
+  Future<dynamic> getItems() async {
     final url = Uri.http(link, '/items');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -85,12 +85,12 @@ class Api {
 
     Map<String, dynamic> parsed = jsonDecode(response.body);
 
-    Items responseParsed = Items.fromJson(parsed);
-
     if (response.statusCode == 200) {
+      Items responseParsed = Items.fromJson(parsed);
       return responseParsed;
     } else {
-      return null;
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
     }
   }
 
@@ -221,6 +221,33 @@ class Api {
 
     if (response.statusCode == 200) {
       AuctionItems responseParsed = AuctionItems.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
+  }
+
+  Future<Message> deleteAuctionItem(String idPub) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+      'Content-Type': 'application/json'
+    };
+
+    Map<String, dynamic> data = {'id_pub': idPub};
+
+    String jsonData = jsonEncode(data);
+
+    final url = Uri.http(link, '/auction_item');
+
+    final response = await http.delete(url, headers: headers, body: jsonData);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Message responseParsed = Message.fromJson(parsed);
       return responseParsed;
     } else {
       Message responseParsed = Message.fromJson(parsed);

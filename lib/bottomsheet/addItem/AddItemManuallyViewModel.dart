@@ -12,14 +12,10 @@ final addItemManuallyViewModel =
     ChangeNotifierProvider((ref) => AddItemManuallyViewModel());
 
 class AddItemManuallyViewModel extends ChangeNotifier {
-  late List<DataDropDownCategory> dropDownItemsCategory;
+  final List<DataDropDownCategory> dropDownItemsCategory = [
+    const DataDropDownCategory(value: -1, nameCategory: 'Carregando...')
+  ];
   int dropValue = -1;
-
-  void initList() {
-    dropDownItemsCategory = [
-      const DataDropDownCategory(value: -1, nameCategory: 'Carregando...'),
-    ];
-  }
 
   String? validateNameItem(String str) {
     if (str.isEmpty) {
@@ -81,8 +77,18 @@ class AddItemManuallyViewModel extends ChangeNotifier {
     return imagemBase64;
   }
 
-  Future<Items?> getListItemType(String categoryName) async {
-    return await Api.instance.getItems();
+  Future<dynamic> getListItemType(String categoryName) async {
+    final response = await Api.instance.getItems();
+    if (response is Items) {
+      dropDownItemsCategory.clear();
+      dropDownItemsCategory.add(
+          const DataDropDownCategory(value: -1, nameCategory: 'Selecione'));
+      for (var item in response.item) {
+        dropDownItemsCategory
+            .add(DataDropDownCategory(value: item.id, nameCategory: item.item));
+      }
+      notifyListeners();
+    }
   }
 
   Future<Message> addItem(
@@ -94,15 +100,8 @@ class AddItemManuallyViewModel extends ChangeNotifier {
       int itemTier,
       int itemRarity,
       int itemLevel) async {
-    final response = Api.instance.postItem(
-        name,
-        itemPower,
-        initialPrice,
-        description,
-        itemType,
-        itemTier,
-        itemRarity,
-        itemLevel);
+    final response = Api.instance.postItem(name, itemPower, initialPrice,
+        description, itemType, itemTier, itemRarity, itemLevel);
 
     return response;
   }
