@@ -1,5 +1,6 @@
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
 import 'package:dtrade/extension/Extension.dart';
+import 'package:dtrade/extension/Rules.dart';
 import 'package:dtrade/listitems/ListLeilaoRow.dart';
 import 'package:dtrade/listitems/ListLeilaoViewModel.dart';
 import 'package:flutter/material.dart';
@@ -80,12 +81,7 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
               }),
         );
       } else {
-        return Center(
-            child: Text('Nenhum Leilão Aberto',
-                style: GoogleFonts.roboto(
-                    textStyle: const TextStyle(
-                  fontSize: 20,
-                ))));
+        return Center(child: emptyList('Nenhum Leilão Aberto'));
       }
     }
   }

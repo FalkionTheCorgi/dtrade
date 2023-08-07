@@ -91,7 +91,12 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
                         if (showCard)
                           Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: [Text(widget.description)]),
+                              children: [
+                                Text(
+                                  widget.description,
+                                  style: const TextStyle(fontFamily: 'Diablo'),
+                                )
+                              ]),
                         if (showCard) const SizedBox(height: 16),
                         if (showCard)
                           Row(
@@ -118,11 +123,10 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
                                     ),
                                   ),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   'EXCLUIR',
-                                  style: GoogleFonts.roboto(
-                                      textStyle:
-                                          const TextStyle(color: Colors.red)),
+                                  style: TextStyle(
+                                      color: Colors.red, fontFamily: 'Diablo'),
                                 ),
                               ),
                             ],

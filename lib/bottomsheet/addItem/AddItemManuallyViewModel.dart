@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dtrade/api/data/Affixes.dart';
+import 'package:dtrade/api/data/Implicit.dart';
 import 'package:dtrade/api/data/Items.dart';
 import 'package:dtrade/api/data/Message.dart';
 import 'package:dtrade/api/https.dart';
@@ -13,9 +15,37 @@ final addItemManuallyViewModel =
 
 class AddItemManuallyViewModel extends ChangeNotifier {
   final List<DataDropDownCategory> dropDownItemsCategory = [
-    const DataDropDownCategory(value: -1, nameCategory: 'Carregando...')
+    const DataDropDownCategory(value: -1, nameCategory: 'Loading...')
   ];
-  int dropValue = -1;
+  final List<DataDropDownCategory> dropDownImplicit = [];
+
+  final List<DataDropDownCategory> dropDownAffix = [
+    const DataDropDownCategory(value: -1, nameCategory: 'Select an Equip')
+  ];
+
+  void changeImplicit() {
+    dropDownImplicit.clear();
+    notifyListeners();
+  }
+
+  void noImplicit() {
+    dropDownImplicit.clear();
+    notifyListeners();
+  }
+
+  void changeAffix() {
+    dropDownAffix.clear();
+    dropDownAffix
+        .add(const DataDropDownCategory(value: -1, nameCategory: 'Loading...'));
+    notifyListeners();
+  }
+
+  void noAffix() {
+    dropDownAffix.clear();
+    dropDownAffix
+        .add(const DataDropDownCategory(value: -1, nameCategory: 'No Affix'));
+    notifyListeners();
+  }
 
   String? validateNameItem(String str) {
     if (str.isEmpty) {
@@ -88,6 +118,45 @@ class AddItemManuallyViewModel extends ChangeNotifier {
             .add(DataDropDownCategory(value: item.id, nameCategory: item.item));
       }
       notifyListeners();
+    }
+  }
+
+  Future<dynamic> getAffix(int id) async {
+    changeAffix();
+    final response = await Api.instance.getAffixes(id);
+    if (response is Affixes) {
+      dropDownAffix.clear();
+      dropDownAffix.add(
+          const DataDropDownCategory(value: -1, nameCategory: 'Selecione'));
+      for (var item in response.item) {
+        dropDownAffix.add(
+            DataDropDownCategory(value: item.id, nameCategory: item.affixe));
+      }
+      notifyListeners();
+    } else {
+      noAffix();
+    }
+  }
+
+  Future<dynamic> getImplicit(int id) async {
+    changeImplicit();
+    final response = await Api.instance.getImplicit(id);
+    if (response is Implicit) {
+      dropDownImplicit.clear();
+      print(response.item);
+      if (response.item.isNotEmpty) {
+        dropDownImplicit.add(
+            const DataDropDownCategory(value: -1, nameCategory: 'Selecione'));
+        for (var item in response.item) {
+          dropDownImplicit.add(DataDropDownCategory(
+              value: item.id, nameCategory: item.implicit));
+        }
+      } else {
+        noImplicit();
+      }
+      notifyListeners();
+    } else {
+      noImplicit();
     }
   }
 

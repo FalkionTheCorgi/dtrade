@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:dtrade/api/data/Affixes.dart';
 import 'package:dtrade/api/data/AuctionItems.dart';
+import 'package:dtrade/api/data/Implicit.dart';
 import 'package:dtrade/api/data/Items.dart';
 import 'package:dtrade/api/data/Message.dart';
 import 'package:dtrade/api/data/profile.dart';
@@ -94,6 +96,78 @@ class Api {
     }
   }
 
+  Future<dynamic> getAffixes(int idItem) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+    };
+
+    final queryParameters = {'id_item': idItem.toString()};
+
+    final url = Uri.http(link, '/affixes', queryParameters);
+
+    final response = await http.get(url, headers: headers);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Affixes responseParsed = Affixes.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
+  }
+
+  Future<dynamic> getImplicit(int idItem) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+    };
+
+    final queryParameters = {'id_item': idItem.toString()};
+
+    final url = Uri.http(link, '/implicit', queryParameters);
+
+    final response = await http.get(url, headers: headers);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Implicit responseParsed = Implicit.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
+  }
+
+  Future<dynamic> getItemsByClass(int clas) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+    };
+
+    final queryParameters = {'class': clas.toString()};
+
+    final url = Uri.http(link, '/items_by_class', queryParameters);
+
+    final response = await http.get(url, headers: headers);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Items responseParsed = Items.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
+  }
+
   Future<Message> postItem(
       String name,
       String itemPower,
@@ -141,6 +215,39 @@ class Api {
     };
 
     final queryParameters = {'class': clas.toString(), 'page': page.toString()};
+
+    final url = Uri.http(link, '/auction_items', queryParameters);
+
+    final response = await http.get(url, headers: headers);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      AuctionItems responseParsed = AuctionItems.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
+  }
+
+  Future<dynamic> getAuctionItemsFiltered(int clas, String name, int typeItem,
+      String minPower, String maxPower, String description, int page) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+    };
+
+    final queryParameters = {
+      'class': clas,
+      'name': name,
+      'type_item': typeItem,
+      'min_power': minPower,
+      'max_power': maxPower,
+      'description': description,
+      'page': page,
+    };
 
     final url = Uri.http(link, '/auction_items', queryParameters);
 

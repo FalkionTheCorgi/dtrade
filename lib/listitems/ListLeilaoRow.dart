@@ -93,14 +93,12 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                         if (showCard)
                           Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: [Text(widget.description)]),
-                        /*if (showCard) const SizedBox(height: 16),
-                        if (showCard)
-                          TextButton(
-                              onPressed: () {
-                                model.createFileFromString(widget.file);
-                              },
-                              child: textWithoutIcon("Baixar arquivo")),*/
+                              children: [
+                                Text(
+                                  widget.description,
+                                  style: const TextStyle(fontFamily: 'Diablo'),
+                                )
+                              ]),
                         if (showCard) const SizedBox(height: 16),
                         if (showCard)
                           Row(
@@ -120,11 +118,10 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                                     builder: (BuildContext context) {
                                       return DenounceView();
                                     }),
-                                child: Text(
+                                child: const Text(
                                   'DENUNCIAR',
-                                  style: GoogleFonts.roboto(
-                                      textStyle:
-                                          const TextStyle(color: Colors.red)),
+                                  style: TextStyle(
+                                      color: Colors.red, fontFamily: 'Diablo'),
                                 ),
                               ),
                               const Spacer(),
@@ -150,11 +147,11 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                                     ),
                                   ),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   'DAR LANCE',
-                                  style: GoogleFonts.roboto(
-                                      textStyle: const TextStyle(
-                                          color: ColorTheme.colorFirst)),
+                                  style: TextStyle(
+                                      color: ColorTheme.colorFirst,
+                                      fontFamily: 'Diablo'),
                                 ),
                               ),
                             ],
@@ -178,5 +175,4 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
               ))),
     );
   }
-
 }

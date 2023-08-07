@@ -1,5 +1,6 @@
 import 'package:dtrade/bottomsheet/filter/FilterItemsViewModel.dart';
 import 'package:dtrade/components/ProgressButton.dart';
+import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
 import 'package:dtrade/extension/Color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,7 +16,8 @@ class FilterItemsState extends ConsumerState<FilterItems> {
   final formKey = GlobalKey<FormState>();
 
   late TextEditingController nameItem;
-  late TextEditingController itemPower;
+  late TextEditingController minPower;
+  late TextEditingController maxPower;
   late TextEditingController lvlRankItem;
   late TextEditingController description;
 
@@ -24,10 +26,12 @@ class FilterItemsState extends ConsumerState<FilterItems> {
   @override
   void initState() {
     final model = ref.read(filterItemsViewModel);
-    model.getListItemType();
+    final drawerModel = ref.read(drawerLayoutViewModel);
+    model.getListItemType(drawerModel.returnIntItemChoose());
 
     nameItem = TextEditingController(text: '');
-    itemPower = TextEditingController(text: '');
+    minPower = TextEditingController(text: '0');
+    maxPower = TextEditingController(text: '');
     lvlRankItem = TextEditingController(text: '');
     description = TextEditingController(text: '');
 
@@ -43,7 +47,8 @@ class FilterItemsState extends ConsumerState<FilterItems> {
   @override
   void dispose() {
     nameItem.dispose();
-    itemPower.dispose();
+    minPower.dispose();
+    maxPower.dispose();
     lvlRankItem.dispose();
     description.dispose();
     super.dispose();
@@ -51,14 +56,14 @@ class FilterItemsState extends ConsumerState<FilterItems> {
 
   @override
   Widget build(BuildContext context) {
-    final model = ref.watch(filterItemsViewModel);
+    final _ = ref.watch(filterItemsViewModel);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
           key: formKey,
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(children: [
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
               const SizedBox(height: 24),
               Text(
                 "Filtrar Item",
@@ -82,9 +87,25 @@ class FilterItemsState extends ConsumerState<FilterItems> {
               Row(children: [
                 Expanded(
                   child: TextFormField(
-                    controller: itemPower,
+                    controller: minPower,
                     decoration: const InputDecoration(
-                      labelText: 'Item Power',
+                      labelText: 'Min Power',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(
+                        Icons.bolt,
+                      ),
+                    ),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: TextFormField(
+                    controller: maxPower,
+                    decoration: const InputDecoration(
+                      labelText: 'Max Power',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(
                         Icons.bolt,
@@ -106,7 +127,7 @@ class FilterItemsState extends ConsumerState<FilterItems> {
                   border: OutlineInputBorder(),
                 ),
               ),
-              const Spacer(),
+              const SizedBox(height: 16),
               FkFProgressButton(
                 title: 'FILTRAR',
                 bgColorButton: ColorTheme.colorFirst,

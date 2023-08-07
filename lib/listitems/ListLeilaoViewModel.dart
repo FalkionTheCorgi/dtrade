@@ -39,6 +39,20 @@ class ListLeilaoViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<dynamic> filterList(int clas, String name, int typeItem,
+      String itemPower, String description) async {
+    final response = await Api.instance.getAuctionItems(clas, page);
+    if (response is AuctionItems) {
+      list.status = response.status;
+      list.quantidade = response.quantidade;
+      list.items.addAll(response.items);
+      page++;
+    } else {
+      list = emptyList;
+    }
+    notifyListeners();
+  }
+
   Future<String> createFileFromString(String str) async {
     Uint8List bytes = base64.decode(str);
     String dir = (await getApplicationDocumentsDirectory()).path;

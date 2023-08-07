@@ -1,4 +1,5 @@
 import 'package:dtrade/extension/Extension.dart';
+import 'package:dtrade/extension/Rules.dart';
 import 'package:dtrade/leilao/andamento/LeilaoAndamentoRow.dart';
 import 'package:dtrade/leilao/andamento/LeilaoAndamentoViewModel.dart';
 import 'package:flutter/material.dart';
@@ -66,12 +67,7 @@ class LeilaoAndamentoState extends ConsumerState<LeilaoAndamento> {
               }),
         );
       } else {
-        return Center(
-            child: Text('Nenhum Leilão Cadastrado',
-                style: GoogleFonts.roboto(
-                    textStyle: const TextStyle(
-                  fontSize: 20,
-                ))));
+        return Center(child: emptyList('Nenhum Leilão Cadastrado'));
       }
     }
   }

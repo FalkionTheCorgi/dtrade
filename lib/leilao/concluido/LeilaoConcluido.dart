@@ -1,4 +1,5 @@
 import 'package:dtrade/extension/Extension.dart';
+import 'package:dtrade/extension/Rules.dart';
 import 'package:dtrade/leilao/concluido/Leil%C3%A3oConcluidoRow.dart';
 import 'package:dtrade/leilao/concluido/LeilaoConcluidoViewModel.dart';
 import 'package:flutter/material.dart';
@@ -66,12 +67,7 @@ class LeilaoConcluidoState extends ConsumerState<LeilaoConcluido> {
               }),
         );
       } else {
-        return Center(
-            child: Text('Nenhum Leilão Concluído',
-                style: GoogleFonts.roboto(
-                    textStyle: const TextStyle(
-                  fontSize: 20,
-                ))));
+        return Center(child: emptyList('Nenhum Leilão Concluído'));
       }
     }
   }

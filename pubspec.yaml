@@ -69,6 +69,13 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+  fonts:
+    - family: Diablo
+      fonts:
+        - asset: assets/fonts/diablo/diablo.ttf
+    - family: DiabloHeavy
+      fonts:
+        - asset: assets/fonts/diablo/DiabloHeavy.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

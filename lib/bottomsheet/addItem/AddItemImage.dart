@@ -4,6 +4,7 @@ import 'package:dtrade/bottomsheet/configuracoes/DarkModeProvider.dart';
 import 'package:dtrade/components/ProgressButton.dart';
 import 'package:dtrade/data/DataItemRegister.dart';
 import 'package:dtrade/extension/Color.dart';
+import 'package:dtrade/extension/Rules.dart';
 import 'package:dtrade/routes/AppRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,16 +25,11 @@ class AddItemImage extends ConsumerWidget {
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    "Adicionar Item",
-                    style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(fontSize: 24)),
-                  ),
+                  titleScreen('ADICIONAR ITEM'),
                   const SizedBox(height: 32),
-                  Text(
+                  const Text(
                     "Adicione uma foto, use sua câmera para captar os dados do item, ou escolha adicionar manualmente, vale ressaltar que o metódo de usar uma foto da galeria ou tirar uma foto não é 100% preciso, para melhor precisão escolha adicionar manualmente.",
-                    style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(fontSize: 14)),
+                    style: TextStyle(fontFamily: 'Diablo'),
                   ),
                   const SizedBox(height: 32),
                   Row(
@@ -53,11 +49,11 @@ class AddItemImage extends ConsumerWidget {
                           },
                           style: TextButton.styleFrom(
                               padding: const EdgeInsets.all(0)),
-                          child: Text('Adicionar foto',
-                              style: GoogleFonts.roboto(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      color: ColorTheme.colorFirst)))),
+                          child: const Text('Adicionar foto',
+                              style: TextStyle(
+                                  fontFamily: 'Diablo',
+                                  fontSize: 16,
+                                  color: ColorTheme.colorFirst))),
                       const Spacer(),
                       TextButton(
                           onPressed: () {
@@ -68,12 +64,11 @@ class AddItemImage extends ConsumerWidget {
                           style: TextButton.styleFrom(
                               padding: const EdgeInsets.all(0)),
                           child: Text('Manualmente',
-                              style: GoogleFonts.roboto(
-                                  textStyle: TextStyle(
-                                      fontSize: 16,
-                                      color: darkmode
-                                          ? Colors.white
-                                          : Colors.black)))),
+                              style: TextStyle(
+                                  fontFamily: 'Diablo',
+                                  fontSize: 16,
+                                  color:
+                                      darkmode ? Colors.white : Colors.black))),
                     ],
                   ),
                   const SizedBox(height: 16),

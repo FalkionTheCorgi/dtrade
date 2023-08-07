@@ -58,7 +58,8 @@ class ProgressButtonState extends State<FkFProgressButton> {
                 ],
               )
             : Text(widget.title,
-                style: TextStyle(color: widget.textColorButton)),
+                style: TextStyle(
+                    color: widget.textColorButton, fontFamily: 'Diablo')),
         onPressed: () async {
           if (isLoading) return;
 

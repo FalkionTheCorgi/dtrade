@@ -1,3 +1,4 @@
+import 'package:dtrade/extension/Rules.dart';
 import 'package:dtrade/extension/TextFormatter.dart';
 import 'package:dtrade/listitems/DialogBetViewModel.dart';
 import 'package:flutter/material.dart';
@@ -41,9 +42,7 @@ class DialogBetState extends ConsumerState<DialogBet> {
             key: formKey,
             child: Column(
               children: [
-                Text("Lance",
-                    style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(fontSize: 18))),
+                titleScreen('Lance'),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: betValue,
@@ -52,6 +51,7 @@ class DialogBetState extends ConsumerState<DialogBet> {
                   },
                   decoration: const InputDecoration(
                     labelText: 'Valor',
+                    labelStyle: TextStyle(fontFamily: 'Diablo'),
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(
                       Icons.monetization_on_outlined,
@@ -60,6 +60,7 @@ class DialogBetState extends ConsumerState<DialogBet> {
                   keyboardType: TextInputType.number,
                   inputFormatters: [CustomNumberFormatter()],
                   maxLength: 15,
+                  style: const TextStyle(fontFamily: 'Diablo'),
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -68,8 +69,9 @@ class DialogBetState extends ConsumerState<DialogBet> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('FECHAR',
-                          style: GoogleFonts.roboto(color: Colors.red)),
+                      child: const Text('FECHAR',
+                          style: TextStyle(
+                              color: Colors.red, fontFamily: 'Diablo')),
                     ),
                     const Spacer(),
                     TextButton(
@@ -78,7 +80,8 @@ class DialogBetState extends ConsumerState<DialogBet> {
                           model.postBet(widget.idPub, betValue.text);
                         }
                       },
-                      child: Text('DAR LANCE', style: GoogleFonts.roboto()),
+                      child: const Text('DAR LANCE',
+                          style: TextStyle(fontFamily: 'Diablo')),
                     )
                   ],
                 )

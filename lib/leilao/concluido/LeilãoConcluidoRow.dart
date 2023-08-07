@@ -89,7 +89,12 @@ class LeilaoConcluidoRowState extends ConsumerState<LeilaoConcluidoRow> {
                         if (showCard)
                           Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: [Text(widget.description)]),
+                              children: [
+                                Text(
+                                  widget.description,
+                                  style: const TextStyle(fontFamily: 'Diablo'),
+                                )
+                              ]),
                       ],
                     ),
                   ),

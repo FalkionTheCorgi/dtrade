@@ -31,8 +31,7 @@ Widget textListItemAsset(String text, String image) {
     children: [
       Image.asset(image, width: 24, height: 24),
       const SizedBox(width: 4),
-      Text(text,
-          style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 16)))
+      Text(text, style: const TextStyle(fontSize: 16, fontFamily: 'Diablo'))
     ],
   );
 }
@@ -42,8 +41,7 @@ Widget textListItemIcon(String text, IconData image) {
     children: [
       Icon(image),
       const SizedBox(width: 4),
-      Text(text,
-          style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 16)))
+      Text(text, style: const TextStyle(fontSize: 16, fontFamily: 'Diablo'))
     ],
   );
 }

@@ -23,11 +23,8 @@ class TopBarState extends ConsumerState<TopBar> {
             ? AppBar(
                 title: Text(
                   'DTRADE - ${drawerModel.returnItemDrawerChoose()}',
-                  style: GoogleFonts.roboto(
-                    textStyle: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
+                  style: const TextStyle(
+                      color: Colors.white, fontFamily: 'Diablo'),
                 ),
                 backgroundColor: Colors.black,
                 actions: [
@@ -61,19 +58,20 @@ class TopBarState extends ConsumerState<TopBar> {
             : AppBar(
                 bottom: const TabBar(
                   tabs: [
-                    Tab(text: 'EM ANDAMENTO'),
-                    Tab(text: 'CONCLUÍDOS'),
+                    Tab(
+                        child: Text('EM ANDAMENTO',
+                            style: TextStyle(
+                                color: Colors.white, fontFamily: 'Diablo'))),
+                    Tab(
+                        child: Text('CONCLUÍDOS',
+                            style: TextStyle(
+                                color: Colors.white, fontFamily: 'Diablo')))
                   ],
                   indicatorColor: Colors.white,
                 ),
-                title: Text(
-                  'DTRADE',
-                  style: GoogleFonts.roboto(
-                    textStyle: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                title: const Text('DTRADE',
+                    style:
+                        TextStyle(color: Colors.white, fontFamily: 'Diablo')),
                 backgroundColor: Colors.black,
                 actions: [
                   IconButton(

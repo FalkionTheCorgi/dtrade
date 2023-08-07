@@ -32,6 +32,8 @@ class BottomBarState extends ConsumerState<BottomBar> {
       unselectedItemColor: Colors.white,
       onTap: model.onItemTapped,
       backgroundColor: Colors.black,
+      selectedLabelStyle: const TextStyle(fontFamily: 'Diablo'),
+      unselectedLabelStyle: const TextStyle(fontFamily: 'Diablo'),
     );
   }
 }
