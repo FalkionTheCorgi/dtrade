@@ -1,20 +1,25 @@
+import 'package:dtrade/api/data/Affixes.dart';
+import 'package:dtrade/bottomsheet/addItem/data/ChipItem.dart';
 import 'package:dtrade/bottomsheet/denunciar/DenounceView.dart';
 import 'package:dtrade/extension/Color.dart';
 import 'package:dtrade/extension/Extension.dart';
 import 'package:dtrade/listitems/DialogBet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ListLeilaoRow extends ConsumerStatefulWidget {
   final String idPub;
   final String name;
   final int category;
   final String ip;
+  final String sacred;
+  final List<ChipItem> affixes;
+  final List<ChipItem> implicit;
+  final int socket;
+  final int itemLevel;
   final String lastBet;
   final String initial;
   final String value;
-  final String description;
 
   const ListLeilaoRow(
       {Key? key,
@@ -25,7 +30,11 @@ class ListLeilaoRow extends ConsumerStatefulWidget {
       required this.lastBet,
       required this.initial,
       required this.value,
-      required this.description})
+      required this.itemLevel,
+      required this.affixes,
+      required this.implicit,
+      required this.socket,
+      required this.sacred})
       : super(key: key);
 
   @override
@@ -86,79 +95,9 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                     ],
                   ),
                   AnimatedSize(
-                    curve: Curves.easeIn,
-                    duration: const Duration(milliseconds: 400),
-                    child: Column(
-                      children: [
-                        if (showCard)
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.description,
-                                  style: const TextStyle(fontFamily: 'Diablo'),
-                                )
-                              ]),
-                        if (showCard) const SizedBox(height: 16),
-                        if (showCard)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.zero),
-                                onPressed: () => showModalBottomSheet(
-                                    showDragHandle: true,
-                                    isDismissible: false,
-                                    isScrollControlled: true,
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return DenounceView();
-                                    }),
-                                child: const Text(
-                                  'DENUNCIAR',
-                                  style: TextStyle(
-                                      color: Colors.red, fontFamily: 'Diablo'),
-                                ),
-                              ),
-                              const Spacer(),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    alignment: Alignment.centerRight,
-                                    padding: EdgeInsets.zero),
-                                onPressed: () => showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) => Dialog(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        DialogBet(
-                                          value: widget.value,
-                                          idPub: widget.idPub,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                child: const Text(
-                                  'DAR LANCE',
-                                  style: TextStyle(
-                                      color: ColorTheme.colorFirst,
-                                      fontFamily: 'Diablo'),
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ),
+                      curve: Curves.easeIn,
+                      duration: const Duration(milliseconds: 400),
+                      child: showCard ? showCardAnimation() : null),
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
@@ -173,6 +112,108 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                   )
                 ],
               ))),
+    );
+  }
+
+  Widget showCardAnimation() {
+    return Column(
+      children: [
+        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Text(
+            '${widget.sacred} Rare ${widget.category}',
+            style: const TextStyle(fontFamily: 'Diablo'),
+          )
+        ]),
+        const SizedBox(height: 8),
+        const Row(
+          children: [
+            Text(
+              'Implicit',
+              style: TextStyle(fontFamily: 'Diablo'),
+            )
+          ],
+        ),
+        const SizedBox(height: 8),
+        for (var element in widget.implicit)
+          Text(element.item.replaceAll('#', element.value),
+              style: const TextStyle(fontFamily: 'Diablo')),
+        const SizedBox(height: 8),
+        const Row(children: [
+          Text(
+            'Affixes',
+            style: TextStyle(fontFamily: 'Diablo'),
+          ),
+        ]),
+        const SizedBox(height: 8),
+        for (var element in widget.affixes)
+          Text(element.item.replaceAll('#', element.value),
+              style: const TextStyle(fontFamily: 'Diablo')),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Text(
+              'Socket: ${widget.socket}',
+              style: const TextStyle(fontFamily: 'Diablo'),
+            ),
+            const Spacer(),
+            Text(
+              'Required Level: ${widget.itemLevel}',
+              style: const TextStyle(fontFamily: 'Diablo'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.zero),
+              onPressed: () => showModalBottomSheet(
+                  showDragHandle: true,
+                  isDismissible: false,
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DenounceView();
+                  }),
+              child: const Text(
+                'DENUNCIAR',
+                style: TextStyle(color: Colors.red, fontFamily: 'Diablo'),
+              ),
+            ),
+            const Spacer(),
+            TextButton(
+              style: TextButton.styleFrom(
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.zero),
+              onPressed: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => Dialog(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      DialogBet(
+                        value: widget.value,
+                        idPub: widget.idPub,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              child: const Text(
+                'DAR LANCE',
+                style: TextStyle(
+                    color: ColorTheme.colorFirst, fontFamily: 'Diablo'),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

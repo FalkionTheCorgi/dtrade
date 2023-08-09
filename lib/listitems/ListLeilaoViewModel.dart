@@ -60,4 +60,5 @@ class ListLeilaoViewModel extends ChangeNotifier {
     await file.writeAsBytes(bytes);
     return file.path;
   }
+
 }

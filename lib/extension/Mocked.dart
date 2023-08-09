@@ -113,9 +113,16 @@ class Mocked {
   ];
 
   static final listItemsTier = [
-    const DataDropDownCategory(value: 0, nameCategory: 'Normal'),
+    const DataDropDownCategory(value: -1, nameCategory: 'Select'),
     const DataDropDownCategory(value: 1, nameCategory: 'Sacred'),
     const DataDropDownCategory(value: 2, nameCategory: 'Ancestral'),
+  ];
+
+  static final listSocket = [
+    const DataDropDownCategory(value: -1, nameCategory: 'Select'),
+    const DataDropDownCategory(value: 1, nameCategory: '0'),
+    const DataDropDownCategory(value: 2, nameCategory: '1'),
+    const DataDropDownCategory(value: 3, nameCategory: '2'),
   ];
 
   Mocked._();

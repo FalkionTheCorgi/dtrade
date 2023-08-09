@@ -59,7 +59,7 @@ class DialogDeleteState extends ConsumerState<DialogDelete> {
                   child: Text('NÃO',
                       style: GoogleFonts.roboto(color: ColorTheme.colorFirst)),
                 ),
-                Spacer(),
+                const Spacer(),
                 TextButton(
                   onPressed: () {
                     model.deleteItem(widget.idPub).then((value) {

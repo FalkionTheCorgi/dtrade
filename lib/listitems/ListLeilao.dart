@@ -5,7 +5,6 @@ import 'package:dtrade/listitems/ListLeilaoRow.dart';
 import 'package:dtrade/listitems/ListLeilaoViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ListLeilao extends ConsumerStatefulWidget {
   @override
@@ -63,15 +62,20 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
               itemBuilder: (BuildContext context, int index) {
                 if (index < model.list.items.length) {
                   return ListLeilaoRow(
-                      idPub: model.list.items[index].uuid,
-                      name: model.list.items[index].name,
-                      category: model.list.items[index].typeItem,
-                      ip: model.list.items[index].itemPower,
-                      lastBet: model.list.items[index].battletag ??
-                          "Seja o primeiro",
-                      initial: model.list.items[index].initialPrice,
-                      value: model.list.items[index].actualPrice,
-                      description: model.list.items[index].description);
+                    idPub: model.list.items[index].uuid,
+                    name: model.list.items[index].name,
+                    category: model.list.items[index].typeItem,
+                    ip: model.list.items[index].itemPower,
+                    lastBet:
+                        model.list.items[index].battletag ?? "be the first",
+                    initial: model.list.items[index].initialPrice,
+                    value: model.list.items[index].actualPrice,
+                    itemLevel: model.list.items[index].itemLevel,
+                    socket: model.list.items[index].socket,
+                    affixes: [],
+                    implicit: [],
+                    sacred: model.list.items[index].itemTier,
+                  );
                 } else {
                   if (model.list.quantidade - model.list.items.length > 0) {
                     return circularProgressIndicator(width);

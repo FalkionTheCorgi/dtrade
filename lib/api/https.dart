@@ -5,7 +5,10 @@ import 'package:dtrade/api/data/AuctionItems.dart';
 import 'package:dtrade/api/data/Implicit.dart';
 import 'package:dtrade/api/data/Items.dart';
 import 'package:dtrade/api/data/Message.dart';
+import 'package:dtrade/api/data/Sock.dart';
+import 'package:dtrade/api/data/Tier.dart';
 import 'package:dtrade/api/data/profile.dart';
+import 'package:dtrade/bottomsheet/addItem/data/ChipItem.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -176,9 +179,22 @@ class Api {
       int itemType,
       int itemTier,
       int itemRarity,
-      int itemLevel) async {
+      int itemLevel,
+      List<ChipItem> listImplict,
+      List<ChipItem> listAffix,
+      int armor,
+      int damagePerSecond,
+      int attackPerSecond,
+      int damagePerHitMin,
+      int damagePerHitMax,
+      int socket) async {
     final url = Uri.http(link, '/auction_item');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    List<Map<String, dynamic>> implicitToJson =
+        listImplict.map((chipItem) => chipItem.toJson()).toList();
+    List<Map<String, dynamic>> affixToJson =
+        listAffix.map((chipItem) => chipItem.toJson()).toList();
 
     final headers = {
       'token': prefs.getString('token') ?? "",
@@ -193,7 +209,15 @@ class Api {
       'item_type': itemType,
       'item_tier': itemTier,
       'item_rarity': itemRarity,
-      'item_level': itemLevel
+      'item_level': itemLevel,
+      'implicit': implicitToJson,
+      'affix': affixToJson,
+      'armor': armor,
+      'damage_per_second': damagePerSecond,
+      'attack_per_second': attackPerSecond,
+      'damage_per_hit_min': damagePerHitMin,
+      'damage_per_hit_max': damagePerHitMax,
+      'socket': socket
     };
 
     String jsonData = jsonEncode(data);
@@ -221,6 +245,8 @@ class Api {
     final response = await http.get(url, headers: headers);
 
     Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    print(response.body);
 
     if (response.statusCode == 200) {
       AuctionItems responseParsed = AuctionItems.fromJson(parsed);
@@ -257,6 +283,28 @@ class Api {
 
     if (response.statusCode == 200) {
       AuctionItems responseParsed = AuctionItems.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
+  }
+
+  Future<dynamic> getTier() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {
+      'token': prefs.getString('token') ?? "",
+    };
+
+    final url = Uri.http(link, '/tier');
+
+    final response = await http.get(url, headers: headers);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Tier responseParsed = Tier.fromJson(parsed);
       return responseParsed;
     } else {
       Message responseParsed = Message.fromJson(parsed);
@@ -355,6 +403,26 @@ class Api {
 
     if (response.statusCode == 200) {
       Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    } else {
+      Message responseParsed = Message.fromJson(parsed);
+      return responseParsed;
+    }
+  }
+
+  Future<dynamic> getSockets() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final headers = {'token': prefs.getString('token') ?? ""};
+
+    final url = Uri.http(link, '/socket');
+
+    final response = await http.get(url, headers: headers);
+
+    Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Sock responseParsed = Sock.fromJson(parsed);
       return responseParsed;
     } else {
       Message responseParsed = Message.fromJson(parsed);

@@ -57,7 +57,8 @@ class LeilaoConcluidoState extends ConsumerState<LeilaoConcluido> {
                           "Não identificado",
                       initial: model.list.items[index].initialPrice,
                       value: model.list.items[index].actualPrice,
-                      description: model.list.items[index].description);
+                      description: model.list.items[index].battletag ??
+                          "Not is running");
                 } else {
                   if (model.list.quantidade - model.list.items.length > 0) {
                     return circularProgressIndicator(width);

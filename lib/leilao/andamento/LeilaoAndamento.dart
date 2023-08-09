@@ -49,15 +49,17 @@ class LeilaoAndamentoState extends ConsumerState<LeilaoAndamento> {
               itemBuilder: (BuildContext context, int index) {
                 if (index < model.list.items.length) {
                   return LeilaoAndamentoRow(
-                      idPub: model.list.items[index].uuid,
-                      name: model.list.items[index].name,
-                      category: model.list.items[index].typeItem,
-                      ip: model.list.items[index].itemPower,
-                      lastBet:
-                          model.list.items[index].battletag ?? "Não iniciado",
-                      initial: model.list.items[index].initialPrice,
-                      value: model.list.items[index].actualPrice,
-                      description: model.list.items[index].description);
+                    idPub: model.list.items[index].uuid,
+                    name: model.list.items[index].name,
+                    category: model.list.items[index].typeItem,
+                    ip: model.list.items[index].itemPower,
+                    lastBet:
+                        model.list.items[index].battletag ?? "Not is running",
+                    initial: model.list.items[index].initialPrice,
+                    value: model.list.items[index].actualPrice,
+                    description:
+                        model.list.items[index].battletag ?? "Not is running",
+                  );
                 } else {
                   if (model.list.quantidade - model.list.items.length > 0) {
                     return circularProgressIndicator(width);
