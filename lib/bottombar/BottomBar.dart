@@ -18,13 +18,13 @@ class BottomBarState extends ConsumerState<BottomBar> {
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.balance_outlined),
-          label: 'Leilão',
+          label: 'Auction',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.person_outline,
           ),
-          label: 'Meus Leilões',
+          label: 'My Auctions',
         ),
       ],
       currentIndex: model.selectedIndex,

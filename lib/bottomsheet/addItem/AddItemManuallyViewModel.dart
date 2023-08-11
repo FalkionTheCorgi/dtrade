@@ -71,7 +71,7 @@ class AddItemManuallyViewModel extends ChangeNotifier {
 
   String? validateLvlItem(String str) {
     if (str.isEmpty) {
-      return 'Campo vazio.';
+      return 'Empty Field.';
     } else if (RegExp(RegexData.onlyNumber).hasMatch(str)) {
       return null;
     } else {
@@ -198,8 +198,8 @@ class AddItemManuallyViewModel extends ChangeNotifier {
     if (response is Implicit) {
       dropDownImplicit.clear();
       if (response.item.isNotEmpty) {
-        dropDownImplicit.add(
-            const DataDropDownCategory(value: -1, nameCategory: 'Selecione'));
+        dropDownImplicit
+            .add(const DataDropDownCategory(value: -1, nameCategory: 'Select'));
         for (var item in response.item) {
           dropDownImplicit.add(DataDropDownCategory(
               value: item.id, nameCategory: item.implicit));

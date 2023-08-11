@@ -40,11 +40,11 @@ class DialogDeleteState extends ConsumerState<DialogDelete> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Aviso",
+                Text("Notice",
                     style: GoogleFonts.roboto(
                         textStyle: const TextStyle(fontSize: 18))),
                 const SizedBox(height: 16),
-                Text("Essa ação é irreversível, você tem certeza?",
+                Text("This action is irreversible, are you sure?",
                     style: GoogleFonts.roboto(
                         textStyle: const TextStyle(fontSize: 16))),
               ],
@@ -56,7 +56,7 @@ class DialogDeleteState extends ConsumerState<DialogDelete> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('NÃO',
+                  child: Text('NO',
                       style: GoogleFonts.roboto(color: ColorTheme.colorFirst)),
                 ),
                 const Spacer(),
@@ -69,7 +69,7 @@ class DialogDeleteState extends ConsumerState<DialogDelete> {
                     });
                   },
                   child:
-                      Text('SIM', style: GoogleFonts.roboto(color: Colors.red)),
+                      Text('YES', style: GoogleFonts.roboto(color: Colors.red)),
                 )
               ],
             )

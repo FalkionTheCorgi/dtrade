@@ -1,10 +1,9 @@
 import 'package:dtrade/extension/Extension.dart';
 import 'package:dtrade/extension/Rules.dart';
-import 'package:dtrade/leilao/concluido/Leil%C3%A3oConcluidoRow.dart';
+import 'package:dtrade/leilao/concluido/LeilaoConcluidoRow.dart';
 import 'package:dtrade/leilao/concluido/LeilaoConcluidoViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LeilaoConcluido extends ConsumerStatefulWidget {
   @override
@@ -49,16 +48,25 @@ class LeilaoConcluidoState extends ConsumerState<LeilaoConcluido> {
               itemBuilder: (BuildContext context, int index) {
                 if (index < model.list.items.length) {
                   return LeilaoConcluidoRow(
-                      idPub: model.list.items[index].uuid,
-                      name: model.list.items[index].name,
-                      category: model.list.items[index].typeItem,
-                      ip: model.list.items[index].itemPower,
-                      lastBet: model.list.items[index].battletag ??
-                          "Não identificado",
-                      initial: model.list.items[index].initialPrice,
-                      value: model.list.items[index].actualPrice,
-                      description: model.list.items[index].battletag ??
-                          "Not is running");
+                    idPub: model.list.items[index].uuid,
+                    name: model.list.items[index].name,
+                    category: model.list.items[index].typeItem,
+                    ip: model.list.items[index].itemPower,
+                    lastBet:
+                        model.list.items[index].battletag ?? "be the first",
+                    initial: model.list.items[index].initialPrice,
+                    value: model.list.items[index].actualPrice,
+                    itemLevel: model.list.items[index].itemLevel,
+                    socket: model.list.items[index].socket,
+                    affixes: model.list.items[index].affix,
+                    implicit: model.list.items[index].implicit,
+                    sacred: model.list.items[index].itemTier,
+                    armor: model.list.items[index].armor,
+                    damagePerSecond: model.list.items[index].damagePerSecond,
+                    attackPerSecond: model.list.items[index].attackPerSecond,
+                    damagePerHitMin: model.list.items[index].damagePerHitMin,
+                    damagePerHitMax: model.list.items[index].damagePerHitMax,
+                  );
                 } else {
                   if (model.list.quantidade - model.list.items.length > 0) {
                     return circularProgressIndicator(width);
@@ -68,7 +76,24 @@ class LeilaoConcluidoState extends ConsumerState<LeilaoConcluido> {
               }),
         );
       } else {
-        return Center(child: emptyList('Nenhum Leilão Concluído'));
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            emptyList('No Auction finished'),
+            SizedBox(
+              height: 24.0,
+              width: 24.0,
+              child: TextButton(
+                child: const Icon(Icons.forward_10_outlined),
+                onPressed: () {
+                  model.resetList();
+                  model.getList();
+                },
+              ),
+            )
+          ],
+        );
       }
     }
   }

@@ -41,7 +41,7 @@ class DialogBetState extends ConsumerState<DialogBet> {
             key: formKey,
             child: Column(
               children: [
-                titleScreen('Lance'),
+                titleScreen('Bet'),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: betValue,
@@ -49,7 +49,7 @@ class DialogBetState extends ConsumerState<DialogBet> {
                     return model.validateValueBet(widget.value, betValue.text);
                   },
                   decoration: const InputDecoration(
-                    labelText: 'Valor',
+                    labelText: 'Value',
                     labelStyle: TextStyle(fontFamily: 'Diablo'),
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(
@@ -68,7 +68,7 @@ class DialogBetState extends ConsumerState<DialogBet> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: const Text('FECHAR',
+                      child: const Text('CLOSE',
                           style: TextStyle(
                               color: Colors.red, fontFamily: 'Diablo')),
                     ),
@@ -79,7 +79,7 @@ class DialogBetState extends ConsumerState<DialogBet> {
                           model.postBet(widget.idPub, betValue.text);
                         }
                       },
-                      child: const Text('DAR LANCE',
+                      child: const Text('BET',
                           style: TextStyle(fontFamily: 'Diablo')),
                     )
                   ],

@@ -69,7 +69,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                   children: [
                     ImageIcon(AssetImage('assets/barbarian.png')),
                     SizedBox(width: 4),
-                    Text('Bárbaro',
+                    Text('Barbarian',
                         style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
                   ]),
               selected: _selectedIndex == 0,
@@ -111,7 +111,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                   children: [
                     ImageIcon(AssetImage('assets/druid.png')),
                     SizedBox(width: 4),
-                    Text('Druida',
+                    Text('Druid',
                         style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
                   ]),
               selected: _selectedIndex == 2,
@@ -166,7 +166,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
             ),
             const Divider(),
             const ListTile(
-              title: Text("Opções",
+              title: Text("Options",
                   style: TextStyle(fontFamily: 'Diablo', fontSize: 16)),
             ),
             ListTile(
@@ -175,7 +175,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                   children: [
                     Icon(Icons.settings),
                     SizedBox(width: 4),
-                    Text('Configurações',
+                    Text('Settings',
                         style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
                   ]),
               onTap: () {
@@ -196,7 +196,7 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                   children: [
                     Icon(Icons.logout),
                     SizedBox(width: 4),
-                    Text('Sair',
+                    Text('Logout',
                         style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
                   ]),
               onTap: () {

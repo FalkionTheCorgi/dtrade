@@ -44,6 +44,7 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
     final model = ref.watch(listLeilaoViewModel);
     final drawerModel = ref.watch(drawerLayoutViewModel);
     double width = MediaQuery.of(context).size.width;
+    final keyList = GlobalKey<ScaffoldState>();
 
     if (model.list.status == 'INITIAL') {
       return const Center(
@@ -57,6 +58,7 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
             model.getList(drawerModel.returnIntItemChoose());
           },
           child: ListView.builder(
+              key: keyList,
               itemCount: model.list.items.length + 1,
               padding: const EdgeInsets.all(8),
               itemBuilder: (BuildContext context, int index) {
@@ -72,9 +74,14 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
                     value: model.list.items[index].actualPrice,
                     itemLevel: model.list.items[index].itemLevel,
                     socket: model.list.items[index].socket,
-                    affixes: [],
-                    implicit: [],
+                    affixes: model.list.items[index].affix,
+                    implicit: model.list.items[index].implicit,
                     sacred: model.list.items[index].itemTier,
+                    armor: model.list.items[index].armor,
+                    damagePerSecond: model.list.items[index].damagePerSecond,
+                    attackPerSecond: model.list.items[index].attackPerSecond,
+                    damagePerHitMin: model.list.items[index].damagePerHitMin,
+                    damagePerHitMax: model.list.items[index].damagePerHitMax,
                   );
                 } else {
                   if (model.list.quantidade - model.list.items.length > 0) {
@@ -85,7 +92,24 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
               }),
         );
       } else {
-        return Center(child: emptyList('Nenhum Leilão Aberto'));
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            emptyList('No Auction Opened'),
+            SizedBox(
+              height: 24.0,
+              width: 24.0,
+              child: TextButton(
+                child: const Icon(Icons.forward_10_outlined),
+                onPressed: () {
+                  model.resetList();
+                  model.getList(drawerModel.returnIntItemChoose());
+                },
+              ),
+            )
+          ],
+        );
       }
     }
   }

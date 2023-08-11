@@ -58,11 +58,11 @@ class TopBarState extends ConsumerState<TopBar> {
                 bottom: const TabBar(
                   tabs: [
                     Tab(
-                        child: Text('EM ANDAMENTO',
+                        child: Text('PROGRESS',
                             style: TextStyle(
                                 color: Colors.white, fontFamily: 'Diablo'))),
                     Tab(
-                        child: Text('CONCLUÍDOS',
+                        child: Text('FINISHED',
                             style: TextStyle(
                                 color: Colors.white, fontFamily: 'Diablo')))
                   ],

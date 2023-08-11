@@ -19,9 +19,9 @@ class DrawerLayoutViewModel extends ChangeNotifier {
   String returnItemDrawerChoose() {
     switch (item) {
       case ClassD.barbarian:
-        return 'Bárbaro';
+        return 'Barbarian';
       case ClassD.druid:
-        return "Druida";
+        return "Druid";
       case ClassD.necromancer:
         return "Necromancer";
       case ClassD.rogue:

@@ -27,16 +27,18 @@ class ListLeilaoViewModel extends ChangeNotifier {
   }
 
   Future<dynamic> getList(int clas) async {
-    final response = await Api.instance.getAuctionItems(clas, page);
-    if (response is AuctionItems) {
-      list.status = response.status;
-      list.quantidade = response.quantidade;
-      list.items.addAll(response.items);
-      page++;
-    } else {
-      list = emptyList;
+    if (list.quantidade != list.items.length || list.status == 'INITIAL') {
+      final response = await Api.instance.getAuctionItems(clas, page);
+      if (response is AuctionItems) {
+        list.status = response.status;
+        list.quantidade = response.quantidade;
+        list.items.addAll(response.items);
+        page++;
+      } else {
+        list = emptyList;
+      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   Future<dynamic> filterList(int clas, String name, int typeItem,
@@ -60,5 +62,4 @@ class ListLeilaoViewModel extends ChangeNotifier {
     await file.writeAsBytes(bytes);
     return file.path;
   }
-
 }

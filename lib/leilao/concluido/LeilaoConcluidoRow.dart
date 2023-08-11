@@ -1,10 +1,9 @@
 import 'package:dtrade/api/data/AuctionItems.dart';
 import 'package:dtrade/extension/Extension.dart';
-import 'package:dtrade/leilao/andamento/DialogDelete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LeilaoAndamentoRow extends ConsumerStatefulWidget {
+class LeilaoConcluidoRow extends ConsumerStatefulWidget {
   final String idPub;
   final String name;
   final int category;
@@ -23,7 +22,7 @@ class LeilaoAndamentoRow extends ConsumerStatefulWidget {
   final String initial;
   final String value;
 
-  const LeilaoAndamentoRow(
+  const LeilaoConcluidoRow(
       {Key? key,
       required this.idPub,
       required this.name,
@@ -45,10 +44,10 @@ class LeilaoAndamentoRow extends ConsumerStatefulWidget {
       : super(key: key);
 
   @override
-  LeilaoAndamentoRowState createState() => LeilaoAndamentoRowState();
+  LeilaoConcluidoRowState createState() => LeilaoConcluidoRowState();
 }
 
-class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
+class LeilaoConcluidoRowState extends ConsumerState<LeilaoConcluidoRow> {
   bool showCard = false;
 
   void toggleExpand() {
@@ -65,7 +64,7 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
       padding: const EdgeInsets.all(8),
       child: Card(
           child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   Row(
@@ -136,6 +135,15 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
           )
         ]),
         const SizedBox(height: 8),
+        Row(
+          children: [
+            if (widget.implicit.isNotEmpty)
+              const Text(
+                'Implicit',
+                style: TextStyle(fontFamily: 'DiabloHeavy'),
+              )
+          ],
+        ),
         if (widget.armor > 0) showArmor(),
         if (widget.armor > 0) const SizedBox(height: 8),
         if (widget.damagePerSecond > 0) showDamagePerSecond(),
@@ -146,16 +154,6 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
           showDamagePerHit(),
         if (widget.damagePerHitMin > 0 || widget.damagePerHitMax > 0)
           const SizedBox(height: 8),
-        if (widget.implicit.isNotEmpty)
-          const Row(
-            children: [
-              Text(
-                'Implicit',
-                style: TextStyle(fontFamily: 'DiabloHeavy'),
-                overflow: TextOverflow.ellipsis,
-              )
-            ],
-          ),
         if (widget.implicit.isNotEmpty) const SizedBox(height: 8),
         for (var element in widget.implicit)
           Row(
@@ -169,13 +167,13 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
             ],
           ),
         const SizedBox(height: 8),
-        if (widget.affixes.isNotEmpty)
-          const Row(children: [
-            Text(
+        Row(children: [
+          if (widget.affixes.isNotEmpty)
+            const Text(
               'Affixes',
               style: TextStyle(fontFamily: 'DiabloHeavy'),
             ),
-          ]),
+        ]),
         if (widget.affixes.isNotEmpty) const SizedBox(height: 8),
         for (var element in widget.affixes)
           Row(
@@ -216,36 +214,6 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
                 ),
               ],
             )
-          ],
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TextButton(
-              style: TextButton.styleFrom(
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.zero),
-              onPressed: () => showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => Dialog(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      DialogDelete(
-                        idPub: widget.idPub,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              child: const Text(
-                'EXCLUIR',
-                style: TextStyle(color: Colors.red, fontFamily: 'Diablo'),
-              ),
-            ),
           ],
         ),
       ],
@@ -330,32 +298,23 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
   Widget showDamagePerHit() {
     return Wrap(
       children: [
-        const Text(
-          'Damage Per Hit',
-          style: TextStyle(fontFamily: 'DiabloHeavy'),
+        const SizedBox(
+          height: 8,
         ),
         Row(
           children: [
             const Text(
-              'Min:',
+              'Min',
               style: TextStyle(fontFamily: 'DiabloHeavy'),
-            ),
-            const SizedBox(
-              width: 2,
             ),
             Text(
               '${widget.damagePerHitMin}',
               style: const TextStyle(fontFamily: 'Diablo'),
             ),
-            const SizedBox(
-              width: 8,
-            ),
+            const Spacer(),
             const Text(
-              'Max:',
+              'Max',
               style: TextStyle(fontFamily: 'DiabloHeavy'),
-            ),
-            const SizedBox(
-              width: 2,
             ),
             Text(
               '${widget.damagePerHitMax}',
@@ -363,6 +322,9 @@ class LeilaoAndamentoRowState extends ConsumerState<LeilaoAndamentoRow> {
             ),
           ],
         ),
+        const SizedBox(
+          height: 8,
+        )
       ],
     );
   }

@@ -1,5 +1,4 @@
-import 'package:dtrade/api/data/Affixes.dart';
-import 'package:dtrade/bottomsheet/addItem/data/ChipItem.dart';
+import 'package:dtrade/api/data/AuctionItems.dart';
 import 'package:dtrade/bottomsheet/denunciar/DenounceView.dart';
 import 'package:dtrade/extension/Color.dart';
 import 'package:dtrade/extension/Extension.dart';
@@ -13,8 +12,13 @@ class ListLeilaoRow extends ConsumerStatefulWidget {
   final int category;
   final String ip;
   final String sacred;
-  final List<ChipItem> affixes;
-  final List<ChipItem> implicit;
+  final List<ImplicitAndAffixData> affixes;
+  final List<ImplicitAndAffixData> implicit;
+  final int armor;
+  final int damagePerSecond;
+  final int attackPerSecond;
+  final int damagePerHitMin;
+  final int damagePerHitMax;
   final int socket;
   final int itemLevel;
   final String lastBet;
@@ -27,6 +31,11 @@ class ListLeilaoRow extends ConsumerStatefulWidget {
       required this.name,
       required this.category,
       required this.ip,
+      required this.armor,
+      required this.damagePerSecond,
+      required this.attackPerSecond,
+      required this.damagePerHitMin,
+      required this.damagePerHitMax,
       required this.lastBet,
       required this.initial,
       required this.value,
@@ -78,15 +87,14 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                               ]),
                               const SizedBox(height: 8),
                               Row(children: [
-                                textListItemIcon(
-                                    'Último Bet: ${widget.lastBet}',
+                                textListItemIcon('Last Bet: ${widget.lastBet}',
                                     Icons.emoji_events_outlined)
                               ]),
                               const SizedBox(height: 8),
-                              textListItemIcon('Inicial: ${widget.initial}',
+                              textListItemIcon('Initial: ${widget.initial}',
                                   Icons.monetization_on_outlined),
                               const SizedBox(height: 8),
-                              textListItemIcon('Atual: ${widget.value}',
+                              textListItemIcon('Actual: ${widget.value}',
                                   Icons.monetization_on_outlined),
                             ],
                           ),
@@ -97,7 +105,11 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                   AnimatedSize(
                       curve: Curves.easeIn,
                       duration: const Duration(milliseconds: 400),
-                      child: showCard ? showCardAnimation() : null),
+                      child: showCard
+                          ? showCardAnimation()
+                          : const Column(
+                              children: [],
+                            )),
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
@@ -117,49 +129,94 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
 
   Widget showCardAnimation() {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           Text(
-            '${widget.sacred} Rare ${widget.category}',
-            style: const TextStyle(fontFamily: 'Diablo'),
+            widget.sacred,
+            style: const TextStyle(fontFamily: 'DiabloHeavy'),
           )
         ]),
         const SizedBox(height: 8),
-        const Row(
-          children: [
-            Text(
-              'Implicit',
-              style: TextStyle(fontFamily: 'Diablo'),
-            )
-          ],
-        ),
-        const SizedBox(height: 8),
-        for (var element in widget.implicit)
-          Text(element.item.replaceAll('#', element.value),
-              style: const TextStyle(fontFamily: 'Diablo')),
-        const SizedBox(height: 8),
-        const Row(children: [
-          Text(
-            'Affixes',
-            style: TextStyle(fontFamily: 'Diablo'),
+        if (widget.armor > 0) showArmor(),
+        if (widget.armor > 0) const SizedBox(height: 8),
+        if (widget.damagePerSecond > 0) showDamagePerSecond(),
+        if (widget.damagePerSecond > 0) const SizedBox(height: 8),
+        if (widget.attackPerSecond > 0) showAttackPerSecond(),
+        if (widget.attackPerSecond > 0) const SizedBox(height: 8),
+        if (widget.damagePerHitMin > 0 || widget.damagePerHitMax > 0)
+          showDamagePerHit(),
+        if (widget.damagePerHitMin > 0 || widget.damagePerHitMax > 0)
+          const SizedBox(height: 8),
+        if (widget.implicit.isNotEmpty)
+          const Row(
+            children: [
+              Text(
+                'Implicit',
+                style: TextStyle(fontFamily: 'DiabloHeavy'),
+              )
+            ],
           ),
-        ]),
+        if (widget.implicit.isNotEmpty) const SizedBox(height: 8),
+        for (var element in widget.implicit)
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                    '- ${element.effect.replaceAll('#', element.value)}',
+                    style: const TextStyle(fontFamily: 'Diablo')),
+              ),
+              const SizedBox(height: 4),
+            ],
+          ),
         const SizedBox(height: 8),
+        if (widget.affixes.isNotEmpty)
+          const Row(children: [
+            Text(
+              'Affixes',
+              style: TextStyle(fontFamily: 'DiabloHeavy'),
+            ),
+          ]),
+        if (widget.affixes.isNotEmpty) const SizedBox(height: 8),
         for (var element in widget.affixes)
-          Text(element.item.replaceAll('#', element.value),
-              style: const TextStyle(fontFamily: 'Diablo')),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                    '- ${element.effect.replaceAll('#', element.value)}',
+                    style: const TextStyle(fontFamily: 'Diablo')),
+              ),
+              const SizedBox(height: 4),
+            ],
+          ),
         const SizedBox(height: 8),
         Row(
           children: [
-            Text(
-              'Socket: ${widget.socket}',
-              style: const TextStyle(fontFamily: 'Diablo'),
+            Row(
+              children: [
+                const Text(
+                  'Socket: ',
+                  style: TextStyle(fontFamily: 'DiabloHeavy'),
+                ),
+                Text(
+                  '${widget.socket}',
+                  style: const TextStyle(fontFamily: 'Diablo'),
+                ),
+              ],
             ),
             const Spacer(),
-            Text(
-              'Required Level: ${widget.itemLevel}',
-              style: const TextStyle(fontFamily: 'Diablo'),
-            ),
+            Row(
+              children: [
+                const Text(
+                  'Required Level: ',
+                  style: TextStyle(fontFamily: 'DiabloHeavy'),
+                ),
+                Text(
+                  '${widget.itemLevel}',
+                  style: const TextStyle(fontFamily: 'Diablo'),
+                ),
+              ],
+            )
           ],
         ),
         const SizedBox(height: 8),
@@ -180,7 +237,7 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                     return DenounceView();
                   }),
               child: const Text(
-                'DENUNCIAR',
+                'REPORT',
                 style: TextStyle(color: Colors.red, fontFamily: 'Diablo'),
               ),
             ),
@@ -206,13 +263,122 @@ class ListLeilaoRowState extends ConsumerState<ListLeilaoRow> {
                 ),
               ),
               child: const Text(
-                'DAR LANCE',
+                'BET',
                 style: TextStyle(
                     color: ColorTheme.colorFirst, fontFamily: 'Diablo'),
               ),
             ),
           ],
         ),
+      ],
+    );
+  }
+
+  Widget showArmor() {
+    return Wrap(
+      children: [
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            const Text(
+              'Armor:',
+              style: TextStyle(fontFamily: 'DiabloHeavy'),
+            ),
+            Text(
+              '${widget.armor}',
+              style: const TextStyle(fontFamily: 'Diablo'),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 8,
+        )
+      ],
+    );
+  }
+
+  Widget showDamagePerSecond() {
+    return Wrap(
+      children: [
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            const Text(
+              'Damage Per Second:',
+              style: TextStyle(fontFamily: 'DiabloHeavy'),
+            ),
+            Text(
+              '${widget.damagePerSecond}',
+              style: const TextStyle(fontFamily: 'Diablo'),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 8,
+        )
+      ],
+    );
+  }
+
+  Widget showAttackPerSecond() {
+    return Wrap(
+      children: [
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            const Text(
+              'Attack Per Second:',
+              style: TextStyle(fontFamily: 'DiabloHeavy'),
+            ),
+            Text(
+              '${widget.attackPerSecond}',
+              style: const TextStyle(fontFamily: 'Diablo'),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 8,
+        )
+      ],
+    );
+  }
+
+  Widget showDamagePerHit() {
+    return Wrap(
+      children: [
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            const Text(
+              'Min',
+              style: TextStyle(fontFamily: 'DiabloHeavy'),
+            ),
+            Text(
+              '${widget.damagePerHitMin}',
+              style: const TextStyle(fontFamily: 'Diablo'),
+            ),
+            const Spacer(),
+            const Text(
+              'Max',
+              style: TextStyle(fontFamily: 'DiabloHeavy'),
+            ),
+            Text(
+              '${widget.damagePerHitMax}',
+              style: const TextStyle(fontFamily: 'Diablo'),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 8,
+        )
       ],
     );
   }

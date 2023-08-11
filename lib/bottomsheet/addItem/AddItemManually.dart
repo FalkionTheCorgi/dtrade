@@ -122,7 +122,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
     DataDropDownCategory itemTier = model.dropDownSacred.firstWhere(
       (category) => category.nameCategory == widget.sacredItem,
       orElse: () =>
-          const DataDropDownCategory(value: -1, nameCategory: 'SELECIONE'),
+          const DataDropDownCategory(value: -1, nameCategory: 'Select'),
     );
     if (itemTier.nameCategory == widget.sacredItem) {
       dropValueSacred = itemTier.value;
@@ -160,7 +160,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
             padding: const EdgeInsets.all(16),
             child: Column(children: [
               const SizedBox(height: 24),
-              titleScreen('Adicionar Item'),
+              titleScreen('Add Item'),
               const SizedBox(height: 32),
               Row(
                 children: [
@@ -387,7 +387,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
                 )));
               }
             },
-            title: 'ADICIONAR IMPLICÍTO',
+            title: 'ADD IMPLICIT',
             bgColorButton: Colors.black,
             textColorButton: Colors.white,
             colorProgress: Colors.white),
@@ -505,7 +505,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
                 });
               }
             },
-            title: 'ADICIONAR AFIXO',
+            title: 'ADD AFFIX',
             bgColorButton: Colors.black,
             textColorButton: Colors.white,
             colorProgress: Colors.white),
