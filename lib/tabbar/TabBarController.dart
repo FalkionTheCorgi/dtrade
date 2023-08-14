@@ -1,7 +1,6 @@
 import 'package:dtrade/TopBar/TopBar.dart';
 import 'package:dtrade/bottombar/BottomBar.dart';
 import 'package:dtrade/bottombar/BottomBarViewModel.dart';
-import 'package:dtrade/bottomsheet/addItem/AddItemImage.dart';
 import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
 import 'package:dtrade/data/DataItemRegister.dart';
 import 'package:dtrade/drawer/DrawerLayout.dart';

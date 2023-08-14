@@ -151,6 +151,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
               titleScreen('Add Item'),
               const SizedBox(height: 32),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                       child: TextFormField(
@@ -177,7 +178,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
               const SizedBox(height: 16),
               dropDownTypeItem(),
               const SizedBox(height: 16),
-              Row(children: [
+              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Expanded(
                   child: TextFormField(
                     controller: itemPower,
@@ -196,7 +197,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
                   ),
                 ),
                 const SizedBox(
-                  width: 16,
+                  width: 4,
                 ),
                 Expanded(
                   child: TextFormField(
@@ -535,6 +536,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
           height: 8,
         ),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(child: dropDownSocket()),
             const SizedBox(
@@ -706,6 +708,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
           height: 8,
         ),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
                 child: TextFormField(

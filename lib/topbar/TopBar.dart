@@ -1,5 +1,4 @@
 import 'package:dtrade/bottombar/BottomBarViewModel.dart';
-import 'package:dtrade/bottomsheet/filter/FilterItems.dart';
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
 import 'package:dtrade/routes/AppRoutes.dart';
 import 'package:flutter/material.dart';

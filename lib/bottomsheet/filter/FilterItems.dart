@@ -133,7 +133,7 @@ class FilterItemsState extends ConsumerState<FilterItems> {
                     ),
                   ),
                   const SizedBox(
-                    width: 8,
+                    width: 4,
                   ),
                   Expanded(
                     child: TextFormField(
@@ -164,6 +164,7 @@ class FilterItemsState extends ConsumerState<FilterItems> {
                   height: 8,
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(child: dropDownSocket()),
                     const SizedBox(
@@ -550,8 +551,6 @@ class FilterItemsState extends ConsumerState<FilterItems> {
   }
 
   Widget fieldDamage() {
-    final model = ref.watch(filterItemsViewModel);
-
     return Column(
       children: [
         TextFormField(
