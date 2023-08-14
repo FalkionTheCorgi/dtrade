@@ -24,16 +24,18 @@ class LeilaoAndamentoViewModel extends ChangeNotifier {
   }
 
   Future<dynamic> getList() async {
-    final response = await Api.instance.getMyAuctionItemsProgress(page);
-    if (response is AuctionItems) {
-      list.status = response.status;
-      list.quantidade = response.quantidade;
-      list.items.addAll(response.items);
-      page++;
-    } else {
-      list = emptyList;
+    if (list.quantidade != list.items.length || list.status == 'INITIAL') {
+      final response = await Api.instance.getMyAuctionItemsProgress(page);
+      if (response is AuctionItems) {
+        list.status = response.status;
+        list.quantidade = response.quantidade;
+        list.items.addAll(response.items);
+        page++;
+      } else {
+        list = emptyList;
+      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   Future<Message> deleteItem(String id) async {

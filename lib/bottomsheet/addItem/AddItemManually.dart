@@ -17,18 +17,16 @@ class AddItemManually extends ConsumerStatefulWidget {
   final String sacredItem;
   final String itemPower;
   final String lvlRankItem;
-  final List<String> description;
 
-  const AddItemManually(
-      {Key? key,
-      required this.nameItem,
-      required this.categoryName,
-      required this.rarity,
-      required this.sacredItem,
-      required this.itemPower,
-      required this.lvlRankItem,
-      required this.description})
-      : super(key: key);
+  const AddItemManually({
+    Key? key,
+    required this.nameItem,
+    required this.categoryName,
+    required this.rarity,
+    required this.sacredItem,
+    required this.itemPower,
+    required this.lvlRankItem,
+  }) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => AddItemManuallyState();
@@ -40,7 +38,6 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
   late TextEditingController nameItem;
   late TextEditingController itemPower;
   late TextEditingController lvlRankItem;
-  late TextEditingController description;
   late TextEditingController priceItem;
   late TextEditingController valueImplicit;
   late TextEditingController valueAffix;
@@ -61,7 +58,6 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
   late List<ChipItem> listAffix;
 
   final List<DataDropDownCategory> dropDownRarity = Mocked.listItemsRarity;
-
   late List<DropdownMenuItem<int>> itemListRarity;
   late List<DropdownMenuItem<int>> itemListSacred;
 
@@ -72,14 +68,13 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
     model.getSocket();
     model.getTier();
 
-    var desc = '';
     nameItem =
         TextEditingController(text: widget.nameItem.replaceAll("\n", " "));
     itemPower = TextEditingController(text: widget.itemPower);
     lvlRankItem = TextEditingController(text: widget.lvlRankItem);
     priceItem = TextEditingController(text: "");
-    valueImplicit = TextEditingController(text: "0.0");
-    valueAffix = TextEditingController(text: "0.0");
+    valueImplicit = TextEditingController(text: "");
+    valueAffix = TextEditingController(text: "");
     armor = TextEditingController(text: '');
     damagePerSecond = TextEditingController(text: '');
     attackPerSecond = TextEditingController(text: '');
@@ -88,12 +83,6 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
 
     listImplict = [];
     listAffix = [];
-
-    for (var element in widget.description) {
-      desc += "$element\n";
-    }
-
-    description = TextEditingController(text: desc);
 
     model.dropDownItemsCategory
         .map((val) => DropdownMenuItem<int>(
@@ -136,7 +125,6 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
     nameItem.dispose();
     itemPower.dispose();
     lvlRankItem.dispose();
-    description.dispose();
     priceItem.dispose();
     valueImplicit.dispose();
     valueAffix.dispose();
@@ -243,7 +231,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
                 height: 64,
               ),
               FkFProgressButton(
-                title: 'ABRIR LEILÃO',
+                title: 'ADD AUCTION',
                 bgColorButton: ColorTheme.colorFirst,
                 textColorButton: Colors.white,
                 colorProgress: Colors.white,
@@ -254,7 +242,6 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
                             nameItem.text,
                             itemPower.text,
                             priceItem.text,
-                            description.text,
                             dropValue,
                             dropValueSacred,
                             dropValueRarity,
@@ -291,7 +278,7 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
                   onPressedCallback: () async {
                     Navigator.pop(context);
                   },
-                  title: 'VOLTAR',
+                  title: 'GO BACK',
                   bgColorButton: Colors.black,
                   textColorButton: Colors.white,
                   colorProgress: Colors.white)
@@ -503,6 +490,12 @@ class AddItemManuallyState extends ConsumerState<AddItemManually> {
                               (element) => element.value == dropValueAffix)
                           .nameCategory));
                 });
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                  'Please, fill this fields correctly',
+                  style: TextStyle(fontFamily: 'Diablo'),
+                )));
               }
             },
             title: 'ADD AFFIX',

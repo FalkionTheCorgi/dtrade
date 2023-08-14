@@ -37,6 +37,7 @@ class ListLeilaoViewModel extends ChangeNotifier {
       } else {
         list = emptyList;
       }
+      print(list.quantidade);
       notifyListeners();
     }
   }

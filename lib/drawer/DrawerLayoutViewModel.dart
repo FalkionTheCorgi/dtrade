@@ -1,7 +1,9 @@
 import 'package:dtrade/api/data/profile.dart';
 import 'package:dtrade/api/https.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final drawerLayoutViewModel =
     ChangeNotifierProvider((ref) => DrawerLayoutViewModel());
@@ -56,6 +58,12 @@ class DrawerLayoutViewModel extends ChangeNotifier {
       battletag = 'Sem battletag cadastrada';
     }
     notifyListeners();
+  }
+
+  Future<void> signOut() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+    await FirebaseAuth.instance.signOut();
   }
 }
 

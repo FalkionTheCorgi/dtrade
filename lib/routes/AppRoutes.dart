@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dtrade/bottomsheet/addItem/AddItemManually.dart';
+import 'package:dtrade/bottomsheet/filter/FilterItems.dart';
 import 'package:dtrade/cadastro/Cadastro.dart';
 import 'package:dtrade/camera/PreviewCamera.dart';
 import 'package:dtrade/camera/camera.dart';
@@ -18,6 +19,7 @@ class AppRoutes {
   static const String camera = '/camera';
   static const String previewcam = '/previewcam';
   static const String addItem = '/addItem';
+  static const String filterItem = '/filter';
 
   static Route<dynamic> generateRoute(RouteSettings settings,
       {Object? arguments}) {
@@ -34,7 +36,7 @@ class AppRoutes {
         final args = settings.arguments as File;
         return AppRoutes().buildPageRouteBuilder(PreviewCamera(file: args));
       case tabbar:
-        return AppRoutes().buildPageRouteBuilder(TabBarController());
+        return AppRoutes().buildPageRouteBuilder(const TabBarController());
       case addItem:
         final args = settings.arguments as DataItemRegister;
         return AppRoutes().buildPageRouteBuilder(AddItemManually(
@@ -43,10 +45,14 @@ class AppRoutes {
             rarity: args.rarity,
             sacredItem: args.sacredItem,
             itemPower: args.itemPower,
-            lvlRankItem: args.lvlRankItem,
-            description: args.description));
+            lvlRankItem: args.lvlRankItem));
+      case filterItem:
+        final args = settings.arguments as int;
+        return AppRoutes().buildPageRouteBuilder(FilterItems(
+          screenFilter: args,
+        ));
       default:
-        return MaterialPageRoute(builder: (_) => Login());
+        return MaterialPageRoute(builder: (_) => const Login());
     }
   }
 

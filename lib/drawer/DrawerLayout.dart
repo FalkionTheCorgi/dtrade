@@ -1,6 +1,7 @@
 import 'package:dtrade/bottomsheet/configuracoes/Configuracoes.dart';
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
 import 'package:dtrade/listitems/ListLeilaoViewModel.dart';
+import 'package:dtrade/routes/AppRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -199,10 +200,11 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                     Text('Logout',
                         style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
                   ]),
-              onTap: () {
-                // Update the state of the app
-                // Then close the drawer
-                Navigator.pop(context);
+              onTap: () async {
+                await model.signOut().then((value) {
+                  Navigator.of(context)
+                      .restorablePopAndPushNamed(AppRoutes.login);
+                });
               },
             ),
           ],
@@ -230,7 +232,8 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
           const ImageIcon(AssetImage('assets/Battlenet.png')),
           const SizedBox(width: 4),
           Text(model.battletag,
-              style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 18)))
+              style:
+                  GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 18)))
         ],
       );
     }

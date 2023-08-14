@@ -1,6 +1,7 @@
 import 'package:dtrade/bottombar/BottomBarViewModel.dart';
 import 'package:dtrade/bottomsheet/filter/FilterItems.dart';
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
+import 'package:dtrade/routes/AppRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +16,7 @@ class TopBarState extends ConsumerState<TopBar> {
     final bottomBarModel = ref.watch(bottomBarViewModel);
     final drawerModel = ref.watch(drawerLayoutViewModel);
 
-    return AnimatedContainer(
+    return AnimatedSize(
         curve: Curves.easeInOut,
         duration: const Duration(milliseconds: 600),
         child: bottomBarModel.selectedIndex == 0
@@ -33,14 +34,16 @@ class TopBarState extends ConsumerState<TopBar> {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      showModalBottomSheet(
+                      Navigator.of(context)
+                          .pushNamed(AppRoutes.filterItem, arguments: 1);
+                      /*showModalBottomSheet(
                           showDragHandle: true,
                           isDismissible: false,
                           isScrollControlled: true,
                           context: context,
                           builder: (BuildContext context) {
                             return FilterItems();
-                          });
+                          });*/
                     },
                   ),
                 ],
@@ -79,10 +82,21 @@ class TopBarState extends ConsumerState<TopBar> {
                       color: Colors.white,
                     ),
                     onPressed: () {
+                      Navigator.of(context)
+                          .pushNamed(AppRoutes.filterItem, arguments: 1);
                       // Adicione a lógica para abrir as configurações aqui
                     },
                   ),
                 ],
+                leading: IconButton(
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
                 automaticallyImplyLeading: false));
   }
 }

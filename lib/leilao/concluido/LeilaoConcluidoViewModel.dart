@@ -23,14 +23,17 @@ class LeilaoConcluidoViewModel extends ChangeNotifier {
   }
 
   Future<dynamic> getList() async {
-    final response = await Api.instance.getMyAuctionItemsClosed(page);
-    if (response is AuctionItems) {
-      list.status = response.status;
-      list.quantidade = response.quantidade;
-      list.items.addAll(response.items);
-    } else {
-      list = emptyList;
+    if (list.quantidade != list.items.length || list.status == 'INITIAL') {
+      final response = await Api.instance.getMyAuctionItemsClosed(page);
+      if (response is AuctionItems) {
+        list.status = response.status;
+        list.quantidade = response.quantidade;
+        list.items.addAll(response.items);
+        page++;
+      } else {
+        list = emptyList;
+      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 }

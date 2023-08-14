@@ -175,7 +175,6 @@ class Api {
       String name,
       String itemPower,
       String initialPrice,
-      String description,
       int itemType,
       int itemTier,
       int itemRarity,
@@ -205,7 +204,6 @@ class Api {
       'name': name,
       'item_power': itemPower,
       'initial_price': initialPrice,
-      'description': description,
       'item_type': itemType,
       'item_tier': itemTier,
       'item_rarity': itemRarity,
@@ -349,6 +347,8 @@ class Api {
     final response = await http.get(url, headers: headers);
 
     Map<String, dynamic> parsed = jsonDecode(response.body);
+
+    print(response.body);
 
     if (response.statusCode == 200) {
       AuctionItems responseParsed = AuctionItems.fromJson(parsed);

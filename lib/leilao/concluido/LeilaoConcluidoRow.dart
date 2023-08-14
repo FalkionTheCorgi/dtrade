@@ -91,7 +91,7 @@ class LeilaoConcluidoRowState extends ConsumerState<LeilaoConcluidoRow> {
                               textListItemIcon('Initial: ${widget.initial}',
                                   Icons.monetization_on_outlined),
                               const SizedBox(height: 8),
-                              textListItemIcon('Actual: ${widget.value}',
+                              textListItemIcon('Final: ${widget.value}',
                                   Icons.monetization_on_outlined),
                             ],
                           ),
@@ -135,15 +135,6 @@ class LeilaoConcluidoRowState extends ConsumerState<LeilaoConcluidoRow> {
           )
         ]),
         const SizedBox(height: 8),
-        Row(
-          children: [
-            if (widget.implicit.isNotEmpty)
-              const Text(
-                'Implicit',
-                style: TextStyle(fontFamily: 'DiabloHeavy'),
-              )
-          ],
-        ),
         if (widget.armor > 0) showArmor(),
         if (widget.armor > 0) const SizedBox(height: 8),
         if (widget.damagePerSecond > 0) showDamagePerSecond(),
@@ -155,6 +146,15 @@ class LeilaoConcluidoRowState extends ConsumerState<LeilaoConcluidoRow> {
         if (widget.damagePerHitMin > 0 || widget.damagePerHitMax > 0)
           const SizedBox(height: 8),
         if (widget.implicit.isNotEmpty) const SizedBox(height: 8),
+        Row(
+          children: [
+            if (widget.implicit.isNotEmpty)
+              const Text(
+                'Implicit',
+                style: TextStyle(fontFamily: 'DiabloHeavy'),
+              )
+          ],
+        ),
         for (var element in widget.implicit)
           Row(
             children: [
@@ -304,22 +304,30 @@ class LeilaoConcluidoRowState extends ConsumerState<LeilaoConcluidoRow> {
         Row(
           children: [
             const Text(
-              'Min',
+              'Min:',
               style: TextStyle(fontFamily: 'DiabloHeavy'),
+            ),
+            const SizedBox(
+              width: 2,
             ),
             Text(
               '${widget.damagePerHitMin}',
               style: const TextStyle(fontFamily: 'Diablo'),
             ),
-            const Spacer(),
+            const SizedBox(
+              width: 8,
+            ),
             const Text(
-              'Max',
+              'Max:',
               style: TextStyle(fontFamily: 'DiabloHeavy'),
+            ),
+            const SizedBox(
+              width: 2,
             ),
             Text(
               '${widget.damagePerHitMax}',
               style: const TextStyle(fontFamily: 'Diablo'),
-            ),
+            )
           ],
         ),
         const SizedBox(
