@@ -9,6 +9,7 @@ import 'LoginState.dart';
 final loginViewModel = ChangeNotifierProvider((ref) => LoginViewModel());
 
 class LoginViewModel extends ChangeNotifier {
+  
   LoginState state = LoginState();
 
   String? validateEmail(String str) {

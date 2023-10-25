@@ -3,6 +3,7 @@ import 'package:dtrade/bottomsheet/filter/FilterItemsViewModel.dart';
 import 'package:dtrade/components/ProgressButton.dart';
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
 import 'package:dtrade/extension/Color.dart';
+import 'package:dtrade/listitems/ListLeilaoViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -89,6 +90,8 @@ class FilterItemsState extends ConsumerState<FilterItems> {
   @override
   Widget build(BuildContext context) {
     final model = ref.watch(filterItemsViewModel);
+    final listModel = ref.watch(listLeilaoViewModel);
+    final drawerModel = ref.watch(drawerLayoutViewModel);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
@@ -121,7 +124,6 @@ class FilterItemsState extends ConsumerState<FilterItems> {
                   Expanded(
                     child: TextFormField(
                       controller: minPower,
-                      validator: (value) => model.validateItemPower(value!),
                       decoration: const InputDecoration(
                         labelText: 'Min Power',
                         border: OutlineInputBorder(),
@@ -138,7 +140,6 @@ class FilterItemsState extends ConsumerState<FilterItems> {
                   Expanded(
                     child: TextFormField(
                       controller: maxPower,
-                      validator: (value) => model.validateItemPower(value!),
                       decoration: const InputDecoration(
                           labelText: 'Max Power',
                           border: OutlineInputBorder(),
@@ -173,9 +174,6 @@ class FilterItemsState extends ConsumerState<FilterItems> {
                     Expanded(
                       child: TextFormField(
                         controller: lvlRankItem,
-                        validator: (value) {
-                          return model.validateLvlItem(value!);
-                        },
                         decoration: const InputDecoration(
                             labelText: 'Item Level',
                             labelStyle: TextStyle(fontFamily: 'Diablo'),
@@ -194,7 +192,41 @@ class FilterItemsState extends ConsumerState<FilterItems> {
                   textColorButton: Colors.white,
                   colorProgress: Colors.white,
                   onPressedCallback: () async {
-                    if (formKey.currentState!.validate()) {}
+                    if (formKey.currentState!.validate()) {
+                      final affix =
+                          listAffix.map((chipItem) => chipItem.item).toList();
+
+                      final implicit =
+                          listImplict.map((chipItem) => chipItem.item).toList();
+
+                      listModel.resetList();
+
+                      listModel.setValues(
+                          nameItem.text.isEmpty ? null : nameItem.text,
+                          dropValue == -1 ? null : dropValue,
+                          minPower.text.isEmpty ? '0' : minPower.text,
+                          maxPower.text.isEmpty ? '2000' : maxPower.text,
+                          2,
+                          3,
+                          lvlRankItem.text.isEmpty
+                              ? null
+                              : int.parse(lvlRankItem.text),
+                          armor.text.isEmpty ? null : int.parse(armor.text),
+                          damagePerSecond.text.isEmpty
+                              ? null
+                              : int.parse(damagePerSecond.text),
+                          damagePerHitMin.text.isEmpty
+                              ? null
+                              : int.parse(damagePerHitMin.text),
+                          damagePerHitMax.text.isEmpty
+                              ? null
+                              : int.parse(damagePerHitMax.text),
+                          affix.isEmpty ? null : affix,
+                          implicit.isEmpty ? null : implicit,
+                          dropValueSocket == -1 ? null : dropValueSocket);
+                      listModel.getList(drawerModel.returnIntItemChoose());
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
                 const SizedBox(height: 8),
@@ -533,12 +565,8 @@ class FilterItemsState extends ConsumerState<FilterItems> {
   }
 
   Widget fieldArmor() {
-    final model = ref.watch(filterItemsViewModel);
     return TextFormField(
         controller: armor,
-        validator: (value) {
-          return model.validateArmor(value!);
-        },
         decoration: const InputDecoration(
           labelText: 'Armor',
           labelStyle: TextStyle(fontFamily: 'Diablo'),

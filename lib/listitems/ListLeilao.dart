@@ -53,7 +53,7 @@ class ListLeilaoState extends ConsumerState<ListLeilao> {
     } else {
       if (model.list.items.isNotEmpty) {
         return RefreshIndicator(
-          onRefresh: () async {
+            onRefresh: () async {
             model.resetList();
             model.getList(drawerModel.returnIntItemChoose());
           },

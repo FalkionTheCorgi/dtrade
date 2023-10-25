@@ -13,6 +13,7 @@ class DrawerLayout extends ConsumerStatefulWidget {
 }
 
 int _selectedIndex = 0;
+int _selectedTypeGame = 0;
 
 class DrawerLayoutState extends ConsumerState<DrawerLayout> {
   static const TextStyle optionStyle =
@@ -28,6 +29,12 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  void _onTypeGameTapped(int index) {
+    setState(() {
+      _selectedTypeGame = index;
     });
   }
 
@@ -58,6 +65,44 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 ],
               ),
             ),
+            ListTile(
+              title: Text("Type Game",
+                  style: GoogleFonts.roboto(
+                      textStyle: const TextStyle(fontSize: 16))),
+            ),
+            ListTile(
+              selectedColor: Colors.red,
+              title: const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ImageIcon(AssetImage('assets/barbarian.png')),
+                    SizedBox(width: 4),
+                    Text('Softcore',
+                        style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
+                  ]),
+              selected: _selectedTypeGame == 0,
+              onTap: () {
+                _onTypeGameTapped(0);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              selectedColor: Colors.red,
+              title: const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ImageIcon(AssetImage('assets/barbarian.png')),
+                    SizedBox(width: 4),
+                    Text('Hardcore',
+                        style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
+                  ]),
+              selected: _selectedTypeGame == 1,
+              onTap: () {
+                _onTypeGameTapped(1);
+                Navigator.pop(context);
+              },
+            ),
+            const Divider(),
             ListTile(
               title: Text("Classes",
                   style: GoogleFonts.roboto(

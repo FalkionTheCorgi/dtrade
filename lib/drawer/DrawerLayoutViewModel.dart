@@ -10,11 +10,17 @@ final drawerLayoutViewModel =
 
 class DrawerLayoutViewModel extends ChangeNotifier {
   var item = ClassD.barbarian;
+  var typeGame = TypeGame.softcore;
   String battletag = '';
   var refresh = true;
 
   void changeItem(ClassD newClass) {
     item = newClass;
+    notifyListeners();
+  }
+
+  void changeTypeGame(TypeGame newType) {
+    typeGame = newType;
     notifyListeners();
   }
 
@@ -49,6 +55,15 @@ class DrawerLayoutViewModel extends ChangeNotifier {
     }
   }
 
+  int returnIntTypeGame() {
+    switch (typeGame) {
+      case TypeGame.softcore:
+        return 1;
+      case TypeGame.hardcore:
+        return 2;
+    }
+  }
+
   Future<void> getProfile() async {
     final response = await Api.instance.getProfile();
 
@@ -68,3 +83,5 @@ class DrawerLayoutViewModel extends ChangeNotifier {
 }
 
 enum ClassD { barbarian, rogue, sorcerer, druid, necromancer }
+
+enum TypeGame { softcore, hardcore }

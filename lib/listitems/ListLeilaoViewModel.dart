@@ -15,10 +15,26 @@ class ListLeilaoViewModel extends ChangeNotifier {
   AuctionItems emptyList =
       AuctionItems(status: 'EMPTY_LIST', quantidade: 0, items: []);
   int page = 1;
+  String? name;
+  int? typeItem;
+  String? minItemPower;
+  String? maxItemPower;
+  int? itemTier;
+  int? itemRarity;
+  int? itemLevel;
+  int? armor;
+  int? damagePerSecond;
+  int? damagePerHitMin;
+  int? damagePerHitMax;
+  List<String>? affix;
+  List<String>? implicit;
+  int? socket;
 
   void resetList() {
     page = 1;
     list = AuctionItems(status: 'INITIAL', quantidade: 0, items: []);
+    setValues(null, null, null, null, null, null, null, null, null, null, null,
+        null, null, null);
     notifyListeners();
   }
 
@@ -26,25 +42,55 @@ class ListLeilaoViewModel extends ChangeNotifier {
     getList(clas);
   }
 
-  Future<dynamic> getList(int clas) async {
-    if (list.quantidade != list.items.length || list.status == 'INITIAL') {
-      final response = await Api.instance.getAuctionItems(clas, page);
-      if (response is AuctionItems) {
-        list.status = response.status;
-        list.quantidade = response.quantidade;
-        list.items.addAll(response.items);
-        page++;
-      } else {
-        list = emptyList;
-      }
-      print(list.quantidade);
-      notifyListeners();
-    }
+  void setValues(
+      String? name,
+      int? typeItem,
+      String? minItemPower,
+      String? maxItemPower,
+      int? itemTier,
+      int? itemRarity,
+      int? itemLevel,
+      int? armor,
+      int? damagePerSecond,
+      int? damagePerHitMin,
+      int? damagePerHitMax,
+      List<String>? affix,
+      List<String>? implicit,
+      int? socket) {
+    this.name = name;
+    this.typeItem = typeItem;
+    this.minItemPower = minItemPower;
+    this.maxItemPower = maxItemPower;
+    this.itemTier = itemTier;
+    this.itemRarity = itemRarity;
+    this.itemLevel = itemLevel;
+    this.armor = armor;
+    this.damagePerSecond = damagePerSecond;
+    this.damagePerHitMin = damagePerHitMin;
+    this.damagePerHitMax = damagePerHitMax;
+    this.affix = affix;
+    this.implicit = implicit;
+    this.socket = socket;
   }
 
-  Future<dynamic> filterList(int clas, String name, int typeItem,
-      String itemPower, String description) async {
-    final response = await Api.instance.getAuctionItems(clas, page);
+  Future<dynamic> getList(int clas) async {
+    final response = await Api.instance.getAuctionItems(
+        clas,
+        page,
+        name,
+        minItemPower,
+        maxItemPower,
+        typeItem,
+        itemTier,
+        itemRarity,
+        itemLevel,
+        armor,
+        damagePerSecond,
+        damagePerHitMin,
+        damagePerHitMax,
+        affix,
+        implicit,
+        socket);
     if (response is AuctionItems) {
       list.status = response.status;
       list.quantidade = response.quantidade;
@@ -53,6 +99,7 @@ class ListLeilaoViewModel extends ChangeNotifier {
     } else {
       list = emptyList;
     }
+    print(list.quantidade);
     notifyListeners();
   }
 

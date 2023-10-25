@@ -229,7 +229,23 @@ class Api {
     return responseParsed;
   }
 
-  Future<dynamic> getAuctionItems(int clas, int page) async {
+  Future<dynamic> getAuctionItems(
+      int clas,
+      int page,
+      String? name,
+      String? minItemPower,
+      String? maxItemPower,
+      int? itemType,
+      int? itemTier,
+      int? itemRarity,
+      int? itemLevel,
+      int? armor,
+      int? damagePerSecond,
+      int? damagePerHitMin,
+      int? damagePerHitMax,
+      List<String>? affix,
+      List<String>? implicit,
+      int? socket) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final headers = {
@@ -238,40 +254,50 @@ class Api {
 
     final queryParameters = {'class': clas.toString(), 'page': page.toString()};
 
-    final url = Uri.http(link, '/auction_items', queryParameters);
-
-    final response = await http.get(url, headers: headers);
-
-    Map<String, dynamic> parsed = jsonDecode(response.body);
-
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      AuctionItems responseParsed = AuctionItems.fromJson(parsed);
-      return responseParsed;
-    } else {
-      Message responseParsed = Message.fromJson(parsed);
-      return responseParsed;
+    if (name != null) {
+      queryParameters.addAll({'name': name});
     }
-  }
-
-  Future<dynamic> getAuctionItemsFiltered(int clas, String name, int typeItem,
-      String minPower, String maxPower, String description, int page) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final headers = {
-      'token': prefs.getString('token') ?? "",
-    };
-
-    final queryParameters = {
-      'class': clas,
-      'name': name,
-      'type_item': typeItem,
-      'min_power': minPower,
-      'max_power': maxPower,
-      'description': description,
-      'page': page,
-    };
+    if (minItemPower != null) {
+      queryParameters.addAll({'min_item_power': minItemPower});
+    }
+    if (maxItemPower != null) {
+      queryParameters.addAll({'max_item_power': maxItemPower});
+    }
+    if (itemType != null) {
+      queryParameters.addAll({'item_type': itemType.toString()});
+    }
+    if (itemTier != null) {
+      queryParameters.addAll({'item_tier': itemTier.toString()});
+    }
+    if (itemRarity != null) {
+      queryParameters.addAll({'item_rarity': itemRarity.toString()});
+    }
+    if (itemLevel != null) {
+      queryParameters.addAll({'item_level': itemLevel.toString()});
+    }
+    if (armor != null) {
+      queryParameters.addAll({'armor': armor.toString()});
+    }
+    if (damagePerSecond != null) {
+      queryParameters.addAll({'damage_per_second': damagePerSecond.toString()});
+    }
+    if (damagePerHitMin != null) {
+      queryParameters
+          .addAll({'damage_per_hit_min': damagePerHitMin.toString()});
+    }
+    if (damagePerHitMax != null) {
+      queryParameters
+          .addAll({'damage_per_hit_max': damagePerHitMax.toString()});
+    }
+    if (affix != null) {
+      queryParameters.addAll({'affix': affix.toString()});
+    }
+    if (implicit != null) {
+      queryParameters.addAll({'implicit': implicit.toString()});
+    }
+    if (socket != null) {
+      queryParameters.addAll({'socket': socket.toString()});
+    }
 
     final url = Uri.http(link, '/auction_items', queryParameters);
 

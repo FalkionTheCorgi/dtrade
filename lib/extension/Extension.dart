@@ -7,6 +7,7 @@ void updateToken() async {
   final token = await FirebaseAuth.instance.currentUser?.getIdToken();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('token', token ?? '');
+  print(token);
 }
 
 Widget circularProgressIndicator(double width) {
