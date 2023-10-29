@@ -7,7 +7,7 @@ import 'package:dtrade/api/data/Message.dart';
 import 'package:dtrade/api/data/Sock.dart';
 import 'package:dtrade/api/data/Tier.dart';
 import 'package:dtrade/api/https.dart';
-import 'package:dtrade/bottomsheet/addItem/data/ChipItem.dart';
+import 'package:dtrade/addItem/data/ChipItem.dart';
 import 'package:dtrade/data/DataDropDownCategory.dart';
 import 'package:dtrade/extension/Mocked.dart';
 import 'package:dtrade/extension/Regex.dart';

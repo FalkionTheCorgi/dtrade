@@ -1,5 +1,5 @@
-import 'package:dtrade/bottomsheet/addItem/AddItemManuallyViewModel.dart';
-import 'package:dtrade/bottomsheet/addItem/data/ChipItem.dart';
+import 'package:dtrade/addItem/AddItemManuallyViewModel.dart';
+import 'package:dtrade/addItem/data/ChipItem.dart';
 import 'package:dtrade/components/ProgressButton.dart';
 import 'package:dtrade/data/DataDropDownCategory.dart';
 import 'package:dtrade/extension/Color.dart';

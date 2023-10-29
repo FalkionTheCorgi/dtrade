@@ -8,7 +8,7 @@ import 'package:dtrade/api/data/Message.dart';
 import 'package:dtrade/api/data/Sock.dart';
 import 'package:dtrade/api/data/Tier.dart';
 import 'package:dtrade/api/data/profile.dart';
-import 'package:dtrade/bottomsheet/addItem/data/ChipItem.dart';
+import 'package:dtrade/addItem/data/ChipItem.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

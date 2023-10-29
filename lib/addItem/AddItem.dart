@@ -1,7 +1,8 @@
-import 'package:dtrade/bottomsheet/addItem/AddItemImage.dart';
-import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'AddItemImage.dart';
+import 'AddItemViewModel.dart';
 
 class AddItem extends ConsumerStatefulWidget {
   const AddItem({Key? key}) : super(key: key);

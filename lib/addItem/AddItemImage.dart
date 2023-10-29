@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
 import 'package:dtrade/bottomsheet/configuracoes/DarkModeProvider.dart';
 import 'package:dtrade/components/ProgressButton.dart';
 import 'package:dtrade/data/DataItemRegister.dart';
@@ -9,6 +8,8 @@ import 'package:dtrade/routes/AppRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'AddItemViewModel.dart';
 
 class AddItemImage extends ConsumerWidget {
   const AddItemImage({Key? key}) : super(key: key);

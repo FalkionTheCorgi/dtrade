@@ -1,5 +1,7 @@
 import 'package:dtrade/bottomsheet/configuracoes/Configuracoes.dart';
 import 'package:dtrade/drawer/DrawerLayoutViewModel.dart';
+import 'package:dtrade/drawer/data/D4Class.dart';
+import 'package:dtrade/drawer/data/D4TypeGame.dart';
 import 'package:dtrade/listitems/ListLeilaoViewModel.dart';
 import 'package:dtrade/routes/AppRoutes.dart';
 import 'package:flutter/material.dart';
@@ -65,155 +67,56 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
                 ],
               ),
             ),
-            ListTile(
-              title: Text("Type Game",
-                  style: GoogleFonts.roboto(
-                      textStyle: const TextStyle(fontSize: 16))),
+            sectionList(
+              "Type Game"
             ),
-            ListTile(
-              selectedColor: Colors.red,
-              title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ImageIcon(AssetImage('assets/barbarian.png')),
-                    SizedBox(width: 4),
-                    Text('Softcore',
-                        style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
-                  ]),
-              selected: _selectedTypeGame == 0,
-              onTap: () {
-                _onTypeGameTapped(0);
-                Navigator.pop(context);
-              },
+            typeGameItemList(
+                RegisteredTypeGame.softcore.image,
+                RegisteredTypeGame.softcore.typeGame,
+                RegisteredTypeGame.softcore.rowItem
             ),
-            ListTile(
-              selectedColor: Colors.red,
-              title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ImageIcon(AssetImage('assets/barbarian.png')),
-                    SizedBox(width: 4),
-                    Text('Hardcore',
-                        style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
-                  ]),
-              selected: _selectedTypeGame == 1,
-              onTap: () {
-                _onTypeGameTapped(1);
-                Navigator.pop(context);
-              },
+            typeGameItemList(
+                RegisteredTypeGame.hardcore.image,
+                RegisteredTypeGame.hardcore.typeGame,
+                RegisteredTypeGame.hardcore.rowItem
             ),
             const Divider(),
-            ListTile(
-              title: Text("Classes",
-                  style: GoogleFonts.roboto(
-                      textStyle: const TextStyle(fontSize: 16))),
+            sectionList(
+              "Classes"
             ),
-            ListTile(
-              selectedColor: Colors.red,
-              title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ImageIcon(AssetImage('assets/barbarian.png')),
-                    SizedBox(width: 4),
-                    Text('Barbarian',
-                        style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
-                  ]),
-              selected: _selectedIndex == 0,
-              onTap: () {
-                // Update the state of the app
-                _onItemTapped(0);
-                model.changeItem(ClassD.barbarian);
-                listModel.resetList();
-                listModel.getList(model.returnIntItemChoose());
-
-                // Then close the drawer
-                Navigator.pop(context);
-              },
+            classItemList(
+                RegisteredClass.barbarian.image,
+                RegisteredClass.barbarian.className,
+                RegisteredClass.barbarian.classD,
+                RegisteredClass.barbarian.rowItem
             ),
-            ListTile(
-              selectedColor: Colors.red,
-              title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ImageIcon(AssetImage('assets/rogue.png')),
-                    SizedBox(width: 4),
-                    Text('Rogue',
-                        style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
-                  ]),
-              selected: _selectedIndex == 1,
-              onTap: () {
-                // Update the state of the app
-                _onItemTapped(1);
-                model.changeItem(ClassD.rogue);
-                listModel.resetList();
-                listModel.getList(model.returnIntItemChoose());
-                Navigator.pop(context);
-              },
+            classItemList(
+                RegisteredClass.rogue.image,
+                RegisteredClass.rogue.className,
+                RegisteredClass.rogue.classD,
+                RegisteredClass.rogue.rowItem
             ),
-            ListTile(
-              selectedColor: Colors.red,
-              title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ImageIcon(AssetImage('assets/druid.png')),
-                    SizedBox(width: 4),
-                    Text('Druid',
-                        style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
-                  ]),
-              selected: _selectedIndex == 2,
-              onTap: () {
-                // Update the state of the app
-                _onItemTapped(2);
-                model.changeItem(ClassD.druid);
-                listModel.resetList();
-                listModel.getList(model.returnIntItemChoose());
-                Navigator.pop(context);
-              },
+            classItemList(
+                RegisteredClass.druid.image,
+                RegisteredClass.druid.className,
+                RegisteredClass.druid.classD,
+                RegisteredClass.druid.rowItem
             ),
-            ListTile(
-              selectedColor: Colors.red,
-              title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ImageIcon(AssetImage('assets/necromancer.png')),
-                    SizedBox(width: 4),
-                    Text('Necromancer',
-                        style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
-                  ]),
-              selected: _selectedIndex == 3,
-              onTap: () {
-                // Update the state of the app
-                _onItemTapped(3);
-                model.changeItem(ClassD.necromancer);
-                listModel.resetList();
-                listModel.getList(model.returnIntItemChoose());
-                Navigator.pop(context);
-              },
+            classItemList(
+                RegisteredClass.necromancer.image,
+                RegisteredClass.necromancer.className,
+                RegisteredClass.necromancer.classD,
+                RegisteredClass.necromancer.rowItem
             ),
-            ListTile(
-              selectedColor: Colors.red,
-              title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ImageIcon(AssetImage('assets/sorcerer.png')),
-                    SizedBox(width: 4),
-                    Text('Sorcerer',
-                        style: TextStyle(fontFamily: 'Diablo', fontSize: 16))
-                  ]),
-              selected: _selectedIndex == 4,
-              onTap: () {
-                // Update the state of the app
-                _onItemTapped(4);
-                model.changeItem(ClassD.sorcerer);
-                listModel.resetList();
-                listModel.getList(model.returnIntItemChoose());
-                Navigator.pop(context);
-              },
+            classItemList(
+                RegisteredClass.sorcerer.image,
+                RegisteredClass.sorcerer.className,
+                RegisteredClass.sorcerer.classD,
+                RegisteredClass.sorcerer.rowItem
             ),
             const Divider(),
-            const ListTile(
-              title: Text("Options",
-                  style: TextStyle(fontFamily: 'Diablo', fontSize: 16)),
+            sectionList(
+              "Options"
             ),
             ListTile(
               title: const Row(
@@ -283,4 +186,75 @@ class DrawerLayoutState extends ConsumerState<DrawerLayout> {
       );
     }
   }
+
+  Widget classItemList(
+      AssetImage assetImage,
+      String text,
+      ClassD classItem,
+      int rowIndex
+  ){
+
+    final model = ref.watch(drawerLayoutViewModel);
+    final listModel = ref.watch(listLeilaoViewModel);
+
+    return
+      ListTile(
+        selectedColor: Colors.red,
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ImageIcon(assetImage),
+              const SizedBox(width: 4),
+              Text(text,
+                  style: const TextStyle(fontFamily: 'Diablo', fontSize: 16))
+            ]),
+        selected: _selectedIndex == rowIndex,
+        onTap: () {
+          // Update the state of the app
+          _onItemTapped(rowIndex);
+          model.changeItem(classItem);
+          listModel.resetList();
+          listModel.getList(model.returnIntItemChoose());
+          Navigator.pop(context);
+        },
+      );
+  }
+
+  Widget typeGameItemList(
+      AssetImage assetImage,
+      String text,
+      int rowIndex
+      ){
+
+    final model = ref.watch(drawerLayoutViewModel);
+    final listModel = ref.watch(listLeilaoViewModel);
+
+    return
+      ListTile(
+        selectedColor: Colors.red,
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ImageIcon(assetImage),
+              const SizedBox(width: 4),
+              Text(text,
+                  style: const TextStyle(fontFamily: 'Diablo', fontSize: 16))
+            ]),
+        selected: _selectedTypeGame == rowIndex,
+        onTap: () {
+          _onTypeGameTapped(rowIndex);
+          Navigator.pop(context);
+        },
+      );
+  }
+
+  Widget sectionList(
+      String title
+  ){
+    return ListTile(
+      title: Text(title,
+          style: const TextStyle(fontFamily: 'Diablo', fontSize: 16)),
+    );
+  }
+
 }

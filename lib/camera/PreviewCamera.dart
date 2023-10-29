@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dtrade/bottomsheet/addItem/AddItemViewModel.dart';
+import 'package:dtrade/addItem/AddItemViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

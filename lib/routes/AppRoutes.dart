@@ -1,7 +1,6 @@
 import 'dart:io';
-
-import 'package:dtrade/bottomsheet/addItem/AddItemManually.dart';
-import 'package:dtrade/bottomsheet/filter/FilterItems.dart';
+import 'package:dtrade/addItem/AddItemManually.dart';
+import 'package:dtrade/filter/FilterItems.dart';
 import 'package:dtrade/cadastro/Cadastro.dart';
 import 'package:dtrade/camera/PreviewCamera.dart';
 import 'package:dtrade/camera/camera.dart';
